@@ -1,0 +1,166 @@
+---
+
+---
+
+<!-- INVOICE MODAL COMPONENT -->
+<div id="invoice-modal" class="fixed inset-0 z-50 hidden">
+    <!-- Backdrop -->
+    <div
+        class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+        onclick="closeInvoice()"
+    >
+    </div>
+
+    <!-- Modal Card -->
+    <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm p-4"
+    >
+        <div
+            class="bg-white rounded-[2rem] shadow-2xl overflow-hidden animate-fade-in-up"
+        >
+            <!-- Modal Header -->
+            <div class="bg-[#0C1A18] p-6 text-center relative overflow-hidden">
+                <div class="relative z-10">
+                    <h3 class="text-white font-bold text-lg">
+                        Konfirmasi Transaksi
+                    </h3>
+                    <p class="text-emerald-400 text-xs mt-1">
+                        Pastikan detail pesanan sudah benar
+                    </p>
+                </div>
+                <div
+                    class="absolute top-0 left-0 w-full h-full opacity-20 bg-gradient-to-br from-white/10 to-transparent"
+                >
+                </div>
+            </div>
+
+            <!-- Invoice Content -->
+            <div class="p-6 space-y-6">
+                <!-- Service Info -->
+                <div
+                    class="flex items-center gap-4 bg-gray-50 p-4 rounded-2xl border border-gray-100"
+                >
+                    <div
+                        class="w-12 h-12 bg-white rounded-full shadow-sm flex items-center justify-center text-[#0C1A18]"
+                    >
+                        <svg
+                            class="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg
+                        >
+                    </div>
+                    <div>
+                        <p
+                            class="text-xs text-gray-500 font-bold uppercase tracking-wider"
+                        >
+                            Layanan
+                        </p>
+                        <h4 id="inv-service" class="font-bold text-gray-900">
+                            Pulsa Reguler
+                        </h4>
+                    </div>
+                </div>
+
+                <!-- Details List -->
+                <div class="space-y-3">
+                    <div
+                        class="flex justify-between items-center pb-3 border-b border-gray-100"
+                    >
+                        <span class="text-gray-500 text-sm">Nomor Tujuan</span>
+                        <span
+                            id="inv-number"
+                            class="font-bold text-gray-900 font-mono text-sm tracking-wide"
+                            >0812-3456-7890</span
+                        >
+                    </div>
+                    <div
+                        class="flex justify-between items-center pb-3 border-b border-gray-100"
+                    >
+                        <span class="text-gray-500 text-sm">Produk</span>
+                        <span
+                            id="inv-product"
+                            class="font-bold text-gray-900 text-sm"
+                            >Pulsa 10.000</span
+                        >
+                    </div>
+                    <div
+                        class="flex justify-between items-center pb-3 border-b border-gray-100"
+                    >
+                        <span class="text-gray-500 text-sm">Biaya Admin</span>
+                        <div class="text-right">
+                            <span
+                                class="text-xs text-gray-400 line-through mr-1"
+                                >Rp 2.500</span
+                            >
+                            <span class="font-bold text-emerald-600 text-sm"
+                                >GRATIS</span
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Total -->
+                <div
+                    class="bg-[#F8FAFC] p-4 rounded-xl flex justify-between items-center border border-gray-200"
+                >
+                    <span class="text-gray-600 font-bold text-sm"
+                        >Total Bayar</span
+                    >
+                    <span
+                        id="inv-total"
+                        class="text-xl font-black text-[#0C1A18]"
+                        >Rp 10.150</span
+                    >
+                </div>
+
+                <!-- Actions -->
+                <div class="grid grid-cols-2 gap-3 pt-2">
+                    <button
+                        onclick="closeInvoice()"
+                        class="py-3.5 rounded-xl border border-gray-200 font-bold text-gray-600 hover:bg-gray-50 transition-colors text-sm"
+                    >
+                        Batal
+                    </button>
+                    <button
+                        class="py-3.5 rounded-xl bg-[#0C1A18] text-white font-bold shadow-lg shadow-[#0C1A18]/20 hover:bg-[#152A26] transition-all transform active:scale-95 flex items-center justify-center gap-2 text-sm"
+                    >
+                        <span>Bayar</span>
+                        <svg
+                            class="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg
+                        >
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .animate-fade-in-up {
+        animation: fadeInUp 0.3s ease-out forwards;
+    }
+</style>

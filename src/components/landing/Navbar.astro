@@ -1,0 +1,259 @@
+---
+import { Menu } from "lucide-astro";
+---
+
+<nav
+    id="navbar"
+    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out w-full bg-transparent border-transparent"
+>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+            <!-- Logo -->
+            <div class="flex-shrink-0 flex items-center">
+                <a
+                    href="/"
+                    class="text-2xl font-bold text-[#0F1F1C] tracking-tight hover:opacity-80 transition-opacity p-2 -ml-2"
+                    >NexOne</a
+                >
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center gap-8">
+                <a
+                    href="/#features"
+                    class="text-gray-600 hover:text-[#0F392E] font-medium transition-colors py-2"
+                    >Layanan</a
+                >
+                <a
+                    href="/pricing"
+                    class="text-gray-600 hover:text-[#0F392E] font-medium transition-colors py-2"
+                    >Harga</a
+                >
+                <a
+                    href="/#testimonials"
+                    class="text-gray-600 hover:text-[#0F1F1C] font-medium transition-colors py-2"
+                    >Testimoni</a
+                >
+            </nav>
+
+            <!-- Auth Buttons -->
+            <div class="hidden md:flex items-center gap-4">
+                <a
+                    href="/auth/login"
+                    class="text-[#0F392E] font-bold hover:text-[#164e3f] transition-colors px-4 py-2"
+                >
+                    Masuk
+                </a>
+                <a
+                    href="/auth/register"
+                    class="bg-[#0F392E] text-white px-6 py-3 rounded-xl font-semibold hover:bg-[#164e3f] transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+                >
+                    Daftar Sekarang
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button
+                id="mobile-menu-btn"
+                class="md:hidden p-2 text-gray-600 hover:text-[#0F392E] focus:outline-none"
+                aria-label="Toggle menu"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Menu (Off-Canvas Drawer) -->
+<div id="mobile-menu-container" class="fixed inset-0 z-[60] invisible">
+    <!-- Backdrop / Overlay -->
+    <div
+        id="mobile-menu-backdrop"
+        class="absolute inset-0 bg-black/50 backdrop-blur-sm opacity-0 transition-opacity duration-300 ease-in-out"
+    >
+    </div>
+
+    <!-- Sidebar Panel -->
+    <div
+        id="mobile-menu-drawer"
+        class="absolute right-0 top-0 h-full w-64 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col"
+    >
+        <!-- Header with Close Button -->
+        <div
+            class="flex justify-between items-center p-6 border-b border-gray-100"
+        >
+            <span class="text-xl font-bold text-[#0F1F1C]">Menu</span>
+            <button
+                id="mobile-menu-close"
+                class="p-2 text-gray-500 hover:text-[#0F392E] hover:bg-gray-100 rounded-full transition-colors focus:outline-none"
+                aria-label="Close menu"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Menu Items -->
+        <div class="flex-1 overflow-y-auto py-6 px-4 space-y-6">
+            <!-- Navigation Links -->
+            <div class="space-y-4">
+                <a
+                    href="/#features"
+                    class="block text-lg font-medium text-gray-600 hover:text-[#0F392E] transition-colors"
+                    >Layanan</a
+                >
+                <a
+                    href="/#testimonials"
+                    class="block text-lg font-medium text-gray-600 hover:text-[#0F392E] transition-colors"
+                    >Testimoni</a
+                >
+                <a
+                    href="/pricing"
+                    class="block text-lg font-medium text-gray-600 hover:text-[#0F392E] transition-colors"
+                    >Harga</a
+                >
+                <a
+                    href="/auth/login"
+                    class="block text-lg font-medium text-gray-600 hover:text-[#0F392E] transition-colors"
+                    >Testimoni</a
+                >
+            </div>
+
+            <!-- Auth Buttons -->
+            <div class="pt-6 border-t border-gray-100 space-y-4">
+                <a
+                    href="/auth/login"
+                    class="block w-full text-center text-[#0F392E] font-bold py-3 hover:bg-gray-50 rounded-xl transition-colors"
+                >
+                    Masuk
+                </a>
+                <a
+                    href="/auth/register"
+                    class="block w-full text-center bg-[#0F392E] text-white font-bold py-3 rounded-xl hover:bg-[#164e3f] shadow-md hover:shadow-lg transition-all"
+                >
+                    Daftar Sekarang
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const navbar = document.getElementById("navbar");
+    const menuBtn = document.getElementById("mobile-menu-btn");
+    const menuContainer = document.getElementById("mobile-menu-container");
+    const menuBackdrop = document.getElementById("mobile-menu-backdrop");
+    const menuDrawer = document.getElementById("mobile-menu-drawer");
+    const closeBtn = document.getElementById("mobile-menu-close");
+    const menuLinks = menuDrawer ? menuDrawer.querySelectorAll("a") : [];
+
+    // Scroll Handler for Floating Island Effect
+    window.addEventListener("scroll", () => {
+        if (!navbar) return;
+
+        if (window.scrollY > 50) {
+            // Scrolled State: Floating Capsule
+            navbar.classList.remove(
+                "w-full",
+                "bg-transparent",
+                "border-transparent",
+            );
+            navbar.classList.add(
+                "bg-white/95",
+                "backdrop-blur-md",
+                "shadow-lg",
+                "rounded-full",
+                "mt-4",
+                "max-w-5xl",
+                "mx-auto",
+                "border",
+                "border-gray-100/50",
+            );
+        } else {
+            // Initial State: Full Width Transparent
+            navbar.classList.add(
+                "w-full",
+                "bg-transparent",
+                "border-transparent",
+            );
+            navbar.classList.remove(
+                "bg-white/95",
+                "backdrop-blur-md",
+                "shadow-lg",
+                "rounded-full",
+                "mt-4",
+                "max-w-5xl",
+                "mx-auto",
+                "border",
+                "border-gray-100/50",
+            );
+        }
+    });
+
+    // Mobile Menu Functions
+    function openMenu() {
+        if (!menuContainer || !menuBackdrop || !menuDrawer) return;
+
+        menuContainer.classList.remove("invisible");
+        // Small delay to allow display:block to apply before opacity transition
+        setTimeout(() => {
+            menuBackdrop.classList.remove("opacity-0");
+            menuBackdrop.classList.add("opacity-100");
+            menuDrawer.classList.remove("translate-x-full");
+            menuDrawer.classList.add("translate-x-0");
+        }, 10);
+        document.body.style.overflow = "hidden"; // Prevent background scrolling
+    }
+
+    function closeMenu() {
+        if (!menuContainer || !menuBackdrop || !menuDrawer) return;
+
+        menuBackdrop.classList.remove("opacity-100");
+        menuBackdrop.classList.add("opacity-0");
+        menuDrawer.classList.remove("translate-x-0");
+        menuDrawer.classList.add("translate-x-full");
+
+        // Wait for transition to finish before hiding container
+        setTimeout(() => {
+            menuContainer.classList.add("invisible");
+            document.body.style.overflow = ""; // Restore scrolling
+        }, 300);
+    }
+
+    if (menuBtn && menuContainer && menuBackdrop && menuDrawer && closeBtn) {
+        // Open
+        menuBtn.addEventListener("click", openMenu);
+
+        // Close
+        closeBtn.addEventListener("click", closeMenu);
+        menuBackdrop.addEventListener("click", closeMenu); // Click outside
+
+        // Close when clicking a link
+        menuLinks.forEach((link) => {
+            link.addEventListener("click", closeMenu);
+        });
+    }
+</script>

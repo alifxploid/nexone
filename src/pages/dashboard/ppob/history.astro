@@ -1,0 +1,170 @@
+---
+import DashboardLayout from "../../../layouts/DashboardLayout.astro";
+
+// Mock Data for History (Expanded)
+const historyData = [
+    { id: "TRX-882910", service: "Pulsa Reguler", provider: "Telkomsel", number: "0812-3456-7890", price: 10150, date: "30 Jan 2026, 19:30", status: "success", icon: "M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" },
+    { id: "TRX-882909", service: "Token PLN", provider: "PLN", number: "14028491021", price: 50500, date: "30 Jan 2026, 14:15", status: "success", icon: "M13 10V3L4 14h7v7l9-11h-7z" },
+    { id: "TRX-882908", service: "Paket Data", provider: "Indosat", number: "0857-1234-5678", price: 25000, date: "29 Jan 2026, 10:00", status: "pending", icon: "M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" },
+    { id: "TRX-882905", service: "Topup Game", provider: "Mobile Legends", number: "12345678 (8821)", price: 85000, date: "28 Jan 2026, 20:45", status: "failed", icon: "M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" },
+    { id: "TRX-882901", service: "E-Money", provider: "GoPay", number: "0812-9988-7766", price: 150000, date: "28 Jan 2026, 09:30", status: "success", icon: "M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" },
+    { id: "TRX-882899", service: "Pulsa Reguler", provider: "XL Axiata", number: "0878-5544-3322", price: 50000, date: "27 Jan 2026, 18:20", status: "success", icon: "M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" },
+    { id: "TRX-882885", service: "Tagihan Air", provider: "PDAM", number: "55123456", price: 75000, date: "27 Jan 2026, 08:15", status: "success", icon: "M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" },
+];
+
+const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(amount);
+};
+---
+
+<DashboardLayout title="Riwayat Pesanan - Pulsa & PPOB">
+    <!-- Premium Header -->
+    <div class="relative bg-[#0C1A18] rounded-[2rem] p-8 mb-8 overflow-hidden shadow-xl">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2"></div>
+
+        <div class="relative z-10 flex flex-col md:flex-row justify-between md:items-end gap-6">
+            <div>
+                 <div class="flex items-center gap-2 mb-2">
+                    <span class="px-2.5 py-0.5 rounded-full bg-white/10 border border-white/10 text-[10px] font-bold text-emerald-400 uppercase tracking-wider">
+                        Database
+                    </span>
+                 </div>
+                <h1 class="text-2xl md:text-3xl font-bold text-white tracking-tight">Riwayat Transaksi</h1>
+                <p class="text-gray-400 text-sm mt-1 max-w-md">
+                    Rekapitulasi data transaksi PPOB secara lengkap dan real-time.
+                </p>
+            </div>
+            
+            <div class="w-full md:w-auto flex items-center gap-3">
+                 <div class="relative group flex-1 md:w-64">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="h-4 w-4 text-gray-400 group-focus-within:text-emerald-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                    <input 
+                        type="text" 
+                        class="block w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-emerald-500/50 focus:border-emerald-500/50 sm:text-sm transition-all shadow-lg" 
+                        placeholder="Cari ID / Nomor..."
+                    >
+                </div>
+                <button class="bg-emerald-500 hover:bg-emerald-600 text-white p-2.5 rounded-xl shadow-lg transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modern Data Table Layout -->
+    <div class="bg-white rounded-[2rem] border border-gray-200 shadow-sm overflow-hidden flex flex-col min-h-[500px]">
+        
+        <!-- Table Toolbar -->
+        <div class="px-6 py-4 border-b border-gray-100 flex items-center gap-4 overflow-x-auto no-scrollbar">
+             <button class="px-4 py-1.5 rounded-full bg-[#0C1A18] text-white text-xs font-bold shadow-md whitespace-nowrap">Semua Transaksi</button>
+             <button class="px-4 py-1.5 rounded-full bg-white border border-gray-200 text-gray-500 text-xs font-bold hover:border-gray-300 whitespace-nowrap">Berhasil</button>
+             <button class="px-4 py-1.5 rounded-full bg-white border border-gray-200 text-gray-500 text-xs font-bold hover:border-gray-300 whitespace-nowrap">Dalam Proses</button>
+             <button class="px-4 py-1.5 rounded-full bg-white border border-gray-200 text-gray-500 text-xs font-bold hover:border-gray-300 whitespace-nowrap">Gagal</button>
+        </div>
+
+        <!-- Scrollable Table Area -->
+        <div class="overflow-x-auto flex-1">
+            <table class="w-full text-left border-separate border-spacing-y-2 px-4">
+                <thead>
+                    <tr class="text-xs text-gray-400 font-bold uppercase tracking-wider">
+                        <th class="px-4 py-3 pb-2">ID & Layanan</th>
+                        <th class="px-4 py-3 pb-2">Tujuan</th>
+                        <th class="px-4 py-3 pb-2">Tanggal</th>
+                        <th class="px-4 py-3 pb-2 text-right">Nominal</th>
+                        <th class="px-4 py-3 pb-2 text-center rounded-r-2xl">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="text-sm">
+                    {historyData.map((item) => (
+                        <tr class="group relative bg-white hover:bg-gray-50 transition-colors shadow-sm hover:shadow-md rounded-2xl">
+                             <!-- Service -->
+                            <td class="px-4 py-4 rounded-l-2xl border-l border-y border-gray-100 group-hover:border-gray-200 align-middle">
+                                <div class="flex items-center gap-3">
+                                    <div class={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                                        item.status === 'success' ? 'bg-emerald-50 text-emerald-600' :
+                                        item.status === 'pending' ? 'bg-amber-50 text-amber-600' :
+                                        'bg-red-50 text-red-600'
+                                    }`}>
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={item.icon}></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-gray-900 leading-tight">{item.service}</p>
+                                        <p class="text-[10px] text-gray-500 font-bold">{item.id}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            
+                            <!-- Destination -->
+                            <td class="px-4 py-4 border-y border-gray-100 group-hover:border-gray-200 align-middle">
+                                <div>
+                                    <p class="font-bold text-gray-700 font-mono tracking-tight">{item.number}</p>
+                                    <p class="text-[10px] text-gray-400">{item.provider}</p>
+                                </div>
+                            </td>
+
+                            <!-- Date -->
+                            <td class="px-4 py-4 border-y border-gray-100 group-hover:border-gray-200 align-middle">
+                                <span class="text-xs font-medium text-gray-500">{item.date}</span>
+                            </td>
+
+                             <!-- Price -->
+                            <td class="px-4 py-4 border-y border-gray-100 group-hover:border-gray-200 align-middle text-right">
+                                <span class="font-bold text-[#0C1A18]">{formatCurrency(item.price)}</span>
+                            </td>
+
+                            <!-- Status -->
+                            <td class="px-4 py-4 rounded-r-2xl border-r border-y border-gray-100 group-hover:border-gray-200 align-middle text-center">
+                                {item.status === 'success' && (
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-[10px] font-bold">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Success
+                                    </span>
+                                )}
+                                {item.status === 'pending' && (
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 border border-amber-100 text-amber-600 text-[10px] font-bold">
+                                        <svg class="w-2.5 h-2.5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Pending
+                                    </span>
+                                )}
+                                {item.status === 'failed' && (
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-50 border border-red-100 text-red-600 text-[10px] font-bold">
+                                         Failed
+                                    </span>
+                                )}
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Custom Pagination -->
+        <div class="px-6 py-4 border-t border-gray-100 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-xs text-gray-500 font-medium">
+                Showing <span class="font-bold text-[#0C1A18]">1-7</span> of <span class="font-bold text-[#0C1A18]">128</span> transactions
+            </p>
+            
+            <div class="flex items-center gap-2">
+                <button class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-400 hover:border-[#0C1A18] hover:text-[#0C1A18] transition-all disabled:opacity-50">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                
+                <button class="w-8 h-8 flex items-center justify-center rounded-lg bg-[#0C1A18] text-white font-bold text-xs shadow-md">1</button>
+                <button class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:border-[#0C1A18] hover:text-[#0C1A18] font-bold text-xs transition-all">2</button>
+                <button class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:border-[#0C1A18] hover:text-[#0C1A18] font-bold text-xs transition-all">3</button>
+                <span class="text-gray-400 text-xs">...</span>
+                <button class="w-8 h-8 flex items-center justify-center rounded-lg bg-white border border-gray-200 text-gray-500 hover:border-[#0C1A18] hover:text-[#0C1A18] font-bold text-xs transition-all">12</button>
+
+                <button class="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-400 hover:border-[#0C1A18] hover:text-[#0C1A18] transition-all">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</DashboardLayout>

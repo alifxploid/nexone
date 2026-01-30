@@ -1,0 +1,127 @@
+<section
+    class="pt-28 pb-16 md:pt-36 md:pb-24 lg:pt-44 lg:pb-32 overflow-hidden relative"
+>
+    <!-- Grid Background -->
+    <div
+        class="absolute inset-0 -z-10 h-full w-full bg-[#FAFAFA] bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:40px_40px]"
+    >
+    </div>
+
+    <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10"
+    >
+        <!-- Badge -->
+        <div
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white shadow-sm border border-gray-100 text-gray-800 text-[10px] md:text-xs font-bold uppercase tracking-widest mb-8 md:mb-10 hover:shadow-md transition-shadow cursor-default select-none"
+        >
+            <svg
+                class="w-4 h-4 text-[#0F392E]"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                ><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg
+            >
+            Solusi Tercepat
+        </div>
+
+        <h1
+            id="hero-headline"
+            class="text-4xl sm:text-5xl md:text-7xl font-bold text-[#0F1F1C] tracking-tight mb-6 md:mb-8 max-w-5xl mx-auto leading-[1.15] md:leading-[1.1]"
+        >
+            <span class="type-part">Platform </span>
+            <br class="hidden md:block" />
+            <span class="relative inline-block">
+                <span class="type-part">Pertumbuhan Digital</span>
+                <svg
+                    class="absolute w-full h-3 md:h-4 -bottom-1 left-0 text-[#D4F24F] -z-10"
+                    viewBox="0 0 100 10"
+                    preserveAspectRatio="none"
+                >
+                    <path
+                        d="M0 5 Q 50 10 100 5"
+                        stroke="currentColor"
+                        stroke-width="12"
+                        fill="none"></path>
+                </svg>
+            </span>
+            <span class="type-part"> Paling Lengkap</span>
+            <span
+                id="cursor"
+                class="inline-block w-[3px] h-[1em] bg-orange-500 ml-1 align-middle animate-blink"
+            ></span>
+        </h1>
+
+        <p
+            class="text-base sm:text-lg md:text-xl text-gray-500 mb-8 md:mb-12 max-w-2xl mx-auto leading-relaxed font-medium px-4"
+        >
+            Satu ekosistem untuk semua kebutuhan bisnismu. Dari viralin konten,
+            cari cuan lewat link, sampai bisnis PPOB. Semua ada, semua bisa.
+        </p>
+
+        <div
+            class="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center items-center w-full sm:w-auto px-4 sm:px-0"
+        >
+            <a
+                href="/auth/register"
+                class="w-full sm:w-auto px-8 py-4 md:px-10 md:py-5 bg-[#0F392E] text-white rounded-2xl font-bold text-base md:text-lg hover:bg-[#164e3f] transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 active:scale-[0.98]"
+            >
+                Mulai Gratis Sekarang
+            </a>
+            <a
+                href="#how-it-works"
+                class="w-full sm:w-auto px-8 py-4 md:px-10 md:py-5 bg-white text-[#0F1F1C] border border-gray-100 rounded-2xl font-bold text-base md:text-lg hover:bg-gray-50 hover:border-gray-200 transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 active:scale-[0.98]"
+            >
+                Pelajari Cara Kerjanya
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+    @keyframes blink {
+        0%,
+        100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0;
+        }
+    }
+    .animate-blink {
+        animation: blink 1s step-end infinite;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const parts = document.querySelectorAll(".type-part");
+        if (parts.length === 0) return;
+
+        const originalTexts = Array.from(parts).map((part) => part.textContent);
+
+        // Clear initial text
+        parts.forEach((part) => (part.textContent = ""));
+
+        let partIndex = 0;
+        let charIndex = 0;
+
+        function type() {
+            if (partIndex < parts.length) {
+                const currentPart = parts[partIndex];
+                const currentText = originalTexts[partIndex];
+
+                if (charIndex < currentText.length) {
+                    currentPart.textContent += currentText.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(type, 50); // Typing speed
+                } else {
+                    partIndex++;
+                    charIndex = 0;
+                    setTimeout(type, 100); // Pause between parts
+                }
+            }
+        }
+
+        // Start typing after a short delay
+        setTimeout(type, 500);
+    });
+</script>

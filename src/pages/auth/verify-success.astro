@@ -1,0 +1,73 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Verifikasi Berhasil - NexOne">
+    <div class="min-h-screen flex font-sans">
+        <div
+            class="w-full flex items-center justify-center p-4 sm:p-8 bg-gray-50 relative overflow-hidden"
+        >
+            <div
+                class="absolute inset-0 z-0 h-full w-full bg-[#FAFAFA] bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:40px_40px]"
+            >
+            </div>
+
+            <div
+                class="w-full max-w-sm bg-white p-8 md:p-10 rounded-[2.5rem] shadow-2xl shadow-gray-200/50 relative z-10 text-center"
+            >
+                <div class="mb-8">
+                    <a
+                        href="/"
+                        class="inline-block hover:opacity-80 transition-opacity mb-8"
+                    >
+                        <span
+                            class="text-3xl font-bold tracking-tight text-[#0F1F1C]"
+                            >NexOne</span
+                        >
+                    </a>
+
+                    <!-- Success Icon -->
+                    <div
+                        class="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-6 text-emerald-600 animate-bounce"
+                    >
+                        <svg
+                            class="w-8 h-8"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+
+                    <h1
+                        class="text-2xl font-bold text-[#0F1F1C] mb-3 tracking-tight"
+                    >
+                        Email Terverifikasi!
+                    </h1>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Selamat! Akun kamu sudah aktif. Silakan masuk untuk
+                        mulai menggunakan NexOne.
+                    </p>
+                </div>
+
+                <a
+                    href="/auth/login"
+                    class="block w-full py-3 px-4 border border-transparent rounded-xl shadow-lg text-sm font-bold text-white bg-[#0F392E] hover:bg-[#164e3f] transition-all hover:-translate-y-0.5"
+                >
+                    Masuk ke Dashboard
+                </a>
+            </div>
+
+            <div class="absolute bottom-6 text-center w-full z-10">
+                <p class="text-xs text-gray-400">
+                    &copy; 2024 NexOne Ecosystem. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </div>
+</Layout>

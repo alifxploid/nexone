@@ -1,0 +1,145 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/landing/Navbar.astro";
+import Footer from "../components/landing/Footer.astro";
+import SocialBoosterPricing from "../components/pricing/SocialBoosterPricing.astro";
+import ClipperPricing from "../components/pricing/ClipperPricing.astro";
+import PPOBPricing from "../components/pricing/PPOBPricing.astro";
+---
+
+<Layout title="Harga & Paket - NexOne">
+    <div class="fixed top-0 left-0 right-0 z-50">
+        <Navbar />
+    </div>
+
+    <main class="pt-32 pb-20 bg-gray-50 min-h-screen">
+        <!-- Header Section -->
+        <section class="text-center px-4 max-w-4xl mx-auto mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#0F1F1C] mb-4">
+                Pilih Paket Pertumbuhan Anda
+            </h1>
+            <p class="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto">
+                Investasi cerdas untuk hasil viral. Transparan, harga terbaik,
+                dan langsung gaspol.
+            </p>
+        </section>
+
+        <!-- Tab Switcher -->
+        <div class="flex justify-center mb-12 px-4">
+            <div
+                class="inline-flex bg-white p-1.5 rounded-full shadow-sm border border-gray-200"
+            >
+                <button
+                    id="tab-social"
+                    class="tab-btn active px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300"
+                >
+                    Social Booster
+                </button>
+                <button
+                    id="tab-clipper"
+                    class="tab-btn px-6 py-2.5 rounded-full text-sm font-bold text-gray-500 hover:text-gray-900 transition-all duration-300"
+                >
+                    Clipper (Link)
+                </button>
+                <button
+                    id="tab-ppob"
+                    class="tab-btn px-6 py-2.5 rounded-full text-sm font-bold text-gray-500 hover:text-gray-900 transition-all duration-300"
+                >
+                    Pulsa & PPOB
+                </button>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Content: Social Booster -->
+            <div id="content-social" class="tab-content">
+                <SocialBoosterPricing />
+            </div>
+
+            <!-- Content: Clipper -->
+            <div id="content-clipper" class="tab-content hidden">
+                <ClipperPricing />
+            </div>
+
+            <!-- Content: PPOB -->
+            <div id="content-ppob" class="tab-content hidden">
+                <PPOBPricing />
+            </div>
+        </div>
+    </main>
+    <Footer />
+</Layout>
+
+<script>
+    const tabs = {
+        social: document.getElementById("tab-social"),
+        clipper: document.getElementById("tab-clipper"),
+        ppob: document.getElementById("tab-ppob"),
+    };
+
+    const contents = {
+        social: document.getElementById("content-social"),
+        clipper: document.getElementById("content-clipper"),
+        ppob: document.getElementById("content-ppob"),
+    };
+
+    type TabKey = keyof typeof tabs;
+
+    function switchTab(activeKey: TabKey) {
+        // Reset all tabs styles
+        Object.values(tabs).forEach((tab) => {
+            if (tab) {
+                tab.classList.remove("bg-[#0F392E]", "text-white", "shadow-md");
+                tab.classList.add("text-gray-500", "hover:text-gray-900");
+            }
+        });
+
+        // Hide all contents
+        Object.values(contents).forEach((content) => {
+            if (content) {
+                content.classList.add("hidden");
+                content.classList.remove("animate-fade-in");
+            }
+        });
+
+        // Activate selected tab
+        const activeTab = tabs[activeKey];
+        const activeContent = contents[activeKey];
+
+        if (activeTab && activeContent) {
+            activeTab.classList.remove("text-gray-500", "hover:text-gray-900");
+            activeTab.classList.add("bg-[#0F392E]", "text-white", "shadow-md");
+
+            activeContent.classList.remove("hidden");
+            // Simple fade in effect
+            activeContent.classList.add("animate-fade-in");
+        }
+    }
+
+    // Initialize logic
+    if (tabs.social && tabs.clipper && tabs.ppob) {
+        tabs.social.addEventListener("click", () => switchTab("social"));
+        tabs.clipper.addEventListener("click", () => switchTab("clipper"));
+        tabs.ppob.addEventListener("click", () => switchTab("ppob"));
+
+        // Default active
+        switchTab("social");
+    }
+</script>
+
+<style>
+    .animate-fade-in {
+        animation: fadeIn 0.4s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>

@@ -1,0 +1,237 @@
+---
+import DashboardLayout from "../../../layouts/DashboardLayout.astro";
+
+// Mock Data for Tickets
+const tickets = [
+    {
+        id: "T-8821",
+        subject: "Deposit Belum Masuk",
+        category: "Deposit",
+        date: "30 Jan 2026",
+        status: "open",
+    },
+    {
+        id: "T-8755",
+        subject: "Gagal Transaksi Pulsa",
+        category: "PPOB",
+        date: "28 Jan 2026",
+        status: "answered",
+    },
+    {
+        id: "T-8210",
+        subject: "Cara menggunakan Clipper",
+        category: "General",
+        date: "20 Jan 2026",
+        status: "closed",
+    },
+];
+---
+
+<DashboardLayout title="Pusat Bantuan - Tiket">
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-2xl font-bold text-white tracking-tight">
+            Pusat Bantuan
+        </h1>
+        <p class="text-gray-400 text-sm mt-1">
+            Kami siap membantu kendala Anda 24/7.
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <!-- LEFT: Create Ticket Form -->
+        <div class="lg:col-span-7">
+            <div
+                class="bg-gray-50 rounded-[2rem] p-6 md:p-8 border border-gray-200 shadow-sm relative overflow-hidden"
+            >
+                <!-- Decoration -->
+                <div
+                    class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"
+                >
+                </div>
+
+                <h2 class="text-lg font-bold text-[#0C1A18] mb-6 relative z-10">
+                    Buat Tiket Baru
+                </h2>
+
+                <form class="space-y-5 relative z-10">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div class="space-y-1.5">
+                            <label
+                                class="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1"
+                                >Kategori</label
+                            >
+                            <div class="relative">
+                                <select
+                                    class="w-full bg-white text-gray-900 font-bold text-sm px-4 py-3 rounded-xl border border-gray-200 focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] outline-none shadow-sm appearance-none cursor-pointer"
+                                >
+                                    <option>Kendala Transaksi</option>
+                                    <option>Deposit & Saldo</option>
+                                    <option>Akun & Keamanan</option>
+                                    <option>Lainnya</option>
+                                </select>
+                                <div
+                                    class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"
+                                >
+                                    <svg
+                                        class="w-4 h-4 text-gray-400"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        ><path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 9l-7 7-7-7"></path></svg
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label
+                                class="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1"
+                                >ID Transaksi (Opsional)</label
+                            >
+                            <input
+                                type="text"
+                                class="w-full bg-white text-gray-900 font-bold text-sm px-4 py-3 rounded-xl border border-gray-200 focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] outline-none shadow-sm placeholder:text-gray-300"
+                                placeholder="Contoh: TRX-123..."
+                            />
+                        </div>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label
+                            class="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1"
+                            >Subjek Masalah</label
+                        >
+                        <input
+                            type="text"
+                            class="w-full bg-white text-gray-900 font-bold text-sm px-4 py-3 rounded-xl border border-gray-200 focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] outline-none shadow-sm placeholder:text-gray-300"
+                            placeholder="Jelaskan masalah secara singkat..."
+                        />
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label
+                            class="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1"
+                            >Detail Pesan</label
+                        >
+                        <textarea
+                            rows="5"
+                            class="w-full bg-white text-gray-900 font-bold text-sm px-4 py-3 rounded-xl border border-gray-200 focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] outline-none shadow-sm placeholder:text-gray-300 resize-none"
+                            placeholder="Ceritakan kendala yang Anda alami sedetail mungkin..."
+                        ></textarea>
+                    </div>
+
+                    <div class="pt-2">
+                        <button
+                            type="button"
+                            class="w-full py-3.5 bg-[#0C1A18] hover:bg-[#152A26] text-white font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm transform active:scale-95"
+                        >
+                            <svg
+                                class="w-4 h-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                ><path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                                ></path></svg
+                            >
+                            Kirim Tiket
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- RIGHT: Recent Tickets -->
+        <div class="lg:col-span-5 space-y-6">
+            <!-- Quick FAQ -->
+            <div
+                class="bg-[#D4F24F] rounded-2xl p-6 relative overflow-hidden shadow-lg"
+            >
+                <div class="relative z-10">
+                    <h3 class="text-[#0C1A18] font-black text-lg">
+                        Butuh Jawaban Cepat?
+                    </h3>
+                    <p
+                        class="text-[#0C1A18]/80 text-xs font-medium mt-1 mb-4 leading-relaxed"
+                    >
+                        Cek halaman FAQ kami sebelum membuat tiket. Banyak
+                        masalah umum sudah ada solusinya di sana.
+                    </p>
+                    <button
+                        class="px-4 py-2 bg-[#0C1A18] text-white rounded-lg text-xs font-bold hover:bg-opacity-90 transition-all"
+                    >
+                        Baca FAQ
+                    </button>
+                </div>
+                <div class="absolute right-0 bottom-0 w-24 h-24 opacity-10">
+                    <svg
+                        class="w-full h-full text-[#0C1A18]"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                        ><path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"
+                        ></path></svg
+                    >
+                </div>
+            </div>
+
+            <!-- Ticket List -->
+            <div>
+                <div class="flex items-center justify-between mb-3 px-1">
+                    <h3 class="text-white font-bold text-sm">
+                        Tiket Terbaru Anda
+                    </h3>
+                    <a
+                        href="#"
+                        class="text-emerald-400 text-xs font-bold hover:underline"
+                        >Lihat Semua</a
+                    >
+                </div>
+
+                <div class="space-y-3">
+                    {
+                        tickets.map((ticket) => (
+                            <div class="bg-gray-50 hover:bg-white p-4 rounded-xl border border-gray-200 transition-all group cursor-pointer hover:border-[#0C1A18]">
+                                <div class="flex justify-between items-start mb-2">
+                                    <span class="bg-white border border-gray-200 text-gray-500 font-mono text-[10px] font-bold px-2 py-0.5 rounded group-hover:border-[#0C1A18] transition-colors">
+                                        {ticket.id}
+                                    </span>
+                                    {ticket.status === "open" && (
+                                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">
+                                            Open
+                                        </span>
+                                    )}
+                                    {ticket.status === "answered" && (
+                                        <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
+                                            Dijawab
+                                        </span>
+                                    )}
+                                    {ticket.status === "closed" && (
+                                        <span class="text-[10px] font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded border border-gray-200">
+                                            Closed
+                                        </span>
+                                    )}
+                                </div>
+                                <h4 class="text-[#0C1A18] font-bold text-sm leading-tight mb-1">
+                                    {ticket.subject}
+                                </h4>
+                                <div class="flex items-center gap-2 text-[10px] text-gray-400 font-medium">
+                                    <span>{ticket.category}</span>
+                                    <span class="w-1 h-1 rounded-full bg-gray-300" />
+                                    <span>{ticket.date}</span>
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</DashboardLayout>
