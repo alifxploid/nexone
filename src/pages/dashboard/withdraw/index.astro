@@ -1,0 +1,880 @@
+---
+import DashboardLayout from "../../../layouts/DashboardLayout.astro";
+import WithdrawConfirmation from "../../../components/dashboard/withdraw/WithdrawConfirmation.astro";
+import WithdrawStatus from "../../../components/dashboard/withdraw/WithdrawStatus.astro";
+import WithdrawHistoryModal from "../../../components/dashboard/withdraw/WithdrawHistoryModal.astro";
+
+// Mock Data
+const balance = 2500000;
+const payoutHistory = [
+    {
+        id: "WD-8821",
+        method: "Bank BCA",
+        number: "**** 8899",
+        amount: 500000,
+        date: "29 Jan 2026",
+        status: "success",
+    },
+    {
+        id: "WD-8790",
+        method: "Dana",
+        number: "0812****90",
+        amount: 150000,
+        date: "25 Jan 2026",
+        status: "success",
+    },
+    {
+        id: "WD-8650",
+        method: "Bank Jago",
+        number: "**** 3321",
+        amount: 1000000,
+        date: "10 Jan 2026",
+        status: "pending",
+    },
+];
+
+const methods = [
+    { name: "Bank Transfer", icon: "bank", fee: "Rp 1.500" },
+    { name: "E-Wallet", icon: "wallet", fee: "Gratis" },
+];
+---
+
+<DashboardLayout title="Withdraw - Tarik Dana">
+    <!-- Header -->
+    <div
+        class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4"
+    >
+        <div>
+            <h1 class="text-2xl font-bold text-white tracking-tight">
+                Withdraw
+            </h1>
+            <p class="text-gray-400 text-sm mt-1">
+                Cairkan penghasilan Anda ke rekening bank atau e-wallet.
+            </p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10">
+        <!-- LEFT: Withdraw Form -->
+        <div class="lg:col-span-7 space-y-6">
+            <!-- Balance Card -->
+            <div
+                class="bg-gradient-to-br from-[#0C1A18] to-[#142925] rounded-[2rem] p-8 border border-[#1F3D36] relative overflow-hidden shadow-2xl group"
+            >
+                <div
+                    class="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-emerald-500/20 transition-all duration-700"
+                >
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 w-32 h-32 bg-[#D4F24F]/5 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2"
+                >
+                </div>
+
+                <div
+                    class="relative z-10 flex flex-col h-full justify-between gap-8"
+                >
+                    <div class="flex justify-between items-start">
+                        <div
+                            class="p-3 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm"
+                        >
+                            <svg
+                                class="w-8 h-8 text-[#D4F24F]"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                ><path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                ></path></svg
+                            >
+                        </div>
+                        <span
+                            class="px-3 py-1 bg-emerald-500/20 text-emerald-400 text-[10px] font-bold rounded-full border border-emerald-500/20"
+                            >Active Balance</span
+                        >
+                    </div>
+
+                    <div>
+                        <p class="text-gray-400 font-medium text-sm mb-1">
+                            Saldo Tersedia
+                        </p>
+                        <h2
+                            class="text-4xl md:text-5xl font-black text-white tracking-tight"
+                            id="user-balance"
+                            data-balance={balance}
+                        >
+                            Rp 2.500<span class="text-gray-600">.000</span>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Configuration Form -->
+            <div
+                class="bg-white rounded-[2rem] p-6 md:p-8 border border-gray-200 shadow-sm"
+            >
+                <h3 class="text-lg font-bold text-[#0C1A18] mb-6">
+                    Metode Penarikan
+                </h3>
+
+                <!-- Method Selection -->
+                <div class="grid grid-cols-2 gap-3 mb-6">
+                    {
+                        methods.map((m) => (
+                            <button
+                                type="button"
+                                class="method-btn relative group p-4 rounded-2xl border border-gray-200 hover:border-[#0C1A18] hover:bg-gray-50 transition-all text-left focus:border-[#D4F24F] focus:ring-2 focus:ring-[#D4F24F]/20"
+                                onclick={`selectMethod(this, '${m.name}')`}
+                            >
+                                <div class="mb-3 text-gray-400 group-hover:text-[#0C1A18] transition-colors method-icon">
+                                    {m.icon === "bank" && (
+                                        <svg
+                                            class="w-6 h-6"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"
+                                            />
+                                        </svg>
+                                    )}
+                                    {m.icon === "wallet" && (
+                                        <svg
+                                            class="w-6 h-6"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                                            />
+                                        </svg>
+                                    )}
+                                </div>
+                                <p class="font-bold text-sm text-[#0C1A18]">
+                                    {m.name}
+                                </p>
+                                <p class="text-[10px] text-gray-500 font-medium">
+                                    Fee: {m.fee}
+                                </p>
+                            </button>
+                        ))
+                    }
+                </div>
+
+                <!-- Inputs -->
+                <form class="space-y-5" onsubmit="return false;">
+                    <!-- Destination -->
+                    <div class="space-y-1.5">
+                        <label
+                            class="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1"
+                            >Nomor Rekening / E-Wallet</label
+                        >
+                        <div class="flex gap-3 md:w-3/4">
+                            <select
+                                id="account-provider"
+                                class="w-1/3 md:w-40 bg-gray-50 text-[#0C1A18] font-bold text-sm px-4 py-3 rounded-xl border border-gray-200 outline-none focus:border-[#0C1A18] transition-colors"
+                            >
+                                <option>BCA</option>
+                                <option>Mandiri</option>
+                                <option>BRI</option>
+                                <option>BNI</option>
+                                <option>Jago</option>
+                                <option>SeaBank</option>
+                            </select>
+                            <input
+                                type="text"
+                                id="account-number"
+                                class="flex-1 bg-gray-50 text-[#0C1A18] font-bold text-sm px-4 py-3 rounded-xl border border-gray-200 focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] outline-none transition-all placeholder:text-gray-300"
+                                placeholder="1234567890"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Amount -->
+                    <div class="space-y-1.5">
+                        <label
+                            class="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1"
+                            >Nominal Penarikan</label
+                        >
+                        <div class="relative">
+                            <span
+                                class="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 font-bold pointer-events-none"
+                                >Rp</span
+                            >
+                            <input
+                                type="number"
+                                id="withdraw-amount"
+                                class="w-full bg-gray-50 text-[#0C1A18] font-black text-2xl pl-14 pr-20 py-4 rounded-xl border border-gray-200 focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] outline-none transition-all placeholder:text-gray-300"
+                                placeholder="0"
+                            />
+                            <button
+                                type="button"
+                                onclick="setMaxBalance()"
+                                class="absolute right-4 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-[#D4F24F] text-[#0C1A18] text-xs font-bold rounded-lg hover:bg-[#c2e040] transition-colors"
+                            >
+                                MAX
+                            </button>
+                        </div>
+                        <div class="flex gap-2 justify-end">
+                            <span class="text-[10px] text-gray-400 font-bold"
+                                >Min: Rp 50.000</span
+                            >
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-gray-100 mt-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <span class="text-sm font-bold text-gray-500"
+                                >Estimasi Masuk</span
+                            >
+                            <span class="text-sm font-black text-[#0C1A18]"
+                                >5 - 10 Menit</span
+                            >
+                        </div>
+                        <button
+                            type="button"
+                            onclick="openConfirmation()"
+                            class="w-full py-4 bg-[#0C1A18] hover:bg-[#152A26] text-white font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-base transform active:scale-[0.98]"
+                        >
+                            <svg
+                                class="w-5 h-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                ><path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+                                ></path></svg
+                            >
+                            Ajukan Penarikan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- RIGHT: History -->
+        <div class="lg:col-span-5 space-y-6">
+            <div class="flex items-center justify-between px-1">
+                <h3 class="text-white font-bold text-lg">Riwayat Penarikan</h3>
+                <button
+                    onclick="openHistoryModal()"
+                    class="text-emerald-400 text-xs font-bold hover:underline hover:text-emerald-300 transition-colors"
+                    >Lihat Semua</button
+                >
+            </div>
+
+            <!-- List -->
+            <div class="space-y-3">
+                {
+                    payoutHistory.map((item) => (
+                        <div class="bg-gray-50 hover:bg-white p-5 rounded-[1.5rem] border border-gray-200 transition-all group flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-2xl bg-white border border-gray-100 flex items-center justify-center text-gray-400 shadow-sm group-hover:scale-110 transition-transform">
+                                    <svg
+                                        class="w-6 h-6"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M5 10l7-7m0 0l7 7m-7-7v18"
+                                        />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-[#0C1A18] font-bold text-sm leading-tight">
+                                        {item.method}
+                                    </h4>
+                                    <p class="text-xs text-gray-400 font-mono mt-0.5">
+                                        {item.date}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-[#0C1A18] font-black text-sm">
+                                    Rp{" "}
+                                    {new Intl.NumberFormat("id-ID").format(
+                                        item.amount,
+                                    )}
+                                </p>
+                                {item.status === "success" && (
+                                    <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg">
+                                        Berhasil
+                                    </span>
+                                )}
+                                {item.status === "pending" && (
+                                    <span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-lg">
+                                        Proses
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+
+            <!-- Info Box -->
+            <div class="bg-[#142925] rounded-2xl p-6 border border-[#1F3D36]">
+                <div class="flex items-start gap-4">
+                    <div class="p-2 bg-[#D4F24F]/10 rounded-lg text-[#D4F24F]">
+                        <svg
+                            class="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                            ></path></svg
+                        >
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-1">
+                            Informasi Penting
+                        </h4>
+                        <ul
+                            class="text-gray-400 text-xs space-y-2 list-disc pl-4 leading-relaxed"
+                        >
+                            <li>
+                                Penarikan diproses setiap hari jam 09:00 - 21:00
+                                WIB.
+                            </li>
+                            <li>Minimal penarikan Rp 50.000.</li>
+                            <li>
+                                Pastikan data rekening/e-wallet sudah benar.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Components for Flow -->
+    <WithdrawConfirmation />
+    <WithdrawStatus />
+    <WithdrawHistoryModal />
+
+    <script is:inline>
+        // --- 1. CONFIGURATION & DATA ---
+        const BANKS = ["BCA", "Mandiri", "BRI", "BNI", "Jago", "SeaBank"];
+        const EWALLETS = ["Dana", "OVO", "GoPay", "ShopeePay", "LinkAja"];
+
+        const balance = 2500000;
+        let currentMethod = "Bank Transfer";
+
+        // *** HISTORY MOCK DATA & STATE ***
+        const MOCK_HISTORY = Array.from({ length: 45 }).map((_, i) =>
+            updateMockData(i),
+        );
+        let currentPage = 1;
+        const itemsPerPage = 6;
+        let totalPages = Math.ceil(MOCK_HISTORY.length / itemsPerPage);
+
+        function updateMockData(i) {
+            const methods = [
+                "Bank BCA",
+                "Bank Mandiri",
+                "Dana",
+                "OVO",
+                "GoPay",
+                "Bank Jago",
+            ];
+            const statuses = ["success", "pending", "failed"];
+            const method = methods[Math.floor(Math.random() * methods.length)];
+            const date = new Date();
+            date.setDate(date.getDate() - Math.floor(Math.random() * 60));
+
+            return {
+                id: `TRX-${10000 + i}`,
+                method: method,
+                number: method.includes("Bank")
+                    ? "**** " + Math.floor(1000 + Math.random() * 9000)
+                    : "0812****" + Math.floor(100 + Math.random() * 900),
+                amount: (Math.floor(Math.random() * 50) + 1) * 50000,
+                date: date.toLocaleDateString("id-ID", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                }),
+                status: statuses[Math.floor(Math.random() * (i < 5 ? 2 : 3))],
+            };
+        }
+
+        // --- 2. CORE FUNCTIONS ---
+
+        // Move Modals to Body
+        function moveModalsToBody() {
+            const ids = [
+                "withdraw-confirmation-modal",
+                "withdraw-status-modal",
+                "withdraw-history-modal",
+            ];
+            ids.forEach((id) => {
+                const el = document.getElementById(id);
+                if (el && el.parentElement !== document.body) {
+                    document.body.appendChild(el);
+                }
+            });
+        }
+
+        // Helper to populate select dropdown
+        function updateProviderOptions(methodName) {
+            const select = document.getElementById("account-provider");
+            if (!select) return;
+
+            select.innerHTML = "";
+            let options = methodName === "Bank Transfer" ? BANKS : EWALLETS;
+
+            options.forEach((opt) => {
+                const option = document.createElement("option");
+                option.value = opt;
+                option.text = opt;
+                select.appendChild(option);
+            });
+        }
+
+        // *** HISTORY MODAL FUNCTIONS ***
+
+        function renderHistory() {
+            const container = document.getElementById("history-list");
+            if (!container) return;
+
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const items = MOCK_HISTORY.slice(start, end);
+
+            const emptyEl = document.getElementById("history-empty");
+
+            if (items.length === 0) {
+                if (emptyEl) {
+                    emptyEl.classList.remove("hidden");
+                    emptyEl.classList.add("flex");
+                }
+                container.innerHTML = "";
+                updatePaginationInfo(0, 0, 0);
+                return;
+            }
+
+            if (emptyEl) {
+                emptyEl.classList.add("hidden");
+                emptyEl.classList.remove("flex");
+            }
+
+            container.innerHTML = items
+                .map(
+                    (item) => `
+                <div class="bg-white p-5 rounded-2xl border border-gray-100 hover:border-[#0C1A18]/10 hover:shadow-lg hover:shadow-gray-200/50 transition-all duration-300 group flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-2xl ${getMethodColorBg(item.method)} flex items-center justify-center text-[#0C1A18] shadow-sm transform group-hover:scale-110 transition-transform duration-300">
+                            ${getMethodIcon(item.method)}
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2 mb-0.5">
+                                <h4 class="text-[#0C1A18] font-bold text-sm leading-tight">${item.method}</h4>
+                                <span class="text-[10px] px-1.5 py-0.5 rounded-md bg-gray-100 text-gray-500 font-mono tracking-tighter border border-gray-200">${item.number}</span>
+                            </div>
+                            <p class="text-xs text-gray-400 font-medium">${item.date} • <span class="text-gray-300">#${item.id}</span></p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[#0C1A18] font-black text-sm mb-1 group-hover:text-emerald-600 transition-colors">
+                            Rp ${new Intl.NumberFormat("id-ID").format(item.amount)}
+                        </p>
+                        ${getStatusBadge(item.status)}
+                    </div>
+                </div>
+            `,
+                )
+                .join("");
+
+            updatePaginationInfo(
+                start + 1,
+                Math.min(end, MOCK_HISTORY.length),
+                MOCK_HISTORY.length,
+            );
+            updatePaginationButtons();
+        }
+
+        function getMethodColorBg(method) {
+            if (method.includes("Bank")) return "bg-blue-50 text-blue-600";
+            if (method.includes("Dana")) return "bg-sky-50 text-sky-600";
+            if (method.includes("OVO")) return "bg-purple-50 text-purple-600";
+            if (method.includes("GoPay")) return "bg-green-50 text-green-600";
+            return "bg-gray-50 text-gray-600";
+        }
+
+        function getMethodIcon(method) {
+            if (method.includes("Bank"))
+                return `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"/></svg>`;
+            return `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>`;
+        }
+
+        function getStatusBadge(status) {
+            if (status === "success")
+                return `<span class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg border border-emerald-100"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Berhasil</span>`;
+            if (status === "pending")
+                return `<span class="inline-flex items-center gap-1 text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-lg border border-amber-100"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>Proses</span>`;
+            return `<span class="inline-flex items-center gap-1 text-[10px] font-bold text-red-600 bg-red-50 px-2 py-1 rounded-lg border border-red-100">Gagal</span>`;
+        }
+
+        function updatePaginationInfo(start, end, total) {
+            const el = document.getElementById("history-info");
+            if (el)
+                el.innerText = `Menampilkan ${start}-${end} dari ${total} transaksi`;
+        }
+
+        function updatePaginationButtons() {
+            const prev = document.getElementById("btn-prev-page");
+            const next = document.getElementById("btn-next-page");
+
+            if (prev) prev.disabled = currentPage === 1;
+            if (next) next.disabled = currentPage === totalPages;
+        }
+
+        function bindHistoryEvents() {
+            const prev = document.getElementById("btn-prev-page");
+            const next = document.getElementById("btn-next-page");
+
+            if (prev)
+                prev.onclick = () => {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        renderHistory();
+                    }
+                };
+
+            if (next)
+                next.onclick = () => {
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        renderHistory();
+                    }
+                };
+        }
+
+        // --- 3. USER ACTIONS ---
+
+        function selectMethod(btn, name) {
+            document.querySelectorAll(".method-btn").forEach((b) => {
+                b.classList.remove(
+                    "border-[#0C1A18]",
+                    "ring-2",
+                    "ring-[#0C1A18]/5",
+                );
+                b.classList.add("border-gray-200");
+            });
+            btn.classList.remove("border-gray-200");
+            btn.classList.add("border-[#0C1A18]", "ring-2", "ring-[#0C1A18]/5");
+
+            currentMethod = name;
+            updateProviderOptions(name);
+        }
+
+        function setMaxBalance() {
+            const input = document.getElementById("withdraw-amount");
+            if (input) input.value = balance;
+        }
+
+        // Open Confirmation
+        function openConfirmation() {
+            const amountInput = document.getElementById("withdraw-amount");
+            const numberInput = document.getElementById("account-number");
+            const providerSelect = document.getElementById("account-provider");
+
+            const amount = amountInput ? amountInput.value : 0;
+            const number = numberInput ? numberInput.value : "";
+            const provider = providerSelect ? providerSelect.value : "";
+
+            if (!amount || amount < 50000) {
+                showToast("Minimal penarikan Rp 50.000", "error");
+                return;
+            }
+
+            // Populate Data
+            setText("conf-method", `${currentMethod} (${provider})`);
+            setText("conf-number", number || "-");
+            setText("conf-amount", formatRupiah(amount));
+
+            // Fee Logic
+            let fee = currentMethod === "Bank Transfer" ? 1500 : 0;
+
+            // Update Fee UI
+            const feeEl = document.getElementById("conf-fee");
+            if (feeEl) {
+                feeEl.innerText = fee === 0 ? "Gratis" : formatRupiah(fee);
+                feeEl.className =
+                    fee === 0
+                        ? "font-bold text-emerald-500"
+                        : "font-bold text-red-500";
+            }
+
+            // Total
+            const total = parseInt(amount) + fee;
+            setText("conf-total", formatRupiah(total));
+
+            // Show Modal
+            toggleModal("withdraw-confirmation-modal", true);
+        }
+
+        window.openHistoryModal = function () {
+            const modal = document.getElementById("withdraw-history-modal");
+            if (!modal) return;
+
+            if (modal.parentElement !== document.body) {
+                document.body.appendChild(modal);
+            }
+
+            modal.classList.remove("hidden");
+            renderHistory();
+            bindHistoryEvents();
+
+            setTimeout(() => {
+                const backdrop = document.getElementById("history-backdrop");
+                const panel = document.getElementById("history-panel");
+                if (backdrop)
+                    backdrop.classList.replace("opacity-0", "opacity-100");
+                if (panel) {
+                    panel.classList.replace("opacity-0", "opacity-100");
+                    panel.classList.replace("scale-95", "scale-100");
+                }
+            }, 10);
+        };
+
+        window.closeHistoryModal = function () {
+            const modal = document.getElementById("withdraw-history-modal");
+            const backdrop = document.getElementById("history-backdrop");
+            const panel = document.getElementById("history-panel");
+
+            if (backdrop)
+                backdrop.classList.replace("opacity-100", "opacity-0");
+            if (panel) {
+                panel.classList.replace("opacity-100", "opacity-0");
+                panel.classList.replace("scale-100", "scale-95");
+            }
+
+            setTimeout(() => {
+                if (modal) modal.classList.add("hidden");
+            }, 300);
+        };
+
+        // --- 4. HELPER FUNCTIONS ---
+
+        function setText(id, text) {
+            const el = document.getElementById(id);
+            if (el) el.innerText = text;
+        }
+
+        function formatRupiah(number) {
+            return "Rp " + new Intl.NumberFormat("id-ID").format(number);
+        }
+
+        function toggleModal(modalId, show) {
+            const modal = document.getElementById(modalId);
+            if (!modal) return;
+
+            if (show) {
+                modal.classList.remove("hidden");
+                // Small delay for transition
+                setTimeout(() => {
+                    const backdrop =
+                        modal.querySelector("div[id$='-backdrop']") ||
+                        modal.querySelector("#status-backdrop") ||
+                        modal.querySelector("#history-backdrop");
+                    const panel =
+                        modal.querySelector("div[id$='-panel']") ||
+                        modal.querySelector("#status-content") ||
+                        modal.querySelector("#history-panel");
+
+                    if (backdrop)
+                        backdrop.classList.replace("opacity-0", "opacity-100");
+                    if (panel) {
+                        panel.classList.replace("opacity-0", "opacity-100");
+                        if (panel.classList.contains("scale-95"))
+                            panel.classList.replace("scale-95", "scale-100");
+                        if (panel.classList.contains("scale-90"))
+                            panel.classList.replace("scale-90", "scale-100");
+                    }
+                }, 10);
+            } else {
+                const backdrop =
+                    modal.querySelector("div[id$='-backdrop']") ||
+                    modal.querySelector("#status-backdrop") ||
+                    modal.querySelector("#history-backdrop");
+                const panel =
+                    modal.querySelector("div[id$='-panel']") ||
+                    modal.querySelector("#status-content") ||
+                    modal.querySelector("#history-panel");
+
+                if (backdrop)
+                    backdrop.classList.replace("opacity-100", "opacity-0");
+                if (panel) {
+                    panel.classList.replace("opacity-100", "opacity-0");
+                    if (panel.classList.contains("scale-100"))
+                        panel.classList.replace("scale-100", "scale-95");
+                }
+
+                setTimeout(() => {
+                    modal.classList.add("hidden");
+                    if (modalId === "withdraw-status-modal") {
+                        document
+                            .querySelectorAll("#status-content > div")
+                            .forEach((el) => {
+                                el.classList.add("hidden");
+                                el.classList.remove("flex");
+                            });
+                    }
+                }, 300);
+            }
+        }
+
+        // --- 5. EVENT LISTENERS ---
+
+        const btnConfirm = document.getElementById("btn-confirm-withdraw");
+        if (btnConfirm) {
+            btnConfirm.onclick = () => {
+                toggleModal("withdraw-confirmation-modal", false);
+                toggleModal("withdraw-status-modal", true);
+
+                const loadingEl = document.getElementById("status-loading");
+                if (loadingEl) {
+                    loadingEl.classList.remove("hidden");
+                    loadingEl.classList.add("flex");
+                }
+
+                setTimeout(() => {
+                    if (loadingEl) {
+                        loadingEl.classList.remove("flex");
+                        loadingEl.classList.add("hidden");
+                    }
+                    const rand = Math.random();
+                    let resultId = "status-success";
+                    if (rand < 0.1) resultId = "status-maintenance";
+                    else if (rand < 0.2) resultId = "status-failed";
+
+                    const resultEl = document.getElementById(resultId);
+                    if (resultEl) {
+                        resultEl.classList.remove("hidden");
+                        resultEl.classList.add("flex");
+                    }
+                }, 2000);
+            };
+        }
+
+        const btnCancel = document.getElementById("btn-cancel-withdraw");
+        if (btnCancel) {
+            btnCancel.onclick = () => {
+                toggleModal("withdraw-confirmation-modal", false);
+            };
+        }
+
+        window.closeStatusModal = function () {
+            toggleModal("withdraw-status-modal", false);
+        };
+
+        // --- 6. INITIALIZATION ---
+
+        function initPage() {
+            moveModalsToBody();
+            updateProviderOptions(currentMethod);
+        }
+
+        // --- 7. TOAST NOTIFICATION ---
+        function showToast(message, type = "success") {
+            // Remove existing
+            const existing = document.getElementById("dynamic-toast");
+            if (existing) existing.remove();
+
+            // Create Element
+            const toast = document.createElement("div");
+            toast.id = "dynamic-toast";
+
+            const isError = type === "error";
+            const iconColor = isError ? "text-red-500" : "text-[#D4F24F]";
+            const bgColor = isError ? "bg-red-500/10" : "bg-[#D4F24F]/10";
+            const borderColor = isError
+                ? "border-red-500/50"
+                : "border-[#1F3D36]";
+            const title = isError ? "Gagal" : "Berhasil";
+            const iconPath = isError
+                ? "M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                : "M5 13l4 4L19 7";
+
+            // FORCE STYLE with inline style
+            toast.style.cssText =
+                "position: fixed; top: 24px; right: 24px; z-index: 2147483647 !important; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); transform: translateY(-150%); opacity: 0; pointer-events: none;";
+
+            // Mobile adjustment
+            if (window.innerWidth < 768) {
+                toast.style.left = "50%";
+                toast.style.right = "auto";
+                toast.style.transform = "translate(-50%, -150%)";
+            }
+
+            toast.innerHTML = `
+                <div class="bg-[#0C1A18] border ${borderColor} text-white px-5 py-4 rounded-xl shadow-2xl flex items-center gap-3 min-w-[300px] backdrop-blur-md">
+                    <div class="w-8 h-8 rounded-full ${bgColor} flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 ${iconColor}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${iconPath}"></path></svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm text-white">${title}</h4>
+                        <p class="text-[11px] text-gray-400 mt-0.5">${message}</p>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(toast);
+
+            // Animate In
+            setTimeout(() => {
+                toast.style.opacity = "1";
+                toast.style.pointerEvents = "auto";
+
+                if (window.innerWidth < 768) {
+                    toast.style.transform = "translate(-50%, 0)";
+                } else {
+                    toast.style.transform = "translateY(0)";
+                }
+            }, 50);
+
+            // Animate Out
+            setTimeout(() => {
+                toast.style.opacity = "0";
+                toast.style.pointerEvents = "none";
+                if (window.innerWidth < 768) {
+                    toast.style.transform = "translate(-50%, -150%)";
+                } else {
+                    toast.style.transform = "translateY(-150%)";
+                }
+
+                setTimeout(() => {
+                    if (toast && toast.parentElement) toast.remove();
+                }, 500);
+            }, 3000);
+        }
+
+        initPage();
+
+        document.addEventListener("astro:page-load", () => {
+            initPage();
+        });
+    </script>
+</DashboardLayout>

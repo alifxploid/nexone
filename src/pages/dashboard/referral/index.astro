@@ -1,0 +1,443 @@
+---
+import DashboardLayout from "../../../layouts/DashboardLayout.astro";
+
+// Mock Data
+const referralStats = {
+    totalInvited: 124,
+    totalCommission: 2500000,
+    referralCode: "NEXONE-JAMES88",
+    referralLink: "https://nexone.id/ref/NEXONE-JAMES88",
+};
+
+const referralHistory = Array.from({ length: 10 }).map((_, i) => ({
+    id: `REF-${8800 + i}`,
+    user: "User" + Math.floor(1000 + Math.random() * 9000),
+    plan: ["Starter", "Pro", "Enterprise"][Math.floor(Math.random() * 3)],
+    date: new Date(
+        Date.now() - Math.floor(Math.random() * 1000 * 60 * 60 * 24 * 30),
+    ).toLocaleDateString("id-ID", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+    }),
+    commission: (Math.floor(Math.random() * 5) + 1) * 25000,
+    status: ["active", "pending"][Math.floor(Math.random() * 2)],
+}));
+---
+
+<DashboardLayout title="Share & Earn">
+    <!-- Header -->
+    <div
+        class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4"
+    >
+        <div>
+            <h1 class="text-2xl font-bold text-white tracking-tight">
+                Share & Earn
+            </h1>
+            <p class="text-gray-400 text-sm mt-1">
+                Undang teman dan dapatkan komisi dari setiap transaksi mereka.
+            </p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10">
+        <!-- LEFT COLUMN: Stats & Tools -->
+        <div class="lg:col-span-7 space-y-6">
+            <!-- Stats Card (Gradient) -->
+            <div
+                class="bg-gradient-to-br from-[#0C1A18] to-[#142925] rounded-[2rem] p-8 border border-[#1F3D36] relative overflow-hidden shadow-2xl group"
+            >
+                <!-- Background Effects -->
+                <div
+                    class="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-emerald-500/20 transition-all duration-700"
+                >
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 w-32 h-32 bg-[#D4F24F]/5 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2"
+                >
+                </div>
+
+                <div class="relative z-10 grid grid-cols-2 gap-4 md:gap-8">
+                    <!-- Total Invited -->
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <div
+                                class="p-2 bg-white/5 rounded-xl border border-white/10"
+                            >
+                                <img
+                                    src="https://img.icons8.com/?size=100&id=qRw39Ga7doP7&format=png&color=000000"
+                                    class="w-6 h-6 object-contain invert opacity-80"
+                                    alt="Total Teman"
+                                />
+                            </div>
+                            <span
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider"
+                                >Total Teman</span
+                            >
+                        </div>
+                        <h2
+                            class="text-xl sm:text-2xl md:text-3xl font-black text-white whitespace-nowrap"
+                        >
+                            {referralStats.totalInvited}
+                            <span
+                                class="text-sm md:text-lg text-gray-600 font-bold"
+                                >User</span
+                            >
+                        </h2>
+                    </div>
+
+                    <!-- Total Commission -->
+                    <div>
+                        <div class="flex items-center gap-2 mb-2">
+                            <div
+                                class="p-2 bg-white/5 rounded-xl border border-white/10"
+                            >
+                                <img
+                                    src="https://img.icons8.com/?size=100&id=szMlAqDMvWaK&format=png&color=000000"
+                                    class="w-6 h-6 object-contain invert opacity-80"
+                                    alt="Total Komisi"
+                                />
+                            </div>
+                            <span
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider"
+                                >Total Komisi</span
+                            >
+                        </div>
+                        <h2
+                            class="text-xl sm:text-2xl md:text-3xl font-black text-white whitespace-nowrap"
+                        >
+                            Rp {
+                                new Intl.NumberFormat("id-ID").format(
+                                    referralStats.totalCommission,
+                                )
+                            }
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Share Tools -->
+            <div
+                class="bg-white rounded-[2rem] p-6 md:p-8 border border-gray-200 shadow-sm"
+            >
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-bold text-[#0C1A18]">
+                        Bagikan Link Referral
+                    </h3>
+                    <div
+                        class="px-3 py-1 bg-[#D4F24F]/20 text-[#0C1A18] text-xs font-bold rounded-lg border border-[#D4F24F]/50"
+                    >
+                        Komisi 5%
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Copy Link -->
+                    <div class="relative flex flex-col sm:flex-row gap-2">
+                        <div class="flex-1">
+                            <label
+                                class="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1 mb-1.5 block"
+                                >Link Referral Anda</label
+                            >
+                            <input
+                                type="text"
+                                readonly
+                                value={referralStats.referralLink}
+                                class="w-full bg-gray-50 text-gray-600 font-bold text-sm px-4 py-3 rounded-xl border border-gray-200 outline-none truncate"
+                            />
+                        </div>
+                        <div class="flex items-end">
+                            <button
+                                id="copy-btn"
+                                class="w-full sm:w-auto whitespace-nowrap px-6 py-3 bg-[#0C1A18] hover:bg-[#152A26] text-white font-bold text-xs rounded-xl transition-all active:scale-95 flex items-center justify-center gap-2"
+                            >
+                                <svg
+                                    class="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    ><path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
+                                    ></path></svg
+                                >
+                                Copy Asset
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Social Share -->
+                    <div>
+                        <label
+                            class="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1 mb-3 block"
+                            >Bagikan ke Social Media</label
+                        >
+                        <div class="flex gap-3">
+                            <a
+                                href="#"
+                                class="flex-1 flex items-center justify-center gap-2 py-3 bg-[#1877F2]/10 hover:bg-[#1877F2]/20 text-[#1877F2] rounded-xl font-bold text-sm transition-all border border-[#1877F2]/20"
+                            >
+                                <svg
+                                    class="w-5 h-5"
+                                    fill="currentColor"
+                                    viewBox="0 0 24 24"
+                                    ><path
+                                        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+                                    ></path></svg
+                                >
+                                Facebook
+                            </a>
+                            <a
+                                href="#"
+                                class="flex-1 flex items-center justify-center gap-2 py-3 bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#25D366] rounded-xl font-bold text-sm transition-all border border-[#25D366]/20"
+                            >
+                                <svg
+                                    class="w-5 h-5"
+                                    fill="currentColor"
+                                    viewBox="0 0 24 24"
+                                    ><path
+                                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.008-.57-.008-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+                                    ></path></svg
+                                >
+                                WhatsApp
+                            </a>
+                            <a
+                                href="#"
+                                class="flex-1 flex items-center justify-center gap-2 py-3 bg-[#0CA0E2]/10 hover:bg-[#0CA0E2]/20 text-[#0CA0E2] rounded-xl font-bold text-sm transition-all border border-[#0CA0E2]/20"
+                            >
+                                <svg
+                                    class="w-5 h-5"
+                                    fill="currentColor"
+                                    viewBox="0 0 24 24"
+                                    ><path
+                                        d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.638z"
+                                    ></path></svg
+                                >
+                                Telegram
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Info & History -->
+        <div class="lg:col-span-5 space-y-6">
+            <!-- How it works -->
+            <div class="bg-[#142925] rounded-2xl p-6 border border-[#1F3D36]">
+                <div class="flex items-start gap-4">
+                    <div class="p-2 bg-[#D4F24F]/10 rounded-lg text-[#D4F24F]">
+                        <svg
+                            class="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                            ></path></svg
+                        >
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-1">
+                            Cara Pendapatan
+                        </h4>
+                        <ul
+                            class="text-gray-400 text-xs space-y-3 list-decimal pl-4 leading-relaxed"
+                        >
+                            <li>
+                                Bagikan link referral ke teman atau social
+                                media.
+                            </li>
+                            <li>
+                                Tunggu teman Anda mendaftar dan melakukan
+                                deposit pertama.
+                            </li>
+                            <li>
+                                Dapatkan komisi <span
+                                    class="text-[#D4F24F] font-bold">5%</span
+                                > dari setiap transaksi yang mereka lakukan selamanya.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Referral History -->
+            <div>
+                <div class="flex items-center justify-between px-1 mb-4">
+                    <h3 class="text-white font-bold text-lg">
+                        Mendaftar Lewat Anda
+                    </h3>
+                </div>
+                <div class="space-y-3">
+                    {
+                        referralHistory.slice(0, 5).map((item) => (
+                            <div class="bg-white rounded-xl p-4 border border-gray-100 flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-[#0C1A18] font-bold text-sm">
+                                        {item.user.substring(0, 2)}
+                                    </div>
+                                    <div>
+                                        <h4 class="text-[#0C1A18] font-bold text-sm">
+                                            {item.user}
+                                        </h4>
+                                        <span class="text-[10px] px-1.5 py-0.5 rounded-md bg-[#0C1A18]/5 text-gray-500 font-bold border border-[#0C1A18]/10">
+                                            {item.plan} Plan
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-emerald-600 font-bold text-sm">
+                                        + Rp{" "}
+                                        {new Intl.NumberFormat("id-ID").format(
+                                            item.commission,
+                                        )}
+                                    </p>
+                                    <p class="text-[10px] text-gray-400">
+                                        {item.date}
+                                    </p>
+                                </div>
+                            </div>
+                        ))
+                    }
+                    <button
+                        class="w-full py-3 rounded-xl border border-[#1F3D36] text-gray-400 text-xs font-bold hover:bg-[#142925] hover:text-white transition-all"
+                    >
+                        Muat Lebih Banyak
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script is:inline>
+        // Use immediate execution function to avoid scope pollution but expose necessary parts
+        (function () {
+            // Function to handle copy logic
+            async function handleCopy() {
+                const input = document.querySelector("input[readonly]");
+                if (input) {
+                    try {
+                        input.select();
+                        input.setSelectionRange(0, 99999); // For mobile devices
+
+                        let success = false;
+                        if (
+                            navigator.clipboard &&
+                            navigator.clipboard.writeText
+                        ) {
+                            try {
+                                await navigator.clipboard.writeText(
+                                    input.value,
+                                );
+                                success = true;
+                            } catch (err) {
+                                console.log(
+                                    "Clipboard API failed, fallback to execCommand",
+                                );
+                            }
+                        }
+
+                        if (!success) {
+                            document.execCommand("copy");
+                        }
+
+                        showToast();
+                    } catch (err) {
+                        console.error("Copy failed completely", err);
+                        alert("Link berhasil disalin"); // Fallback
+                    }
+                }
+            }
+
+            // Function to show toast
+            function showToast() {
+                // Remove existing
+                const existing = document.getElementById("dynamic-toast");
+                if (existing) existing.remove();
+
+                // Create Element
+                const toast = document.createElement("div");
+                toast.id = "dynamic-toast";
+
+                // FORCE STYLE with inline style to override everything
+                toast.style.cssText =
+                    "position: fixed; top: 24px; right: 24px; z-index: 2147483647 !important; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); transform: translateY(-150%); opacity: 0; pointer-events: none;";
+
+                // Mobile adjustment via JS
+                if (window.innerWidth < 768) {
+                    toast.style.left = "50%";
+                    toast.style.right = "auto";
+                    toast.style.transform = "translate(-50%, -150%)"; // Start position
+                }
+
+                toast.innerHTML = `
+                    <div class="bg-[#0C1A18] border border-[#1F3D36] text-white px-5 py-4 rounded-xl shadow-2xl flex items-center gap-3 min-w-[300px] backdrop-blur-md">
+                        <div class="w-8 h-8 rounded-full bg-[#D4F24F]/10 flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5 text-[#D4F24F]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm text-white">Berhasil Disalin!</h4>
+                            <p class="text-[11px] text-gray-400 mt-0.5">Link referral siap dibagikan.</p>
+                        </div>
+                    </div>
+                `;
+
+                document.body.appendChild(toast);
+
+                // Animate In safely
+                setTimeout(() => {
+                    toast.style.opacity = "1";
+                    toast.style.pointerEvents = "auto";
+
+                    if (window.innerWidth < 768) {
+                        toast.style.transform = "translate(-50%, 0)";
+                    } else {
+                        toast.style.transform = "translateY(0)";
+                    }
+                }, 50);
+
+                // Animate Out
+                setTimeout(() => {
+                    toast.style.opacity = "0";
+                    toast.style.pointerEvents = "none";
+                    if (window.innerWidth < 768) {
+                        toast.style.transform = "translate(-50%, -150%)";
+                    } else {
+                        toast.style.transform = "translateY(-150%)";
+                    }
+
+                    setTimeout(() => {
+                        if (toast && toast.parentElement) toast.remove();
+                    }, 500);
+                }, 3000);
+            }
+
+            // Bind Event Listeners on load and page transitions
+            function init() {
+                const btn = document.getElementById("copy-btn");
+                if (btn) {
+                    // Remove old listener to avoid duplicates if re-running
+                    const newBtn = btn.cloneNode(true);
+                    btn.parentNode.replaceChild(newBtn, btn);
+
+                    newBtn.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        handleCopy();
+                    });
+                }
+            }
+
+            // Run on initial load
+            init();
+
+            // Run on view transitions
+            document.addEventListener("astro:page-load", init);
+        })();
+    </script>
+</DashboardLayout>

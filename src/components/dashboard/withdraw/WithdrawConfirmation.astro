@@ -1,0 +1,105 @@
+---
+
+---
+
+<!-- Invoice / Confirmation Modal -->
+<div id="withdraw-confirmation-modal" class="fixed inset-0 z-[9999] hidden">
+    <!-- Backdrop -->
+    <div
+        class="absolute inset-0 bg-[#0C1A18]/80 backdrop-blur-sm transition-opacity opacity-0"
+        id="confirmation-backdrop"
+    >
+    </div>
+
+    <!-- Modal Content -->
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+        <div
+            class="bg-white rounded-[2rem] w-full max-w-md p-6 shadow-2xl transform scale-95 opacity-0 transition-all duration-300"
+            id="confirmation-panel"
+        >
+            <!-- Header -->
+            <div class="text-center mb-6">
+                <div
+                    class="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-4 text-emerald-500"
+                >
+                    <svg
+                        class="w-8 h-8"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        ></path></svg
+                    >
+                </div>
+                <h3 class="text-xl font-bold text-[#0C1A18]">
+                    Konfirmasi Penarikan
+                </h3>
+                <p class="text-sm text-gray-500 mt-1">
+                    Pastikan data berikut sudah benar
+                </p>
+            </div>
+
+            <!-- Details -->
+            <div
+                class="bg-gray-50 rounded-2xl p-5 space-y-4 mb-6 border border-gray-100"
+            >
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-gray-500 font-bold">Metode</span>
+                    <span class="font-bold text-[#0C1A18]" id="conf-method"
+                        >Bank BCA</span
+                    >
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-gray-500 font-bold">No. Rekening</span>
+                    <span class="font-bold text-[#0C1A18]" id="conf-number"
+                        >1234567890</span
+                    >
+                </div>
+                <div class="border-t border-gray-200 my-2"></div>
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-gray-500 font-bold">Nominal</span>
+                    <span class="font-bold text-[#0C1A18]" id="conf-amount"
+                        >Rp 0</span
+                    >
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-gray-500 font-bold">Biaya Admin</span>
+                    <span class="font-bold text-red-500" id="conf-fee"
+                        >Rp 1.500</span
+                    >
+                </div>
+                <div class="border-top border-dashed border-gray-200 pt-2 mt-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-900 font-bold"
+                            >Total Pengurangan</span
+                        >
+                        <span
+                            class="text-lg font-black text-[#0C1A18]"
+                            id="conf-total">Rp 0</span
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="grid grid-cols-2 gap-3">
+                <button
+                    id="btn-cancel-withdraw"
+                    class="py-3 rounded-xl font-bold text-gray-500 hover:bg-gray-100 transition-colors"
+                >
+                    Batal
+                </button>
+                <button
+                    id="btn-confirm-withdraw"
+                    class="py-3 rounded-xl font-bold text-[#0C1A18] bg-[#D4F24F] hover:bg-[#c2e040] shadow-lg shadow-[#D4F24F]/20 transition-all transform active:scale-95"
+                >
+                    Konfirmasi
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

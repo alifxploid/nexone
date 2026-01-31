@@ -43,6 +43,12 @@ const menuItems = [
         active: currentPath.startsWith("/dashboard/withdraw"),
     },
     {
+        name: "Share & Earn",
+        icon: "share-earn",
+        href: "/dashboard/referral",
+        active: currentPath.startsWith("/dashboard/referral"),
+    },
+    {
         name: "Tiket Bantuan",
         icon: "help-circle",
         href: "/dashboard/ticket",
@@ -58,17 +64,12 @@ const menuItems = [
     <!-- Logo Area -->
     <div class="px-6 py-6 border-b border-[#1F3D36] flex items-center gap-3">
         <a href="/" class="flex items-center gap-3 group">
-            <div class="relative">
-                <div
-                    class="absolute -inset-2 bg-gradient-to-r from-[#D4F24F] to-[#20B2AA] rounded-full blur-lg opacity-20 group-hover:opacity-40 transition-opacity"
-                >
-                </div>
-                <h1
-                    class="text-2xl font-bold text-white relative tracking-tight"
-                >
-                    NexOne
-                </h1>
+            <div
+                class="w-10 h-10 bg-[#142925] rounded-xl flex items-center justify-center text-[#D4F24F] font-bold text-xl group-hover:scale-110 transition-transform shadow-lg shadow-[#D4F24F]/5 border border-[#1F3D36]"
+            >
+                N
             </div>
+            <h1 class="text-2xl font-bold text-white tracking-tight">NexOne</h1>
         </a>
     </div>
 
@@ -92,25 +93,88 @@ const menuItems = [
             menuItems.map((item) =>
                 item.submenu ? (
                     <div class="mb-1">
-                        <button class="w-full flex items-center justify-between gap-3 px-4 py-3.5 rounded-xl text-[15px] font-bold text-gray-400 hover:text-white hover:bg-[#142925] transition-all duration-200 group submenu-toggle">
+                        <button
+                            class:list={[
+                                "w-full flex items-center justify-between gap-3 px-4 py-3.5 rounded-xl text-[15px] font-bold transition-all duration-200 group submenu-toggle",
+                                item.active
+                                    ? "bg-[#D4F24F] text-[#0F1F1C] shadow-[0_4px_12px_-4px_rgba(212,242,79,0.3)]"
+                                    : "text-gray-400 hover:text-white hover:bg-[#142925]",
+                            ]}
+                        >
                             <div class="flex items-center gap-3">
-                                <svg
-                                    class="w-5 h-5"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                                {item.icon === "plus-circle" && (
+                                    <img
+                                        src="https://img.icons8.com/?size=100&id=7Mc0qnzxDnRO&format=png&color=000000"
+                                        class:list={[
+                                            "w-5 h-5 transition-all duration-200",
+                                            item.active
+                                                ? ""
+                                                : "invert opacity-60 group-hover:opacity-100",
+                                        ]}
+                                        alt="Pulsa"
                                     />
-                                </svg>
+                                )}
+                                {item.icon === "wallet" && (
+                                    <img
+                                        src="https://img.icons8.com/?size=100&id=NP5g4BeVSfb3&format=png&color=000000"
+                                        class:list={[
+                                            "w-5 h-5 transition-all duration-200",
+                                            item.active
+                                                ? ""
+                                                : "invert opacity-60 group-hover:opacity-100",
+                                        ]}
+                                        alt="Deposit"
+                                    />
+                                )}
+                                {item.icon === "list" && (
+                                    <img
+                                        src="https://img.icons8.com/?size=100&id=TW81vSHbKLzb&format=png&color=000000"
+                                        class:list={[
+                                            "w-5 h-5 transition-all duration-200",
+                                            item.active
+                                                ? ""
+                                                : "invert opacity-60 group-hover:opacity-100",
+                                        ]}
+                                        alt="Earnings"
+                                    />
+                                )}
+                                {item.icon === "share-earn" && (
+                                    <img
+                                        src="https://img.icons8.com/?size=100&id=Tf7LXmfOzfk5&format=png&color=000000"
+                                        class:list={[
+                                            "w-5 h-5 transition-all duration-200",
+                                            item.active
+                                                ? ""
+                                                : "invert opacity-60 group-hover:opacity-100",
+                                        ]}
+                                        alt="Share & Earn"
+                                    />
+                                )}
+                                {item.icon !== "plus-circle" &&
+                                    item.icon !== "wallet" &&
+                                    item.icon !== "list" &&
+                                    item.icon !== "share-earn" && (
+                                        <svg
+                                            class="w-5 h-5"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                                            />
+                                        </svg>
+                                    )}
                                 {item.name}
                             </div>
                             <svg
-                                class="w-4 h-4 transition-transform duration-200 chevron"
+                                class:list={[
+                                    "w-4 h-4 transition-transform duration-200 chevron",
+                                    item.active ? "rotate-180" : "",
+                                ]}
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -133,6 +197,7 @@ const menuItems = [
                                 const isSubActive =
                                     currentPath === sub.href ||
                                     (sub.href !== "/dashboard/ppob" &&
+                                        sub.href !== "/dashboard/deposit" &&
                                         currentPath.startsWith(sub.href));
                                 return (
                                     <a
@@ -228,20 +293,29 @@ const menuItems = [
                                 />
                             </svg>
                         )}
+                        {item.icon === "share-earn" && (
+                            <img
+                                src="https://img.icons8.com/?size=100&id=Tf7LXmfOzfk5&format=png&color=000000"
+                                class:list={[
+                                    "w-5 h-5 transition-all duration-200",
+                                    item.active
+                                        ? ""
+                                        : "invert opacity-60 group-hover:opacity-100",
+                                ]}
+                                alt="Share & Earn"
+                            />
+                        )}
                         {item.icon === "help-circle" && (
-                            <svg
-                                class="w-5 h-5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-4.418-1.79-8-4"
-                                />
-                            </svg>
+                            <img
+                                src="https://img.icons8.com/?size=100&id=CtviHbVsMacY&format=png&color=000000"
+                                class:list={[
+                                    "w-5 h-5 transition-all duration-200",
+                                    item.active
+                                        ? ""
+                                        : "invert opacity-60 group-hover:opacity-100",
+                                ]}
+                                alt="Tiket Bantuan"
+                            />
                         )}
                         {item.name}
                     </a>
@@ -280,14 +354,49 @@ const menuItems = [
                 }
             });
         });
+        // Sidebar Profile Toggle Logic
+        function initSidebarProfile() {
+            const btn = document.getElementById("sidebar-profile-btn");
+            const menu = document.getElementById("sidebar-profile-menu");
+            const chevron = document.getElementById("sidebar-profile-chevron");
+
+            if (btn && menu && chevron) {
+                btn.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    menu.classList.toggle("opacity-0");
+                    menu.classList.toggle("scale-95");
+                    menu.classList.toggle("pointer-events-none");
+                    chevron.classList.toggle("rotate-180");
+                });
+
+                document.addEventListener("click", (e) => {
+                    if (
+                        !menu.contains(e.target as Node) &&
+                        !btn.contains(e.target as Node)
+                    ) {
+                        menu.classList.add("opacity-0");
+                        menu.classList.add("scale-95");
+                        menu.classList.add("pointer-events-none");
+                        chevron.classList.remove("rotate-180");
+                    }
+                });
+            }
+        }
+
+        initSidebarProfile();
+        document.addEventListener("astro:page-load", initSidebarProfile);
     </script>
 
     <!-- User Profile at Bottom -->
-    <div class="p-4 m-4 border-t border-[#1F3D36]">
-        <div
-            class="flex items-center gap-3 cursor-pointer hover:bg-[#142925] p-2 rounded-xl transition-colors group"
+    <div
+        class="p-4 m-4 border-t border-[#1F3D36] relative"
+        id="sidebar-profile-container"
+    >
+        <button
+            id="sidebar-profile-btn"
+            class="w-full flex items-center gap-3 cursor-pointer hover:bg-[#142925] p-2 rounded-xl transition-colors group text-left"
         >
-            <div class="relative w-10 h-10">
+            <div class="relative w-10 h-10 flex-shrink-0">
                 <div
                     class="w-10 h-10 rounded-full bg-[#142925] flex items-center justify-center overflow-hidden border border-[#1F3D36]"
                 >
@@ -315,7 +424,8 @@ const menuItems = [
                 </p>
             </div>
             <svg
-                class="w-4 h-4 text-gray-500"
+                class="w-4 h-4 text-gray-500 transition-transform duration-200"
+                id="sidebar-profile-chevron"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -325,6 +435,91 @@ const menuItems = [
                     stroke-width="2"
                     d="M19 9l-7 7-7-7"></path></svg
             >
+        </button>
+
+        <!-- Sidebar Profile Popover -->
+        <div
+            id="sidebar-profile-menu"
+            class="absolute bottom-full left-0 mb-2 w-full bg-[#0C1A18] border border-[#1F3D36] rounded-xl shadow-2xl transform opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-bottom z-50 p-2 space-y-1"
+        >
+            <a
+                href="/dashboard/profile"
+                class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-[#142925] transition-colors"
+            >
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    ><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    ></path></svg
+                >
+                Profile Saya
+            </a>
+            <a
+                href="/dashboard/settings"
+                class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-[#142925] transition-colors"
+            >
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    ><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                    ></path><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg
+                >
+                Settings
+            </a>
+            <a
+                href="/help"
+                class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-[#142925] transition-colors"
+            >
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    ><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"
+                    ></path></svg
+                >
+                Bantuan
+            </a>
+
+            <div class="h-px bg-[#1F3D36] my-1"></div>
+
+            <button
+                class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-bold text-red-500 hover:bg-red-500/10 transition-colors"
+            >
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    ><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                    ></path></svg
+                >
+                Keluar
+            </button>
         </div>
     </div>
 </aside>

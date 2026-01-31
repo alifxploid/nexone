@@ -1,0 +1,514 @@
+---
+import DashboardLayout from "../../../layouts/DashboardLayout.astro";
+import DepositStatus from "../../../components/dashboard/deposit/DepositStatus.astro";
+
+// Mock Data
+const currentBalance = 2500000;
+
+const paymentMethods = [
+    { name: "QRIS", icon: "qr-code", fee: "0.7%" },
+    { name: "Virtual Account", icon: "building-library", fee: "Rp 2.500" },
+    { name: "E-Wallet", icon: "wallet", fee: "1.5%" },
+];
+---
+
+<DashboardLayout title="Deposit Saldo">
+    <!-- Header -->
+    <div
+        class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4"
+    >
+        <div>
+            <h1 class="text-2xl font-bold text-white tracking-tight">
+                Deposit Saldo
+            </h1>
+            <p class="text-gray-400 text-sm mt-1">
+                Isi saldo akun Anda untuk memulai transaksi.
+            </p>
+        </div>
+    </div>
+
+    <!-- MAIN GRID -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10">
+        <!-- LEFT COLUMN (Form) - lg:col-span-7 -->
+        <div class="lg:col-span-7 space-y-6">
+            <!-- Balance Card -->
+            <div
+                class="bg-gradient-to-br from-[#0C1A18] to-[#142925] rounded-[2rem] p-8 border border-[#1F3D36] relative overflow-hidden shadow-2xl group"
+            >
+                <div
+                    class="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-emerald-500/20 transition-all duration-700"
+                >
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 w-32 h-32 bg-[#D4F24F]/5 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2"
+                >
+                </div>
+
+                <div
+                    class="relative z-10 flex flex-col h-full justify-between gap-8"
+                >
+                    <div class="flex justify-between items-start">
+                        <div
+                            class="p-3 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-sm"
+                        >
+                            <svg
+                                class="w-8 h-8 text-[#D4F24F]"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                ><path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                ></path></svg
+                            >
+                        </div>
+                        <span
+                            class="px-3 py-1 bg-emerald-500/20 text-emerald-400 text-[10px] font-bold rounded-full border border-emerald-500/20"
+                            >Target Saldo</span
+                        >
+                    </div>
+
+                    <div>
+                        <p class="text-gray-400 font-medium text-sm mb-1">
+                            Saldo Saat Ini
+                        </p>
+                        <h2
+                            class="text-4xl md:text-5xl font-black text-white tracking-tight"
+                        >
+                            Rp 2.500<span class="text-gray-600">.000</span>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deposit Form Card -->
+            <div
+                class="bg-white rounded-[2rem] p-6 md:p-8 border border-gray-200 shadow-sm"
+            >
+                <h3 class="text-lg font-bold text-[#0C1A18] mb-6">
+                    Metode Pembayaran
+                </h3>
+
+                <!-- Method Selection -->
+                <div class="grid grid-cols-2 gap-3 mb-6">
+                    {
+                        paymentMethods.map((m) => (
+                            <button
+                                type="button"
+                                class="method-btn relative group p-4 rounded-2xl border border-gray-200 hover:border-[#0C1A18] hover:bg-gray-50 transition-all text-left focus:border-[#D4F24F] focus:ring-2 focus:ring-[#D4F24F]/20"
+                                onclick={`selectMethod(this, '${m.name}')`}
+                            >
+                                <div class="mb-3 text-gray-400 group-hover:text-[#0C1A18] transition-colors method-icon flex justify-between items-start">
+                                    {m.icon === "qr-code" && (
+                                        <svg
+                                            class="w-6 h-6"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"
+                                            />
+                                        </svg>
+                                    )}
+                                    {m.icon === "building-library" && (
+                                        <svg
+                                            class="w-6 h-6"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"
+                                            />
+                                        </svg>
+                                    )}
+                                    {m.icon === "wallet" && (
+                                        <svg
+                                            class="w-6 h-6"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                                            />
+                                        </svg>
+                                    )}
+                                    <div class="w-5 h-5 rounded-full bg-[#0C1A18] text-white flex items-center justify-center opacity-0 scale-50 transition-all check-icon">
+                                        <svg
+                                            class="w-3 h-3"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="3"
+                                                d="M5 13l4 4L19 7"
+                                            />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <p class="font-bold text-sm text-[#0C1A18]">
+                                    {m.name}
+                                </p>
+                                <p class="text-[10px] text-gray-500 font-medium">
+                                    Fee: {m.fee}
+                                </p>
+                            </button>
+                        ))
+                    }
+                </div>
+
+                <form class="space-y-5" onsubmit="return false;">
+                    <!-- Amount Input -->
+                    <div class="space-y-1.5">
+                        <label
+                            class="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1"
+                            >Nominal Deposit</label
+                        >
+                        <div class="relative">
+                            <span
+                                class="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 font-bold pointer-events-none text-xl"
+                                >Rp</span
+                            >
+                            <input
+                                type="number"
+                                id="deposit-amount"
+                                class="w-full bg-gray-50 text-[#0C1A18] font-black text-2xl pl-14 pr-6 py-4 rounded-xl border border-gray-200 focus:border-[#0C1A18] focus:bg-white transition-all outline-none placeholder:text-gray-200"
+                                placeholder="0"
+                            />
+                        </div>
+                        <div class="flex gap-2 justify-end">
+                            <span class="text-[10px] text-gray-400 font-bold"
+                                >Min: Rp 10.000</span
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="pt-4 border-t border-gray-100 mt-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <span class="text-sm font-bold text-gray-500"
+                                >Total Pembayaran</span
+                            >
+                            <h3
+                                class="text-2xl font-black text-[#0C1A18]"
+                                id="total-payment"
+                            >
+                                Rp 0
+                            </h3>
+                        </div>
+                        <button
+                            type="button"
+                            onclick="processDeposit()"
+                            class="w-full py-4 bg-[#0C1A18] hover:bg-[#152A26] text-white font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-base transform active:scale-[0.98]"
+                        >
+                            <svg
+                                class="w-5 h-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                ><path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"
+                                ></path></svg
+                            >
+                            Bayar Sekarang
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN (Empty / Info Only) - lg:col-span-5 -->
+        <div class="lg:col-span-5 space-y-6">
+            <!-- Info Box -->
+            <div class="bg-[#142925] rounded-2xl p-6 border border-[#1F3D36]">
+                <div class="flex items-start gap-4">
+                    <div class="p-2 bg-[#D4F24F]/10 rounded-lg text-[#D4F24F]">
+                        <svg
+                            class="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                            ></path></svg
+                        >
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-1">
+                            Layanan Otomatis 24/7
+                        </h4>
+                        <ul
+                            class="text-gray-400 text-xs space-y-2 list-disc pl-4 leading-relaxed"
+                        >
+                            <li>
+                                Deposit diproses secara otomatis oleh sistem.
+                            </li>
+                            <li>Minimal deposit Rp 10.000.</li>
+                            <li>Simpan bukti transfer jika diperlukan.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <DepositStatus />
+
+    <script is:inline>
+        let currentAmount = 0;
+        let selectedMethod = "";
+        const currentBalance = 2500000;
+
+        // --- CORE FUNCTIONS ---
+
+        function moveModalsToBody() {
+            const ids = ["deposit-status-modal"];
+            ids.forEach((id) => {
+                const el = document.getElementById(id);
+                if (el && el.parentElement !== document.body) {
+                    document.body.appendChild(el);
+                }
+            });
+        }
+
+        const amountInput = document.getElementById("deposit-amount");
+        if (amountInput) {
+            amountInput.addEventListener("input", (e) => {
+                currentAmount = parseInt(e.target.value) || 0;
+                updateUI();
+            });
+        }
+
+        function updateUI() {
+            // Update Total
+            const totalEl = document.getElementById("total-payment");
+            if (totalEl)
+                totalEl.innerText =
+                    "Rp " +
+                    new Intl.NumberFormat("id-ID").format(currentAmount);
+
+            // Update Estimated Balance
+            const estEl = document.getElementById("estimated-balance");
+            if (estEl) {
+                const total = currentBalance + currentAmount;
+                const formatted = new Intl.NumberFormat("id-ID").format(total);
+                estEl.innerText = "Rp " + formatted;
+            }
+        }
+
+        function selectMethod(btn, name) {
+            document.querySelectorAll(".method-btn").forEach((b) => {
+                b.classList.remove(
+                    "border-[#0C1A18]",
+                    "ring-2",
+                    "ring-[#0C1A18]/5",
+                );
+                b.classList.add("border-gray-200");
+                const check = b.querySelector(".check-icon");
+                if (check) {
+                    check.classList.remove("opacity-100", "scale-100");
+                    check.classList.add("opacity-0", "scale-50");
+                }
+            });
+
+            btn.classList.remove("border-gray-200");
+            btn.classList.add("border-[#0C1A18]", "ring-2", "ring-[#0C1A18]/5");
+            const check = btn.querySelector(".check-icon");
+            if (check) {
+                check.classList.remove("opacity-0", "scale-50");
+                check.classList.add("opacity-100", "scale-100");
+            }
+
+            selectedMethod = name;
+        }
+
+        function processDeposit() {
+            if (currentAmount < 10000) {
+                showToast("Minimal deposit Rp 10.000", "error");
+                return;
+            }
+            if (!selectedMethod) {
+                showToast("Silakan pilih metode pembayaran", "error");
+                return;
+            }
+
+            toggleModal("deposit-status-modal", true);
+            const loading = document.getElementById("status-loading");
+            if (loading) {
+                loading.classList.remove("hidden");
+                loading.classList.add("flex");
+            }
+
+            ["status-success", "status-pending", "status-failed"].forEach(
+                (id) => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.classList.add("hidden");
+                        el.classList.remove("flex");
+                    }
+                },
+            );
+
+            setTimeout(() => {
+                if (loading) {
+                    loading.classList.remove("flex");
+                    loading.classList.add("hidden");
+                }
+                const resId = "status-pending"; // Default pending
+                const resEl = document.getElementById(resId);
+                if (resEl) {
+                    resEl.classList.remove("hidden");
+                    resEl.classList.add("flex");
+                }
+            }, 2000);
+        }
+
+        // --- HISTORY MODAL LOGIC (reused) ---
+        function toggleModal(modalId, show) {
+            const modal = document.getElementById(modalId);
+            if (!modal) return;
+
+            if (show) {
+                modal.classList.remove("hidden");
+                setTimeout(() => {
+                    const backdrop = modal.querySelector(
+                        "div[id$='-backdrop']",
+                    );
+                    const panel =
+                        modal.querySelector("div[id$='-panel']") ||
+                        modal.querySelector("#status-content");
+                    if (backdrop)
+                        backdrop.classList.replace("opacity-0", "opacity-100");
+                    if (panel) {
+                        panel.classList.replace("opacity-0", "opacity-100");
+                        if (panel.classList.contains("scale-95"))
+                            panel.classList.replace("scale-95", "scale-100");
+                        if (panel.classList.contains("scale-90"))
+                            panel.classList.replace("scale-90", "scale-100");
+                    }
+                }, 10);
+            } else {
+                const backdrop = modal.querySelector("div[id$='-backdrop']");
+                const panel =
+                    modal.querySelector("div[id$='-panel']") ||
+                    modal.querySelector("#status-content");
+                if (backdrop)
+                    backdrop.classList.replace("opacity-100", "opacity-0");
+                if (panel) {
+                    panel.classList.replace("opacity-100", "opacity-0");
+                    if (panel.classList.contains("scale-100"))
+                        panel.classList.replace("scale-100", "scale-95");
+                }
+                setTimeout(() => {
+                    modal.classList.add("hidden");
+                }, 300);
+            }
+        }
+
+        window.closeStatusModal = function () {
+            toggleModal("deposit-status-modal", false);
+        };
+
+        // --- TOAST NOTIFICATION ---
+        function showToast(message, type = "success") {
+            // Remove existing
+            const existing = document.getElementById("dynamic-toast");
+            if (existing) existing.remove();
+
+            // Create Element
+            const toast = document.createElement("div");
+            toast.id = "dynamic-toast";
+
+            const isError = type === "error";
+            const iconColor = isError ? "text-red-500" : "text-[#D4F24F]";
+            const bgColor = isError ? "bg-red-500/10" : "bg-[#D4F24F]/10";
+            const borderColor = isError
+                ? "border-red-500/50"
+                : "border-[#1F3D36]";
+            const title = isError ? "Gagal" : "Berhasil";
+            const iconPath = isError
+                ? "M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                : "M5 13l4 4L19 7";
+
+            // FORCE STYLE with inline style
+            toast.style.cssText =
+                "position: fixed; top: 24px; right: 24px; z-index: 2147483647 !important; transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); transform: translateY(-150%); opacity: 0; pointer-events: none;";
+
+            // Mobile adjustment
+            if (window.innerWidth < 768) {
+                toast.style.left = "50%";
+                toast.style.right = "auto";
+                toast.style.transform = "translate(-50%, -150%)";
+            }
+
+            toast.innerHTML = `
+                <div class="bg-[#0C1A18] border ${borderColor} text-white px-5 py-4 rounded-xl shadow-2xl flex items-center gap-3 min-w-[300px] backdrop-blur-md">
+                    <div class="w-8 h-8 rounded-full ${bgColor} flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 ${iconColor}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${iconPath}"></path></svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm text-white">${title}</h4>
+                        <p class="text-[11px] text-gray-400 mt-0.5">${message}</p>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(toast);
+
+            // Animate In
+            setTimeout(() => {
+                toast.style.opacity = "1";
+                toast.style.pointerEvents = "auto";
+
+                if (window.innerWidth < 768) {
+                    toast.style.transform = "translate(-50%, 0)";
+                } else {
+                    toast.style.transform = "translateY(0)";
+                }
+            }, 50);
+
+            // Animate Out
+            setTimeout(() => {
+                toast.style.opacity = "0";
+                toast.style.pointerEvents = "none";
+                if (window.innerWidth < 768) {
+                    toast.style.transform = "translate(-50%, -150%)";
+                } else {
+                    toast.style.transform = "translateY(-150%)";
+                }
+
+                setTimeout(() => {
+                    if (toast && toast.parentElement) toast.remove();
+                }, 500);
+            }, 3000);
+        }
+
+        document.addEventListener("astro:page-load", () => {
+            moveModalsToBody();
+        });
+        moveModalsToBody();
+    </script>
+</DashboardLayout>

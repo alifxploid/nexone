@@ -1,0 +1,157 @@
+---
+interface Props {
+    id?: string;
+}
+
+const { id = "deposit-history-modal" } = Astro.props;
+---
+
+<div
+    id={id}
+    class="fixed inset-0 z-[10001] hidden"
+    aria-labelledby="modal-title"
+    role="dialog"
+    aria-modal="true"
+>
+    <!-- Backdrop -->
+    <div
+        id="history-backdrop"
+        class="absolute inset-0 bg-black/60 backdrop-blur-md transition-opacity duration-300 opacity-0"
+        onclick="closeHistoryModal()"
+    >
+    </div>
+
+    <!-- Modal Panel -->
+    <div
+        class="absolute inset-0 flex items-center justify-center p-4 sm:p-6 pointer-events-none"
+    >
+        <div
+            id="history-panel"
+            class="w-full max-w-2xl bg-white rounded-[2rem] shadow-2xl transform scale-95 opacity-0 transition-all duration-300 pointer-events-auto flex flex-col max-h-[85vh] overflow-hidden border border-gray-100"
+        >
+            <!-- Header -->
+            <div
+                class="p-6 md:p-8 border-b border-gray-100 flex justify-between items-center bg-white/50 backdrop-blur-xl z-10 sticky top-0"
+            >
+                <div>
+                    <h3
+                        class="text-2xl font-black text-[#0C1A18] tracking-tight"
+                    >
+                        Riwayat Deposit
+                    </h3>
+                    <p class="text-gray-400 text-sm font-medium mt-1">
+                        Semua aktivitas deposit saldo Anda
+                    </p>
+                </div>
+                <button
+                    onclick="closeHistoryModal()"
+                    class="p-2 rounded-xl bg-gray-50 text-gray-400 hover:bg-gray-100 hover:text-[#0C1A18] transition-all transform hover:rotate-90 active:scale-95"
+                >
+                    <svg
+                        class="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12"></path></svg
+                    >
+                </button>
+            </div>
+
+            <!-- Content Area (Scrollable) -->
+            <div
+                class="overflow-y-auto flex-1 p-6 md:p-8 bg-[#FAFAFA]"
+                id="history-container"
+            >
+                <!-- List will be injected here via JS -->
+                <div id="history-list" class="space-y-3">
+                    <!-- Skeleton / Initial Loading -->
+                    <div class="animate-pulse space-y-3">
+                        {
+                            [1, 2, 3, 4, 5].map(() => (
+                                <div class="bg-white p-5 rounded-2xl border border-gray-100 h-24" />
+                            ))
+                        }
+                    </div>
+                </div>
+
+                <!-- Empty State (Hidden by default) -->
+                <div
+                    id="history-empty"
+                    class="hidden flex-col items-center justify-center py-12 text-center"
+                >
+                    <div
+                        class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4 text-gray-300"
+                    >
+                        <svg
+                            class="w-10 h-10"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg
+                        >
+                    </div>
+                    <h4 class="text-gray-900 font-bold text-lg">
+                        Belum ada deposit
+                    </h4>
+                    <p class="text-gray-400 text-sm">
+                        Anda belum melakukan pengisian saldo.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Footer / Pagination -->
+            <div
+                class="p-6 border-t border-gray-100 bg-white z-10 sticky bottom-0 flex justify-between items-center"
+            >
+                <span class="text-xs font-bold text-gray-400" id="history-info">
+                    Showing 1-5 of 0
+                </span>
+                <div class="flex gap-2">
+                    <button
+                        id="btn-prev-page"
+                        disabled
+                        class="px-4 py-2.5 rounded-xl border border-gray-200 text-gray-500 font-bold text-xs hover:bg-gray-50 hover:border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-2"
+                    >
+                        <svg
+                            class="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 19l-7-7 7-7"></path></svg
+                        >
+                        Prev
+                    </button>
+                    <button
+                        id="btn-next-page"
+                        class="px-4 py-2.5 rounded-xl bg-[#0C1A18] text-white font-bold text-xs hover:bg-[#152A26] shadow-lg shadow-[#0C1A18]/10 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-2"
+                    >
+                        Next
+                        <svg
+                            class="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 5l7 7-7 7"></path></svg
+                        >
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

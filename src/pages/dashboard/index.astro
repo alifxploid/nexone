@@ -1,22 +1,67 @@
 ---
 import DashboardLayout from "../../layouts/DashboardLayout.astro";
+
+// Mock Data Stats
+const stats = {
+    balance: 2500000,
+    withdraw: 5400000,
+    earnings: 15450000,
+    status: "Publisher",
+};
+
+// Mock Data History PPOB
+const ppobHistory = Array.from({ length: 15 }).map((_, i) => ({
+    id: `TRX-${15200 + i}`,
+    product: ["Pulsa Telkomsel 10K", "Token PLN 20K", "GoPay 50K", "Dana 100K"][
+        Math.floor(Math.random() * 4)
+    ],
+    target: "0812" + Math.floor(Math.random() * 90000000),
+    price: (Math.floor(Math.random() * 10) + 1) * 10000 + 1500,
+    date: new Date(
+        Date.now() - Math.floor(Math.random() * 1000 * 60 * 60 * 24 * 7),
+    ).toLocaleDateString("id-ID", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+    }),
+    status: ["success", "pending", "failed"][
+        Math.floor(Math.random() * (i < 3 ? 2 : 3))
+    ],
+}));
+
+// Mock Data History Earnings
+const earningsHistory = Array.from({ length: 15 }).map((_, i) => ({
+    id: `EARN-${8800 + i}`,
+    task: ["Social Booster", "Clipper Main", "Referral Bonus"][
+        Math.floor(Math.random() * 3)
+    ],
+    amount: (Math.floor(Math.random() * 50) + 1) * 1000,
+    date: new Date(
+        Date.now() - Math.floor(Math.random() * 1000 * 60 * 60 * 24 * 7),
+    ).toLocaleDateString("id-ID", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+    }),
+    status: ["success", "pending"][Math.floor(Math.random() * 2)],
+}));
 ---
 
-<DashboardLayout title="Dashboard - NexOne">
-    <!-- Header Area -->
-    <!-- Header Area -->
+<DashboardLayout title="Dashboard - Ringkasan">
+    <!-- Header -->
     <div
-        class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8"
+        class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4"
     >
         <div>
-            <h1 class="text-2xl font-bold text-white tracking-tight mb-2">
+            <h1 class="text-2xl font-bold text-white tracking-tight">
                 Dashboard
             </h1>
-            <p class="text-gray-400 font-medium text-sm">
-                Welcome, Let's dive into your personalized setup guide.
+            <p class="text-gray-400 text-sm mt-1">
+                Ringkasan aktivitas dan performa akun Anda.
             </p>
         </div>
-        <button
+        <a
+            href="/dashboard/deposit"
             class="flex items-center gap-2 px-5 py-2.5 bg-[#D4F24F] hover:bg-[#c3e33b] text-[#0F1F1C] rounded-xl font-bold transition-all shadow-lg hover:-translate-y-0.5 active:scale-95 text-sm"
         >
             <svg
@@ -31,567 +76,640 @@ import DashboardLayout from "../../layouts/DashboardLayout.astro";
                     d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg
             >
             Deposit Baru
-        </button>
+        </a>
     </div>
 
-    <!-- Stats Section (Unified Card) -->
-    <div class="mb-8">
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <!-- Card 1: Sisa Saldo -->
         <div
-            class="bg-gray-50 rounded-[1.5rem] border border-gray-200 p-8 shadow-sm"
+            class="bg-white rounded-[2rem] p-6 border border-gray-200 shadow-sm relative overflow-hidden group hover:border-[#D4F24F] transition-colors"
         >
-            <!-- Card Header -->
-            <div class="flex items-start justify-between mb-8">
-                <div>
-                    <h2 class="text-xl font-bold text-gray-900 tracking-tight">
-                        Ringkasan Akun
-                    </h2>
-                    <p class="text-sm text-gray-500 mt-1 font-medium">
-                        29 Sept, 2024
-                    </p>
-                </div>
-                <!-- Filter Actions -->
-                <div class="flex gap-2">
-                    <button
-                        class="flex items-center gap-2 px-3 py-1.5 text-xs font-bold text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 shadow-sm transition-all"
-                    >
-                        <svg
-                            class="w-4 h-4 text-gray-500"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            ><path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"
-                            ></path></svg
-                        >
-                        Short
-                    </button>
-                    <button
-                        class="flex items-center gap-2 px-3 py-1.5 text-xs font-bold text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 shadow-sm transition-all"
-                    >
-                        <svg
-                            class="w-4 h-4 text-gray-500"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            ><path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
-                            ></path></svg
-                        >
-                        Filter
-                    </button>
-                    <button
-                        class="flex items-center justify-center w-8 h-8 text-gray-500 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 shadow-sm transition-all"
-                    >
-                        <svg
-                            class="w-5 h-5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            ><path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
-                            ></path></svg
-                        >
-                    </button>
-                </div>
-            </div>
-
-            <!-- Divider -->
-            <!-- Divider -->
-            <!-- Divider -->
-            <div class="h-px bg-gray-200 w-full mb-8"></div>
-
-            <!-- Metrics Grid (Divided) -->
             <div
-                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0 lg:divide-x divide-gray-200"
+                class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"
             >
-                <!-- Metric 1: Saldo -->
-                <div class="lg:px-8 first:pl-0">
-                    <p class="text-gray-500 text-sm font-semibold mb-3">
-                        Sisa Saldo
-                    </p>
-                    <div class="flex items-center gap-3">
-                        <h3
-                            class="text-3xl font-bold text-gray-900 tracking-tight"
-                        >
-                            1.5jt
-                        </h3>
-                        <span
-                            class="flex items-center gap-1 text-[11px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-100/50 px-2 py-0.5 rounded-full"
-                        >
-                            +0.02%
-                            <svg
-                                class="w-3 h-3"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                ><path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg
-                            >
-                        </span>
-                    </div>
-                </div>
+            </div>
+            <p
+                class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
+            >
+                Sisa Saldo
+            </p>
+            <h3 class="text-2xl font-black text-[#0C1A18]">
+                Rp {new Intl.NumberFormat("id-ID").format(stats.balance)}
+            </h3>
+            <div class="mt-4 flex items-center gap-2">
+                <span
+                    class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-100"
+                    >+2.5%</span
+                >
+                <span class="text-[10px] text-gray-400 font-medium"
+                    >dari bulan lalu</span
+                >
+            </div>
+        </div>
 
-                <!-- Metric 2: Total Pesanan -->
-                <div class="lg:px-8">
-                    <p class="text-gray-500 text-sm font-semibold mb-3">
-                        Total Pesanan
-                    </p>
-                    <div class="flex items-center gap-3">
-                        <h3
-                            class="text-3xl font-bold text-gray-900 tracking-tight"
-                        >
-                            1,240
-                        </h3>
-                        <span
-                            class="flex items-center gap-1 text-[11px] font-bold text-red-500 bg-red-50 border border-red-100/50 px-2 py-0.5 rounded-full"
-                        >
-                            -0.05%
-                            <svg
-                                class="w-3 h-3 rotate-180"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                ><path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg
-                            >
-                        </span>
-                    </div>
-                </div>
+        <!-- Card 2: Total Withdraw -->
+        <div
+            class="bg-white rounded-[2rem] p-6 border border-gray-200 shadow-sm relative overflow-hidden group hover:border-[#D4F24F] transition-colors"
+        >
+            <div
+                class="absolute top-0 right-0 w-32 h-32 bg-orange-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"
+            >
+            </div>
+            <p
+                class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
+            >
+                Total Withdraw
+            </p>
+            <h3 class="text-2xl font-black text-[#0C1A18]">
+                Rp {new Intl.NumberFormat("id-ID").format(stats.withdraw)}
+            </h3>
+            <div class="mt-4 flex items-center gap-2">
+                <span class="text-[10px] text-gray-400 font-medium"
+                    >Total penarikan sukses</span
+                >
+            </div>
+        </div>
 
-                <!-- Metric 3: Total Pengeluaran -->
-                <div class="lg:px-8">
-                    <p class="text-gray-500 text-sm font-semibold mb-3">
-                        Total Pengeluaran
-                    </p>
-                    <div class="flex items-center gap-3">
-                        <h3
-                            class="text-3xl font-bold text-gray-900 tracking-tight"
-                        >
-                            5.4jt
-                        </h3>
-                        <span
-                            class="flex items-center gap-1 text-[11px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-100/50 px-2 py-0.5 rounded-full"
-                        >
-                            +0.02%
-                            <svg
-                                class="w-3 h-3"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                ><path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg
-                            >
-                        </span>
-                    </div>
+        <!-- Card 3: Status Akun -->
+        <div
+            class="bg-white rounded-[2rem] p-6 border border-gray-200 shadow-sm relative overflow-hidden group hover:border-[#D4F24F] transition-colors"
+        >
+            <div
+                class="absolute top-0 right-0 w-32 h-32 bg-[#D4F24F]/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"
+            >
+            </div>
+            <p
+                class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
+            >
+                Status Akun
+            </p>
+            <div class="flex items-center gap-2">
+                <div
+                    class="w-8 h-8 rounded-full bg-[#0C1A18] flex items-center justify-center border border-[#D4F24F]"
+                >
+                    <svg
+                        class="w-4 h-4 text-[#D4F24F]"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        ></path></svg
+                    >
                 </div>
+                <h3 class="text-2xl font-black text-[#0C1A18]">
+                    {stats.status}
+                </h3>
+            </div>
+            <div class="mt-4 flex items-center gap-2">
+                <span
+                    class="text-[10px] font-bold text-[#0C1A18] bg-[#D4F24F] px-2 py-0.5 rounded-lg border border-[#D4F24F]"
+                    >Verified</span
+                >
+            </div>
+        </div>
 
-                <!-- Metric 4: Level Akun -->
-                <div class="lg:px-8">
-                    <p class="text-gray-500 text-sm font-semibold mb-3">
-                        Status Akun
-                    </p>
-                    <div class="flex items-center gap-3">
-                        <h3
-                            class="text-3xl font-bold text-gray-900 tracking-tight"
-                        >
-                            Gold
-                        </h3>
-                        <span
-                            class="flex items-center gap-1 text-[11px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-100/50 px-2 py-0.5 rounded-full"
-                        >
-                            Member
-                            <svg
-                                class="w-3 h-3"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                ><path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg
-                            >
-                        </span>
-                    </div>
-                </div>
+        <!-- Card 4: Total Pendapatan -->
+        <div
+            class="bg-white rounded-[2rem] p-6 border border-gray-200 shadow-sm relative overflow-hidden group hover:border-[#D4F24F] transition-colors"
+        >
+            <div
+                class="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"
+            >
+            </div>
+            <p
+                class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
+            >
+                Total Pendapatan
+            </p>
+            <h3 class="text-2xl font-black text-[#0C1A18]">
+                Rp {new Intl.NumberFormat("id-ID").format(stats.earnings)}
+            </h3>
+            <div class="mt-4 flex items-center gap-2">
+                <span
+                    class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-100"
+                    >+12%</span
+                >
+                <span class="text-[10px] text-gray-400 font-medium"
+                    >Bulan ini</span
+                >
             </div>
         </div>
     </div>
 
-    <!-- Charts & Widgets -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Main Chart: Campaign Performance -->
-        <!-- Main Chart: Campaign Performance -->
-        <!-- Main Chart: Campaign Performance -->
-        <!-- Main Chart: Campaign Performance -->
-        <!-- Main Chart: Campaign Performance -->
+    <!-- Chart Section -->
+    <div class="mb-8">
         <div
-            class="lg:col-span-2 bg-gray-50 p-8 rounded-[2rem] border border-gray-200 shadow-sm relative overflow-hidden"
+            class="bg-white rounded-[2rem] p-8 border border-gray-200 shadow-sm"
         >
-            <!-- Header -->
-            <div class="flex items-start justify-between mb-8">
+            <div class="flex items-center justify-between mb-8">
                 <div>
-                    <h2 class="text-xl font-bold text-gray-900 tracking-tight">
-                        Campaign Performance
-                    </h2>
-                </div>
-                <button
-                    class="text-gray-400 hover:text-gray-600 p-1 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                    <svg
-                        class="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        ><path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
-                        ></path></svg
-                    >
-                </button>
-            </div>
-
-            <!-- Main Stat & Badge -->
-            <div class="flex items-start justify-between mb-12">
-                <div>
-                    <h3
-                        class="text-4xl font-bold text-gray-900 tracking-tight mb-1"
-                    >
-                        $24,747.01
+                    <h3 class="text-lg font-bold text-[#0C1A18]">
+                        Statistik Pendapatan
                     </h3>
-                    <p class="text-sm text-gray-500 font-medium">
-                        29 Sept, 2024
+                    <p class="text-sm text-gray-400 mt-1">
+                        Performa pendapatan Anda dalam 6 bulan terakhir
                     </p>
                 </div>
-                <span
-                    class="px-2.5 py-1.5 rounded-lg bg-emerald-50 text-emerald-600 text-xs font-bold flex items-center gap-1.5"
+                <select
+                    class="px-4 py-2 rounded-xl border border-gray-200 text-sm font-bold text-[#0C1A18] outline-none focus:border-[#0C1A18] transition-colors"
                 >
-                    <svg
-                        class="w-3.5 h-3.5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        ><path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg
-                    >
-                    12% <span class="text-gray-900 font-medium ml-1"
-                        >vs last month</span
-                    >
-                </span>
+                    <option>6 Bulan Terakhir</option>
+                    <option>Tahun Ini</option>
+                </select>
             </div>
 
-            <!-- Chart Container -->
-            <div class="relative h-64">
-                <!-- Average Line & Label (Left aligned) -->
+            <!-- Custom CSS Chart -->
+            <div class="relative h-64 w-full">
+                <!-- Grid Lines -->
                 <div
-                    class="absolute top-[45%] left-0 right-0 border-t-2 border-dotted border-gray-300 z-0"
+                    class="absolute inset-0 flex flex-col justify-between pointer-events-none"
                 >
-                </div>
-                <div class="absolute top-[41%] left-0 z-10">
-                    <div
-                        class="bg-[#152A26] text-white text-[10px] font-bold px-3 py-1.5 rounded-r-md shadow-md flex items-center gap-1"
-                    >
-                        Avg $150k
-                    </div>
+                    <div class="border-b border-gray-50 h-0 w-full"></div>
+                    <div class="border-b border-gray-50 h-0 w-full"></div>
+                    <div class="border-b border-gray-50 h-0 w-full"></div>
+                    <div class="border-b border-gray-50 h-0 w-full"></div>
+                    <div class="border-b border-gray-50 h-0 w-full"></div>
                 </div>
 
-                <!-- Bars -->
+                <!-- Bars Container -->
                 <div
-                    class="h-full flex items-end justify-between gap-4 pl-4 pr-4 z-10 relative pt-8"
+                    class="absolute inset-0 flex items-end justify-between px-4 md:px-12 pt-8"
                 >
-                    <!-- Bar 1 -->
-                    <div class="w-full flex flex-col items-center gap-4 group">
-                        <div class="relative w-full h-full flex items-end">
+                    <!-- Bar Item -->
+                    <div
+                        class="flex flex-col items-center gap-3 w-full group cursor-pointer"
+                    >
+                        <div
+                            class="relative w-full h-[200px] flex items-end justify-center"
+                        >
                             <div
-                                class="w-full bg-gray-100 rounded-xl h-[40%] relative group-hover:bg-gray-200 transition-all"
+                                class="w-3/4 md:w-16 bg-gray-100 rounded-t-xl h-[40%] group-hover:bg-[#0C1A18] transition-all duration-300 relative"
                             >
                                 <span
-                                    class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-bold text-gray-500"
-                                    >78%</span
+                                    class="absolute -top-8 left-1/2 -translate-x-1/2 bg-[#0C1A18] text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                                    >Rp 2.5jt</span
                                 >
                             </div>
                         </div>
-                        <span class="text-sm font-medium text-gray-400"
+                        <span
+                            class="text-xs font-bold text-gray-400 group-hover:text-[#0C1A18] transition-colors"
+                            >Agu</span
+                        >
+                    </div>
+                    <!-- Bar Item -->
+                    <div
+                        class="flex flex-col items-center gap-3 w-full group cursor-pointer"
+                    >
+                        <div
+                            class="relative w-full h-[200px] flex items-end justify-center"
+                        >
+                            <div
+                                class="w-3/4 md:w-16 bg-gray-100 rounded-t-xl h-[65%] group-hover:bg-[#0C1A18] transition-all duration-300 relative"
+                            >
+                                <span
+                                    class="absolute -top-8 left-1/2 -translate-x-1/2 bg-[#0C1A18] text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                                    >Rp 4.2jt</span
+                                >
+                            </div>
+                        </div>
+                        <span
+                            class="text-xs font-bold text-gray-400 group-hover:text-[#0C1A18] transition-colors"
+                            >Sep</span
+                        >
+                    </div>
+                    <!-- Bar Item -->
+                    <div
+                        class="flex flex-col items-center gap-3 w-full group cursor-pointer"
+                    >
+                        <div
+                            class="relative w-full h-[200px] flex items-end justify-center"
+                        >
+                            <div
+                                class="w-3/4 md:w-16 bg-gray-100 rounded-t-xl h-[35%] group-hover:bg-[#0C1A18] transition-all duration-300 relative"
+                            >
+                                <span
+                                    class="absolute -top-8 left-1/2 -translate-x-1/2 bg-[#0C1A18] text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                                    >Rp 1.8jt</span
+                                >
+                            </div>
+                        </div>
+                        <span
+                            class="text-xs font-bold text-gray-400 group-hover:text-[#0C1A18] transition-colors"
+                            >Okt</span
+                        >
+                    </div>
+                    <!-- Bar Item -->
+                    <div
+                        class="flex flex-col items-center gap-3 w-full group cursor-pointer"
+                    >
+                        <div
+                            class="relative w-full h-[200px] flex items-end justify-center"
+                        >
+                            <div
+                                class="w-3/4 md:w-16 bg-[#D4F24F] rounded-t-xl h-[85%] shadow-[0_4px_20px_rgba(212,242,79,0.4)] relative"
+                            >
+                                <span
+                                    class="absolute -top-8 left-1/2 -translate-x-1/2 bg-[#0C1A18] text-white text-[10px] px-2 py-1 rounded"
+                                    >Rp 5.8jt</span
+                                >
+                            </div>
+                        </div>
+                        <span class="text-xs font-bold text-[#0C1A18]">Nov</span
+                        >
+                    </div>
+                    <!-- Bar Item -->
+                    <div
+                        class="flex flex-col items-center gap-3 w-full group cursor-pointer"
+                    >
+                        <div
+                            class="relative w-full h-[200px] flex items-end justify-center"
+                        >
+                            <div
+                                class="w-3/4 md:w-16 bg-gray-100 rounded-t-xl h-[55%] group-hover:bg-[#0C1A18] transition-all duration-300 relative"
+                            >
+                                <span
+                                    class="absolute -top-8 left-1/2 -translate-x-1/2 bg-[#0C1A18] text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                                    >Rp 3.1jt</span
+                                >
+                            </div>
+                        </div>
+                        <span
+                            class="text-xs font-bold text-gray-400 group-hover:text-[#0C1A18] transition-colors"
+                            >Des</span
+                        >
+                    </div>
+                    <!-- Bar Item -->
+                    <div
+                        class="flex flex-col items-center gap-3 w-full group cursor-pointer"
+                    >
+                        <div
+                            class="relative w-full h-[200px] flex items-end justify-center"
+                        >
+                            <div
+                                class="w-3/4 md:w-16 bg-gray-100 rounded-t-xl h-[70%] group-hover:bg-[#0C1A18] transition-all duration-300 relative"
+                            >
+                                <span
+                                    class="absolute -top-8 left-1/2 -translate-x-1/2 bg-[#0C1A18] text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                                    >Rp 4.5jt</span
+                                >
+                            </div>
+                        </div>
+                        <span
+                            class="text-xs font-bold text-gray-400 group-hover:text-[#0C1A18] transition-colors"
                             >Jan</span
                         >
                     </div>
-                    <!-- Bar 2 -->
-                    <div class="w-full flex flex-col items-center gap-4 group">
-                        <div class="relative w-full h-full flex items-end">
-                            <div
-                                class="w-full bg-gray-100 rounded-xl h-[60%] relative group-hover:bg-gray-200 transition-all"
-                            >
-                                <span
-                                    class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-bold text-gray-500"
-                                    >34%</span
-                                >
-                            </div>
-                        </div>
-                        <span class="text-sm font-bold text-gray-900">Feb</span>
-                    </div>
-                    <!-- Bar 3 (Active) -->
-                    <div class="w-full flex flex-col items-center gap-4 group">
-                        <div class="relative w-full h-full flex items-end">
-                            <div
-                                class="w-full bg-[#FF7F57] rounded-xl h-[90%] relative shadow-[0_8px_16px_-4px_rgba(255,127,87,0.4)] transform transition-transform group-hover:-translate-y-1"
-                            >
-                                <span
-                                    class="absolute top-4 left-1/2 -translate-x-1/2 text-xs font-bold text-white/90"
-                                    >67%</span
-                                >
-                            </div>
-                        </div>
-                        <span class="text-sm font-medium text-gray-400"
-                            >Mar</span
-                        >
-                    </div>
-                    <!-- Bar 4 -->
-                    <div class="w-full flex flex-col items-center gap-4 group">
-                        <div class="relative w-full h-full flex items-end">
-                            <div
-                                class="w-full bg-gray-100 rounded-xl h-[35%] relative group-hover:bg-gray-200 transition-all"
-                            >
-                                <span
-                                    class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-bold text-gray-500"
-                                    >28%</span
-                                >
-                            </div>
-                        </div>
-                        <span class="text-sm font-medium text-gray-400"
-                            >Apr</span
-                        >
-                    </div>
-                    <!-- Bar 5 -->
-                    <div class="w-full flex flex-col items-center gap-4 group">
-                        <div class="relative w-full h-full flex items-end">
-                            <div
-                                class="w-full bg-gray-100 rounded-xl h-[50%] relative group-hover:bg-gray-200 transition-all"
-                            >
-                                <span
-                                    class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-bold text-gray-500"
-                                    >39%</span
-                                >
-                            </div>
-                        </div>
-                        <span class="text-sm font-medium text-gray-400"
-                            >May</span
-                        >
-                    </div>
-                    <!-- Bar 6 -->
-                    <div class="w-full flex flex-col items-center gap-4 group">
-                        <div class="relative w-full h-full flex items-end">
-                            <div
-                                class="w-full bg-gray-100 rounded-xl h-[70%] relative group-hover:bg-gray-200 transition-all"
-                            >
-                                <span
-                                    class="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-bold text-gray-500"
-                                    >80%</span
-                                >
-                            </div>
-                        </div>
-                        <span class="text-sm font-medium text-gray-400"
-                            >Jun</span
-                        >
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Right Widget: Schedule Campaign -->
-        <div
-            class="bg-gray-50 p-8 rounded-[2rem] border border-gray-200 shadow-sm flex flex-col"
-        >
-            <h2 class="text-xl font-bold text-gray-900 tracking-tight mb-6">
-                Schedule Campaign
-            </h2>
-
-            <p class="text-sm font-bold text-gray-900 mb-4">September 2024</p>
-
-            <!-- Calendar Strip -->
-            <div class="flex justify-between mb-8">
-                <div class="flex flex-col items-center gap-2">
-                    <span class="text-[10px] text-gray-400 font-bold uppercase"
-                        >Mon</span
-                    >
-                    <span class="text-sm font-bold text-gray-900">15</span>
-                </div>
-                <div class="flex flex-col items-center gap-2">
-                    <span class="text-[10px] text-gray-400 font-bold uppercase"
-                        >Tue</span
-                    >
-                    <span class="text-sm font-bold text-gray-900">16</span>
-                </div>
-                <div class="flex flex-col items-center gap-2">
-                    <span class="text-[10px] text-gray-400 font-bold uppercase"
-                        >Wed</span
-                    >
-                    <span class="text-sm font-bold text-gray-900">17</span>
-                </div>
-                <div class="flex flex-col items-center gap-2">
-                    <span class="text-[10px] text-gray-400 font-bold uppercase"
-                        >Thu</span
-                    >
-                    <span class="text-sm font-bold text-gray-900">18</span>
-                </div>
-                <div
-                    class="flex flex-col items-center gap-2 p-1.5 -m-1.5 rounded-xl bg-purple-50"
-                >
-                    <span
-                        class="text-[10px] text-purple-600 font-bold uppercase"
-                        >Fri</span
-                    >
-                    <div
-                        class="w-6 h-6 rounded-full bg-purple-200 flex items-center justify-center text-xs font-bold text-purple-700"
-                    >
-                        19
-                    </div>
-                </div>
-                <div class="flex flex-col items-center gap-2">
-                    <span class="text-[10px] text-gray-400 font-bold uppercase"
-                        >Sat</span
-                    >
-                    <span class="text-sm font-bold text-gray-900">20</span>
-                </div>
-                <div class="flex flex-col items-center gap-2">
-                    <span class="text-[10px] text-gray-400 font-bold uppercase"
-                        >Sun</span
-                    >
-                    <span class="text-sm font-bold text-gray-900">21</span>
-                </div>
-            </div>
-
-            <div class="flex items-center justify-between mb-2">
-                <p class="text-xs font-medium text-gray-400">Today</p>
-            </div>
-
-            <!-- Schedule Items -->
-            <div class="space-y-4">
-                <!-- Yellow Card -->
-                <div
-                    class="bg-[#FFF2C2] p-4 rounded-xl flex items-center justify-between group cursor-pointer hover:shadow-md transition-all"
-                >
-                    <div class="flex items-center gap-4">
-                        <div
-                            class="w-10 h-10 rounded-lg bg-white/50 flex items-center justify-center border border-white/20"
-                        >
-                            <svg
-                                class="w-5 h-5 text-gray-700"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                ><path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
-                                ></path></svg
-                            >
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-[#4A4011] text-sm">
-                                Element of Design Test
-                            </h4>
-                            <p
-                                class="text-[11px] text-[#857526] font-medium mt-0.5"
-                            >
-                                10:00 - 11:00 AM
-                            </p>
-                        </div>
-                    </div>
-                    <button class="text-[#857526] hover:text-[#4A4011]">
-                        <svg
-                            class="w-5 h-5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            ><path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
-                            ></path></svg
-                        >
-                    </button>
-                </div>
-
-                <div class="mb-2 mt-4">
-                    <p class="text-xs font-medium text-gray-400">Sat, Jan 20</p>
-                </div>
-
-                <!-- Pink Card -->
-                <div
-                    class="bg-[#FFE2FD] p-4 rounded-xl flex items-center justify-between group cursor-pointer hover:shadow-md transition-all"
-                >
-                    <div class="flex items-center gap-4">
-                        <div
-                            class="w-10 h-10 rounded-lg bg-white/50 flex items-center justify-center border border-white/20"
-                        >
-                            <svg
-                                class="w-5 h-5 text-gray-700"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                ><path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg
-                            >
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-[#5C2B59] text-sm">
-                                Design Principle Test
-                            </h4>
-                            <p
-                                class="text-[11px] text-[#8F4F8B] font-medium mt-0.5"
-                            >
-                                10:00 - 11:00 AM
-                            </p>
-                        </div>
-                    </div>
-                    <button class="text-[#8F4F8B] hover:text-[#5C2B59]">
-                        <svg
-                            class="w-5 h-5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            ><path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
-                            ></path></svg
-                        >
-                    </button>
-                </div>
-
-                <div class="mb-2 mt-4">
-                    <p class="text-xs font-medium text-gray-400">Sat, Jan 20</p>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- History Tables (Switchable) -->
+    <!-- History Tables (Switchable) -->
+    <div
+        class="bg-white rounded-[2rem] p-6 md:p-8 border border-gray-200 shadow-sm"
+        id="history-section"
+    >
+        <div
+            class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6"
+        >
+            <h3 class="text-lg font-bold text-[#0C1A18]">Riwayat Aktivitas</h3>
+
+            <!-- Tabs -->
+            <div class="flex bg-gray-100 p-1 rounded-xl w-full md:w-auto">
+                <button
+                    onclick="switchTab('ppob')"
+                    id="tab-ppob"
+                    class="flex-1 md:flex-none px-6 py-2 rounded-lg text-sm font-bold transition-all shadow-sm bg-white text-[#0C1A18]"
+                >
+                    Riwayat PPOB
+                </button>
+                <button
+                    onclick="switchTab('earnings')"
+                    id="tab-earnings"
+                    class="flex-1 md:flex-none px-6 py-2 rounded-lg text-sm font-bold transition-all text-gray-500 hover:text-[#0C1A18]"
+                >
+                    Earnings
+                </button>
+            </div>
+        </div>
+
+        <!-- PPOB Content -->
+        <div id="table-ppob" class="block">
+            <!-- Desktop Table -->
+            <div class="hidden md:block overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="text-left border-b border-gray-100">
+                            <th
+                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                                >ID Transaksi</th
+                            >
+                            <th
+                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                                >Produk</th
+                            >
+                            <th
+                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                                >Tujuan</th
+                            >
+                            <th
+                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right"
+                                >Harga</th
+                            >
+                            <th
+                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right"
+                                >Status</th
+                            >
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-50">
+                        {
+                            ppobHistory.slice(0, 5).map((item) => (
+                                <tr class="group hover:bg-gray-50/50 transition-colors">
+                                    <td class="py-4 font-mono text-xs text-gray-400 group-hover:text-[#0C1A18] transition-colors">
+                                        #{item.id}
+                                    </td>
+                                    <td class="py-4">
+                                        <span class="font-bold text-sm text-[#0C1A18]">
+                                            {item.product}
+                                        </span>
+                                    </td>
+                                    <td class="py-4 text-sm font-mono text-gray-500">
+                                        {item.target}
+                                    </td>
+                                    <td class="py-4 text-right font-bold text-sm text-[#0C1A18]">
+                                        Rp{" "}
+                                        {new Intl.NumberFormat("id-ID").format(
+                                            item.price,
+                                        )}
+                                    </td>
+                                    <td class="py-4 text-right">
+                                        {item.status === "success" && (
+                                            <span class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg border border-emerald-100">
+                                                Berhasil
+                                            </span>
+                                        )}
+                                        {item.status === "pending" && (
+                                            <span class="inline-flex items-center gap-1 text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-lg border border-amber-100">
+                                                Proses
+                                            </span>
+                                        )}
+                                        {item.status === "failed" && (
+                                            <span class="inline-flex items-center gap-1 text-[10px] font-bold text-red-600 bg-red-50 px-2 py-1 rounded-lg border border-red-100">
+                                                Gagal
+                                            </span>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Mobile Cards -->
+            <div class="md:hidden space-y-3">
+                {
+                    ppobHistory.slice(0, 5).map((item) => (
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <span class="text-[10px] font-bold text-gray-400 mb-1 block">
+                                        #{item.id}
+                                    </span>
+                                    <h4 class="font-bold text-sm text-[#0C1A18]">
+                                        {item.product}
+                                    </h4>
+                                </div>
+                                {item.status === "success" && (
+                                    <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg border border-emerald-100">
+                                        Berhasil
+                                    </span>
+                                )}
+                                {item.status === "pending" && (
+                                    <span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-lg border border-amber-100">
+                                        Proses
+                                    </span>
+                                )}
+                                {item.status === "failed" && (
+                                    <span class="text-[10px] font-bold text-red-600 bg-red-50 px-2 py-1 rounded-lg border border-red-100">
+                                        Gagal
+                                    </span>
+                                )}
+                            </div>
+                            <div class="flex justify-between items-center pt-3 border-t border-gray-200/50">
+                                <span class="text-xs font-mono text-gray-500 bg-white px-2 py-1 rounded border border-gray-100">
+                                    {item.target}
+                                </span>
+                                <span class="font-black text-sm text-[#0C1A18]">
+                                    Rp{" "}
+                                    {new Intl.NumberFormat("id-ID").format(
+                                        item.price,
+                                    )}
+                                </span>
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+
+            <!-- Simple Pagination -->
+            <div
+                class="flex items-center justify-between mt-6 pt-6 border-t border-gray-100"
+            >
+                <span class="text-xs font-bold text-gray-400">1-5 dari 50</span>
+                <div class="flex gap-2">
+                    <button
+                        disabled
+                        class="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-400 font-bold text-xs cursor-not-allowed"
+                        >Prev</button
+                    >
+                    <button
+                        class="px-3 py-1.5 rounded-lg bg-[#0C1A18] text-white font-bold text-xs hover:bg-[#152A26] transition-all"
+                        >Next</button
+                    >
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings Content -->
+        <div id="table-earnings" class="hidden">
+            <!-- Desktop Table -->
+            <div class="hidden md:block overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="text-left border-b border-gray-100">
+                            <th
+                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                                >ID Earnings</th
+                            >
+                            <th
+                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                                >Task / Sumber</th
+                            >
+                            <th
+                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                                >Tanggal</th
+                            >
+                            <th
+                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right"
+                                >Reward</th
+                            >
+                            <th
+                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right"
+                                >Status</th
+                            >
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-50">
+                        {
+                            earningsHistory.slice(0, 5).map((item) => (
+                                <tr class="group hover:bg-gray-50/50 transition-colors">
+                                    <td class="py-4 font-mono text-xs text-gray-400 group-hover:text-[#0C1A18] transition-colors">
+                                        #{item.id}
+                                    </td>
+                                    <td class="py-4">
+                                        <span class="font-bold text-sm text-[#0C1A18]">
+                                            {item.task}
+                                        </span>
+                                    </td>
+                                    <td class="py-4 text-sm font-medium text-gray-500">
+                                        {item.date}
+                                    </td>
+                                    <td class="py-4 text-right font-black text-sm text-emerald-600">
+                                        + Rp{" "}
+                                        {new Intl.NumberFormat("id-ID").format(
+                                            item.amount,
+                                        )}
+                                    </td>
+                                    <td class="py-4 text-right">
+                                        {item.status === "success" && (
+                                            <span class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg border border-emerald-100">
+                                                Cair
+                                            </span>
+                                        )}
+                                        {item.status === "pending" && (
+                                            <span class="inline-flex items-center gap-1 text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-lg border border-amber-100">
+                                                Pending
+                                            </span>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Mobile Cards -->
+            <div class="md:hidden space-y-3">
+                {
+                    earningsHistory.slice(0, 5).map((item) => (
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <span class="text-[10px] font-bold text-gray-400 mb-1 block">
+                                        #{item.id}
+                                    </span>
+                                    <h4 class="font-bold text-sm text-[#0C1A18]">
+                                        {item.task}
+                                    </h4>
+                                </div>
+                                {item.status === "success" && (
+                                    <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg border border-emerald-100">
+                                        Cair
+                                    </span>
+                                )}
+                                {item.status === "pending" && (
+                                    <span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-lg border border-amber-100">
+                                        Pending
+                                    </span>
+                                )}
+                            </div>
+                            <div class="flex justify-between items-center pt-3 border-t border-gray-200/50">
+                                <span class="text-xs font-medium text-gray-500">
+                                    {item.date}
+                                </span>
+                                <span class="font-black text-sm text-emerald-600">
+                                    + Rp{" "}
+                                    {new Intl.NumberFormat("id-ID").format(
+                                        item.amount,
+                                    )}
+                                </span>
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+
+            <!-- Simple Pagination -->
+            <div
+                class="flex items-center justify-between mt-6 pt-6 border-t border-gray-100"
+            >
+                <span class="text-xs font-bold text-gray-400">1-5 dari 24</span>
+                <div class="flex gap-2">
+                    <button
+                        disabled
+                        class="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-400 font-bold text-xs cursor-not-allowed"
+                        >Prev</button
+                    >
+                    <button
+                        class="px-3 py-1.5 rounded-lg bg-[#0C1A18] text-white font-bold text-xs hover:bg-[#152A26] transition-all"
+                        >Next</button
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script is:inline>
+        function switchTab(tab) {
+            const ppobTab = document.getElementById("tab-ppob");
+            const earningsTab = document.getElementById("tab-earnings");
+            const ppobTable = document.getElementById("table-ppob");
+            const earningsTable = document.getElementById("table-earnings");
+
+            if (tab === "ppob") {
+                ppobTable.classList.remove("hidden");
+                earningsTable.classList.add("hidden");
+
+                ppobTab.classList.add(
+                    "bg-white",
+                    "text-[#0C1A18]",
+                    "shadow-sm",
+                );
+                ppobTab.classList.remove("text-gray-500");
+
+                earningsTab.classList.remove(
+                    "bg-white",
+                    "text-[#0C1A18]",
+                    "shadow-sm",
+                );
+                earningsTab.classList.add("text-gray-500");
+            } else {
+                ppobTable.classList.add("hidden");
+                earningsTable.classList.remove("hidden");
+
+                earningsTab.classList.add(
+                    "bg-white",
+                    "text-[#0C1A18]",
+                    "shadow-sm",
+                );
+                earningsTab.classList.remove("text-gray-500");
+
+                ppobTab.classList.remove(
+                    "bg-white",
+                    "text-[#0C1A18]",
+                    "shadow-sm",
+                );
+                ppobTab.classList.add("text-gray-500");
+            }
+        }
+    </script>
 </DashboardLayout>
