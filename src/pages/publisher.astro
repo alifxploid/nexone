@@ -1,0 +1,242 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/landing/Navbar.astro";
+import Footer from "../components/landing/Footer.astro";
+import CTA from "../components/landing/CallToAction.astro";
+---
+
+<Layout title="Publisher - NexOne">
+    <Navbar />
+    <main>
+        <!-- Publisher Hero -->
+        <section
+            class="pt-28 pb-16 md:pt-36 md:pb-24 lg:pt-44 lg:pb-32 overflow-hidden relative"
+        >
+            <div
+                class="absolute inset-0 -z-10 h-full w-full bg-[#FAFAFA] bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:40px_40px]"
+            >
+            </div>
+
+            <div
+                class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10"
+            >
+                <div
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white shadow-sm border border-gray-100 text-gray-800 text-[10px] md:text-xs font-bold uppercase tracking-widest mb-8 md:mb-10 hover:shadow-md transition-shadow cursor-default select-none"
+                >
+                    <span
+                        class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"
+                    ></span>
+                    Untuk Content Creator & Bisnis PPOB
+                </div>
+
+                <h1
+                    class="text-4xl sm:text-5xl md:text-7xl font-bold text-[#0F1F1C] tracking-tight mb-6 md:mb-8 max-w-5xl mx-auto leading-[1.15] md:leading-[1.1]"
+                >
+                    Ubah Traffic & Skill Jadi <br class="hidden md:block" />
+                    <span class="relative inline-block">
+                        <span class="text-[#0F392E]">Sumber Penghasilan</span>
+                        <svg
+                            class="absolute w-full h-3 md:h-4 -bottom-1 left-0 text-[#D4F24F] -z-10"
+                            viewBox="0 0 100 10"
+                            preserveAspectRatio="none"
+                        >
+                            <path
+                                d="M0 5 Q 50 10 100 5"
+                                stroke="currentColor"
+                                stroke-width="12"
+                                fill="none"></path>
+                        </svg>
+                    </span>
+                </h1>
+
+                <p
+                    class="text-base sm:text-lg md:text-xl text-gray-500 mb-8 md:mb-12 max-w-2xl mx-auto leading-relaxed font-medium px-4"
+                >
+                    Gabung sebagai Publisher di NexOne. Kerjakan misi sosial
+                    media (Like, Komen, Share), jadi Clipper video viral, atau
+                    bisnis PPOB. Cuan mengalir dari aktivitas harianmu!
+                </p>
+
+                <div
+                    class="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center items-center w-full sm:w-auto px-4 sm:px-0"
+                >
+                    <a
+                        href="/auth/register?role=publisher"
+                        class="w-full sm:w-auto px-8 py-4 md:px-10 md:py-5 bg-[#0F392E] text-white rounded-2xl font-bold text-base md:text-lg hover:bg-[#164e3f] transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 active:scale-[0.98]"
+                    >
+                        Daftar Jadi Publisher
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Publisher Features -->
+        <section class="py-16 md:py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Feature 1 -->
+                    <div
+                        class="bg-[#F3F4F1] rounded-[2rem] p-8 hover:bg-[#edf0ec] transition-colors group"
+                    >
+                        <div
+                            class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform"
+                        >
+                            <!-- NOTE: User provided id=undefined for this icon. Using id=24816 (Thumbs Up) as a fallback. -->
+                            <img
+                                src="https://img.icons8.com/?size=100&id=24816&format=png&color=000000"
+                                alt="Social Task Icon"
+                                class="w-8 h-8"
+                            />
+                        </div>
+                        <h3 class="text-2xl font-bold text-[#0F1F1C] mb-3">
+                            Social Task Worker
+                        </h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Cuan dari jempolmu! Dapatkan bayaran dari setiap
+                            Like, Komen, Share, Subscribe, atau Rating Google
+                            Maps yang kamu kerjakan sesuai order Advertiser.
+                        </p>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div
+                        class="bg-[#F3F4F1] rounded-[2rem] p-8 hover:bg-[#edf0ec] transition-colors group"
+                    >
+                        <div
+                            class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform"
+                        >
+                            <img
+                                src="https://img.icons8.com/?size=100&id=42898&format=png&color=000000"
+                                alt="Clipper Icon"
+                                class="w-8 h-8"
+                            />
+                        </div>
+                        <h3 class="text-2xl font-bold text-[#0F1F1C] mb-3">
+                            Jadi Clipper Viral
+                        </h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Punya skill edit video? Jual jasamu membuat potongan
+                            video viral (Clipper) untuk TikTok/Reels brand.
+                            Kreativitasmu dibayar mahal di sini.
+                        </p>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div
+                        class="bg-[#F3F4F1] rounded-[2rem] p-8 hover:bg-[#edf0ec] transition-colors group"
+                    >
+                        <div
+                            class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform"
+                        >
+                            <img
+                                src="https://img.icons8.com/?size=100&id=3S2oxo1xZqhQ&format=png&color=000000"
+                                alt="PPOB Icon"
+                                class="w-8 h-8"
+                            />
+                        </div>
+                        <h3 class="text-2xl font-bold text-[#0F1F1C] mb-3">
+                            Bisnis & Pakai PPOB
+                        </h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            Gunakan saldo hasil kerjamu untuk topup pulsa, data,
+                            atau token PLN sendiri. Atau jual lagi ke orang lain
+                            untuk profit tambahan.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Publisher Steps -->
+        <section class="py-20 bg-white border-t border-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2
+                        class="text-3xl md:text-4xl font-bold text-[#0F1F1C] mb-4 tracking-tight"
+                    >
+                        Cara Mulai Cuan
+                    </h2>
+                    <p class="text-xl text-gray-500 max-w-2xl mx-auto">
+                        Tiga langkah simpel buat mulai penghasilan tambahanmu.
+                    </p>
+                </div>
+
+                <div class="relative grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <div
+                        class="hidden md:block absolute top-[2.25rem] left-[16%] right-[16%] h-0.5 bg-gray-100 z-0"
+                    >
+                    </div>
+
+                    <!-- Step 1 -->
+                    <div
+                        class="relative z-10 flex flex-col items-center text-center group"
+                    >
+                        <div
+                            class="w-18 h-18 bg-white border-4 border-gray-50 rounded-full flex items-center justify-center mb-6 shadow-sm group-hover:border-emerald-50 transition-colors duration-300"
+                        >
+                            <div
+                                class="w-14 h-14 bg-[#0F392E] rounded-full flex items-center justify-center text-[#D4F24F] font-bold text-xl shadow-lg"
+                            >
+                                1
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-[#0F1F1C] mb-3">
+                            Daftar Akun
+                        </h3>
+                        <p class="text-gray-500 leading-relaxed">
+                            Pilih tipe akun "Publisher" saat pendaftaran. Gratis
+                            100%.
+                        </p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div
+                        class="relative z-10 flex flex-col items-center text-center group"
+                    >
+                        <div
+                            class="w-18 h-18 bg-white border-4 border-gray-50 rounded-full flex items-center justify-center mb-6 shadow-sm group-hover:border-emerald-50 transition-colors duration-300"
+                        >
+                            <div
+                                class="w-14 h-14 bg-[#0F392E] rounded-full flex items-center justify-center text-[#D4F24F] font-bold text-xl shadow-lg"
+                            >
+                                2
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-[#0F1F1C] mb-3">
+                            Pilih Projek
+                        </h3>
+                        <p class="text-gray-500 leading-relaxed">
+                            Ambil misi Like/Komen, Project Clipper, atau buka
+                            toko PPOB.
+                        </p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div
+                        class="relative z-10 flex flex-col items-center text-center group"
+                    >
+                        <div
+                            class="w-18 h-18 bg-white border-4 border-gray-50 rounded-full flex items-center justify-center mb-6 shadow-sm group-hover:border-emerald-50 transition-colors duration-300"
+                        >
+                            <div
+                                class="w-14 h-14 bg-[#0F392E] rounded-full flex items-center justify-center text-[#D4F24F] font-bold text-xl shadow-lg"
+                            >
+                                3
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-[#0F1F1C] mb-3">
+                            Tarik Saldo
+                        </h3>
+                        <p class="text-gray-500 leading-relaxed">
+                            Kumpulkan profit dan tarik ke rekening bank atau
+                            E-Wallet kapanpun.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <CTA />
+    </main>
+    <Footer />
+</Layout>

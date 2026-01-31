@@ -1,0 +1,419 @@
+---
+import DashboardLayout from "../../layouts/DashboardLayout.astro";
+
+// Mock User Data
+const user = {
+    name: "James Passaquindici",
+    email: "jamespass@emi.com",
+    role: "Publisher",
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix",
+    securityScore: 85,
+    twoFactor: true,
+};
+
+// Mock Sessions
+const sessions = [
+    {
+        device: "Windows PC - Chrome",
+        location: "Jakarta, Indonesia",
+        ip: "192.168.1.1",
+        active: true,
+        lastActive: "Sekarang",
+        icon: "monitor",
+    },
+    {
+        device: "iPhone 13 - Safari",
+        location: "Jakarta, Indonesia",
+        ip: "192.168.1.20",
+        active: false,
+        lastActive: "2 jam yang lalu",
+        icon: "smartphone",
+    },
+];
+---
+
+<DashboardLayout title="Pengaturan Akun">
+    <!-- Header Section -->
+    <div class="mb-8">
+        <h1 class="text-2xl font-bold text-white tracking-tight">
+            Pengaturan Akun
+        </h1>
+        <p class="text-gray-400 mt-1 text-sm">
+            Kelola keamanan, notifikasi, dan privasi akun Anda.
+        </p>
+    </div>
+
+    <!-- Main Content Container (Strict Match to Profile.astro) -->
+    <!-- force w-full just in case -->
+    <div
+        class="w-full max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 items-start"
+    >
+        <!-- Left Column: Sidebar (Fixed Width) -->
+        <div class="w-full lg:w-[350px] shrink-0 space-y-6 lg:sticky lg:top-8">
+            <!-- Card 1: Security Score (Matches Profile Card Structure) -->
+            <div
+                class="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100/50 relative overflow-hidden text-center"
+            >
+                <div class="relative w-32 h-32 mx-auto mb-6">
+                    <div
+                        class="w-full h-full rounded-full bg-[#E3F9E5] flex items-center justify-center relative border-4 border-white shadow-lg overflow-hidden"
+                    >
+                        <img
+                            src="https://img.icons8.com/?size=100&id=120527&format=png&color=000000"
+                            class="w-20 h-20 object-contain opacity-90"
+                            style="width: 80px; height: 80px;"
+                            alt="Security Shield"
+                        />
+                    </div>
+                    <!-- Badge -->
+                    <div
+                        class="absolute bottom-0 right-0 bg-[#0C1A18] text-white text-xs font-bold px-3 py-1 rounded-full border-2 border-white"
+                    >
+                        {user.securityScore}%
+                    </div>
+                </div>
+
+                <h2 class="text-xl font-bold text-gray-800 mb-1">
+                    Keamanan Akun
+                </h2>
+                <div class="flex items-center justify-center gap-2 mb-4">
+                    <span
+                        class="px-3 py-1 bg-[#E3F9E5] text-emerald-700 text-xs font-bold rounded-full border border-emerald-200"
+                    >
+                        Protected
+                    </span>
+                </div>
+                <p class="text-xs text-gray-400 font-medium">
+                    Terakhir update: 2 menit yang lalu
+                </p>
+            </div>
+
+            <!-- Card 2: Help Center (Matches Stats Mini Structure) -->
+            <div
+                class="bg-[#0C1A18] rounded-[2rem] p-6 shadow-lg border border-[#1F3D36] relative overflow-hidden"
+            >
+                <div
+                    class="absolute top-0 right-0 w-24 h-24 bg-[#D4F24F]/10 rounded-full blur-xl -translate-y-1/2 translate-x-1/2"
+                >
+                </div>
+
+                <h3 class="text-lg font-bold text-white mb-2 relative z-10">
+                    Butuh Bantuan?
+                </h3>
+                <p
+                    class="text-gray-400 text-xs mb-4 relative z-10 w-4/5 leading-relaxed"
+                >
+                    Jika menemukan aktivitas mencurigakan, segera hubungi kami.
+                </p>
+                <a
+                    href="/dashboard/ticket"
+                    class="w-full py-2.5 bg-[#1F3D36] hover:bg-[#2a5249] text-white text-sm font-bold rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95 relative z-10"
+                >
+                    Hubungi Support
+                </a>
+            </div>
+        </div>
+
+        <!-- Right Column: Settings Forms -->
+        <!-- Added explicit w-full to prevent collapse -->
+        <div class="flex-1 min-w-0 w-full">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Card 1: Security Settings (Merged Full Width) -->
+                <div
+                    class="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100/50 md:col-span-2"
+                >
+                    <div class="mb-8">
+                        <h3 class="text-lg font-bold text-gray-800">
+                            Keamanan Login & Transaksi
+                        </h3>
+                        <p class="text-xs text-gray-400 mt-1">
+                            Update password dan PIN secara berkala untuk
+                            keamanan.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Change Password -->
+                        <div class="space-y-4">
+                            <h4
+                                class="text-sm font-bold text-[#0C1A18] flex items-center gap-2"
+                            >
+                                <svg
+                                    class="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    ><path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                                    ></path></svg
+                                >
+                                Ganti Password
+                            </h4>
+                            <div class="space-y-3">
+                                <div class="space-y-1">
+                                    <label
+                                        class="text-[10px] font-bold text-gray-400 uppercase tracking-wider"
+                                        >Password Lama</label
+                                    >
+                                    <input
+                                        type="password"
+                                        placeholder="••••••••"
+                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium text-sm"
+                                    />
+                                </div>
+                                <div class="space-y-1">
+                                    <label
+                                        class="text-[10px] font-bold text-gray-400 uppercase tracking-wider"
+                                        >Password Baru</label
+                                    >
+                                    <input
+                                        type="password"
+                                        placeholder="••••••••"
+                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium text-sm"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Change PIN -->
+                        <div
+                            class="md:border-l md:border-dashed md:border-gray-200 md:pl-8 space-y-4"
+                        >
+                            <h4
+                                class="text-sm font-bold text-[#0C1A18] flex items-center gap-2"
+                            >
+                                <svg
+                                    class="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    ><path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M9 7h6m0 3.666A5.102 5.102 0 0117.29 15c-2.381.94-6.94 4.87-9.29 4.87M9 7a2.91 2.91 0 012.927-2.917c2.927 0 2.927 2.917 2.927 2.917"
+                                    ></path></svg
+                                >
+                                PIN Transaksi
+                            </h4>
+                            <div class="space-y-3">
+                                <div class="space-y-1">
+                                    <label
+                                        class="text-[10px] font-bold text-gray-400 uppercase tracking-wider"
+                                        >PIN Lama</label
+                                    >
+                                    <input
+                                        type="password"
+                                        maxlength="6"
+                                        placeholder="* * * * * *"
+                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium text-sm tracking-[0.5em] text-center"
+                                    />
+                                </div>
+                                <div class="space-y-1">
+                                    <label
+                                        class="text-[10px] font-bold text-gray-400 uppercase tracking-wider"
+                                        >PIN Baru</label
+                                    >
+                                    <input
+                                        type="password"
+                                        maxlength="6"
+                                        placeholder="* * * * * *"
+                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium text-sm tracking-[0.5em] text-center"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="mt-8 flex justify-end border-t border-gray-100 pt-6"
+                    >
+                        <button
+                            class="px-8 py-3 bg-[#0C1A18] text-white font-bold rounded-xl shadow-lg shadow-[#0C1A18]/20 hover:bg-[#152A26] transition-all hover:-translate-y-1 active:scale-95 text-sm"
+                        >
+                            Simpan Perubahan
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 2: Notifications -->
+                <div
+                    class="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100/50 flex flex-col h-full"
+                >
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold text-gray-800">
+                            Notifikasi
+                        </h3>
+                        <p class="text-xs text-gray-400 mt-1">
+                            Atur preferensi pesan masuk.
+                        </p>
+                    </div>
+
+                    <div class="space-y-4 flex-1">
+                        <div
+                            class="flex items-center justify-between p-3 bg-gray-50 rounded-xl"
+                        >
+                            <div>
+                                <p class="text-sm font-bold text-gray-800">
+                                    Transaksi
+                                </p>
+                                <p class="text-[10px] text-gray-500">
+                                    Info topup & withdraw
+                                </p>
+                            </div>
+                            <label
+                                class="relative inline-flex items-center cursor-pointer"
+                            >
+                                <input
+                                    type="checkbox"
+                                    value=""
+                                    class="sr-only peer"
+                                    checked
+                                />
+                                <div
+                                    class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#0C1A18]"
+                                >
+                                </div>
+                            </label>
+                        </div>
+                        <div
+                            class="flex items-center justify-between p-3 bg-gray-50 rounded-xl"
+                        >
+                            <div>
+                                <p class="text-sm font-bold text-gray-800">
+                                    Promo & Info
+                                </p>
+                                <p class="text-[10px] text-gray-500">
+                                    Update fitur baru
+                                </p>
+                            </div>
+                            <label
+                                class="relative inline-flex items-center cursor-pointer"
+                            >
+                                <input
+                                    type="checkbox"
+                                    value=""
+                                    class="sr-only peer"
+                                />
+                                <div
+                                    class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#0C1A18]"
+                                >
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Active Sessions -->
+                <div
+                    class="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100/50 flex flex-col h-full"
+                >
+                    <div class="mb-6 flex items-center justify-between">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800">
+                                Sesi Aktif
+                            </h3>
+                            <p class="text-xs text-gray-400 mt-1">
+                                Perangkat login saat ini.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 flex-1">
+                        {
+                            sessions.map((session) => (
+                                <div class="flex items-start gap-3 p-3 border border-gray-50 rounded-xl bg-gray-50/50">
+                                    <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center shrink-0 text-gray-500 shadow-sm border border-gray-100">
+                                        {session.icon === "monitor" ? (
+                                            <svg
+                                                class="w-4 h-4"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                                                />
+                                            </svg>
+                                        ) : (
+                                            <svg
+                                                class="w-4 h-4"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
+                                                />
+                                            </svg>
+                                        )}
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex items-center justify-between mb-0.5">
+                                            <h5 class="text-xs font-bold text-gray-800 truncate">
+                                                {session.device}
+                                            </h5>
+                                            {session.active && (
+                                                <span class="w-2 h-2 rounded-full bg-emerald-500 shadow-emerald-200 shadow-lg" />
+                                            )}
+                                        </div>
+                                        <p class="text-[10px] text-gray-500 truncate">
+                                            {session.location}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
+
+                <!-- Card 4: Danger Zone -->
+                <div
+                    class="bg-red-50 rounded-[2rem] p-6 shadow-sm border border-red-100 md:col-span-2"
+                >
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center shrink-0 text-red-600 border border-red-200"
+                        >
+                            <svg
+                                class="w-5 h-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                ><path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                ></path></svg
+                            >
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-sm font-bold text-red-900">
+                                Hapus Akun
+                            </h3>
+                            <p class="text-xs text-red-700 mt-1">
+                                Tindakan ini permanen. Data tidak dapat
+                                dipulihkan.
+                            </p>
+                        </div>
+                        <button
+                            class="px-6 py-2.5 bg-white border border-red-200 text-red-600 font-bold text-xs rounded-lg hover:bg-red-600 hover:text-white transition-colors shadow-sm whitespace-nowrap"
+                        >
+                            Hapus Akun
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</DashboardLayout>
