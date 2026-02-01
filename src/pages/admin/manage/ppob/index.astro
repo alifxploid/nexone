@@ -1,0 +1,448 @@
+---
+import AdminLayout from "../../../../layouts/AdminLayout.astro";
+import { prabayarCategories, pascabayarCategories, getTotalProviders, getTotalProducts, getEnabledCategories } from "../../../../data/ppobData";
+
+const pageTitle = "Kelola Pulsa & PPOB - Admin";
+
+// Calculate totals
+const allCategories = [...prabayarCategories, ...pascabayarCategories];
+const totalCategories = allCategories.length;
+const totalProviders = getTotalProviders(prabayarCategories) + getTotalProviders(pascabayarCategories);
+const totalProducts = getTotalProducts(prabayarCategories) + getTotalProducts(pascabayarCategories);
+const enabledCategories = getEnabledCategories(prabayarCategories) + getEnabledCategories(pascabayarCategories);
+---
+
+<AdminLayout title={pageTitle}>
+    <!-- Header -->
+    <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-white tracking-tight">Kelola Pulsa & PPOB</h1>
+            <p class="text-gray-400 text-sm mt-1">Atur layanan, harga jual, dan keuntungan untuk setiap produk PPOB.</p>
+        </div>
+        <div class="flex gap-2">
+            <button class="px-4 py-2 bg-[#142925] text-white rounded-xl text-sm font-bold hover:bg-[#1F3D36] transition-colors border border-[#1F3D36] flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                </svg>
+                Sync API
+            </button>
+            <button class="flex items-center gap-2 px-5 py-2.5 bg-[#D4F24F] hover:bg-[#c3e33b] text-[#0F1F1C] rounded-xl font-bold transition-all shadow-lg hover:-translate-y-0.5 active:scale-95 text-sm">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Simpan Semua
+            </button>
+        </div>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-[#142925] rounded-2xl p-5 border border-[#1F3D36]">
+            <p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-1">Total Kategori</p>
+            <p class="text-2xl font-bold text-white">{totalCategories}</p>
+            <p class="text-gray-500 text-xs">{enabledCategories} aktif</p>
+        </div>
+        <div class="bg-[#142925] rounded-2xl p-5 border border-[#1F3D36]">
+            <p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-1">Total Provider</p>
+            <p class="text-2xl font-bold text-white">{totalProviders}</p>
+        </div>
+        <div class="bg-[#142925] rounded-2xl p-5 border border-[#1F3D36]">
+            <p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-1">Total Produk</p>
+            <p class="text-2xl font-bold text-emerald-400">{totalProducts}</p>
+        </div>
+        <div class="bg-[#142925] rounded-2xl p-5 border border-[#1F3D36]">
+            <p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-1">Status API</p>
+            <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+                <span class="text-emerald-400 font-bold">Connected</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global Margin Settings Card -->
+    <div class="bg-gradient-to-r from-[#142925] to-[#1F3D36] rounded-2xl p-5 border border-[#1F3D36] mb-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-[#D4F24F]/20 flex items-center justify-center">
+                    <svg class="w-5 h-5 text-[#D4F24F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold text-sm">Pengaturan Margin Global</h3>
+                    <p class="text-gray-400 text-xs">Terapkan margin ke semua layanan sekaligus</p>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-3">
+                <!-- Prabayar Global -->
+                <div class="flex items-center gap-2 bg-[#0C1A18] rounded-xl px-4 py-2.5 border border-[#1F3D36]">
+                    <span class="text-emerald-400 text-xs font-bold whitespace-nowrap">Prabayar:</span>
+                    <select id="global-prabayar-type" class="px-2 py-1 bg-[#142925] border border-[#1F3D36] rounded-lg text-white text-xs cursor-pointer">
+                        <option value="percentage">%</option>
+                        <option value="fixed">Rp</option>
+                    </select>
+                    <input type="number" id="global-prabayar-value" placeholder="0" class="w-16 px-2 py-1 bg-[#142925] border border-[#1F3D36] rounded-lg text-white text-xs text-center" />
+                    <button id="apply-prabayar-global" class="px-3 py-1 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg text-xs font-bold transition-colors whitespace-nowrap">
+                        Apply All
+                    </button>
+                </div>
+                <!-- Pascabayar Global -->
+                <div class="flex items-center gap-2 bg-[#0C1A18] rounded-xl px-4 py-2.5 border border-[#1F3D36]">
+                    <span class="text-blue-400 text-xs font-bold whitespace-nowrap">Pascabayar:</span>
+                    <span class="text-gray-400 text-xs">Rp</span>
+                    <input type="number" id="global-pascabayar-value" placeholder="0" class="w-16 px-2 py-1 bg-[#142925] border border-[#1F3D36] rounded-lg text-white text-xs text-center" />
+                    <button id="apply-pascabayar-global" class="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-xs font-bold transition-colors whitespace-nowrap">
+                        Apply All
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search & Filter -->
+    <div class="bg-[#142925] rounded-2xl p-4 border border-[#1F3D36] mb-6 flex flex-col md:flex-row gap-4">
+        <div class="flex-1 relative">
+            <svg class="w-5 h-5 text-gray-500 absolute left-4 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <input 
+                type="text" 
+                id="search-input"
+                placeholder="Cari kategori atau provider..." 
+                class="w-full pl-12 pr-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50"
+            />
+        </div>
+        <select id="type-filter" class="px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50 cursor-pointer">
+            <option value="all">Semua Jenis</option>
+            <option value="prabayar">Prabayar</option>
+            <option value="pascabayar">Pascabayar</option>
+        </select>
+        <select id="status-filter" class="px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50 cursor-pointer">
+            <option value="all">Semua Status</option>
+            <option value="active">Aktif</option>
+            <option value="inactive">Nonaktif</option>
+        </select>
+    </div>
+
+    <!-- PRABAYAR Section -->
+    <div class="section-container mb-8" data-section="prabayar">
+        <div class="flex items-center gap-3 mb-4">
+            <h2 class="text-xl font-bold text-white">Prabayar</h2>
+            <span class="px-3 py-1 bg-emerald-500/20 text-emerald-400 text-xs font-bold rounded-full">{prabayarCategories.length} Kategori</span>
+        </div>
+        
+        <div class="grid grid-cols-1 gap-3" id="prabayar-container">
+            {prabayarCategories.map((cat) => (
+                <div class="category-card bg-[#142925] rounded-2xl border border-[#1F3D36] overflow-hidden" data-category={cat.id} data-enabled={cat.enabled.toString()}>
+                    <!-- Category Header -->
+                    <div class="category-header px-4 md:px-5 py-3 md:py-4 flex items-center justify-between cursor-pointer hover:bg-[#1F3D36]/30 transition-colors gap-2">
+                        <div class="flex items-center gap-2 min-w-0 flex-1">
+                            <div class="min-w-0">
+                                <h3 class="text-white font-bold text-sm truncate">{cat.name}</h3>
+                                <p class="text-gray-500 text-xs whitespace-nowrap">
+                                    {cat.providers.length > 0 
+                                        ? `${cat.providers.length} prov • ${cat.providers.reduce((a, p) => a + p.products.length, 0)} produk` 
+                                        : 'Belum ada provider'}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 flex-shrink-0">
+                            {!cat.enabled && (
+                                <span class="hidden md:inline px-2 py-0.5 bg-gray-600/30 text-gray-400 text-xs font-bold rounded">Nonaktif</span>
+                            )}
+                            <!-- Global Margin Settings (hidden on mobile) -->
+                            {cat.providers.length > 0 && (
+                                <div class="hidden md:flex items-center gap-1" onclick="event.stopPropagation()">
+                                    <span class="text-gray-500 text-xs">Margin:</span>
+                                    <select class="category-margin-type px-1 py-1 bg-[#0C1A18] border border-[#1F3D36] rounded text-white text-xs cursor-pointer">
+                                        <option value="percentage">%</option>
+                                        <option value="fixed">Rp</option>
+                                    </select>
+                                    <input type="number" placeholder="0" class="category-margin-value w-12 px-1 py-1 bg-[#0C1A18] border border-[#1F3D36] rounded text-white text-xs text-center" />
+                                    <button class="apply-margin-btn px-2 py-1 bg-[#D4F24F] hover:bg-[#c3e33b] text-[#0F1F1C] rounded text-xs font-bold transition-colors">
+                                        ✓
+                                    </button>
+                                </div>
+                            )}
+                            <label class="status-toggle relative inline-flex items-center cursor-pointer flex-shrink-0" onclick="event.stopPropagation()">
+                                <input type="checkbox" checked={cat.enabled} class="sr-only peer" />
+                                <div class="toggle-indicator w-9 h-5 rounded-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full peer-checked:after:border-white transition-colors" style={`background-color: ${cat.enabled ? '#D4F24F' : '#4B5563'}`}></div>
+                            </label>
+                            <svg class="chevron-icon w-4 h-4 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Providers Content (Hidden by default) -->
+                    {cat.providers.length > 0 && (
+                        <div class="category-content hidden border-t border-[#1F3D36]">
+                            {cat.providers.map((provider) => (
+                                <div class="provider-card border-b border-[#1F3D36]/50 last:border-0" data-provider={provider.id} data-enabled={provider.enabled.toString()}>
+                                    <!-- Provider Header -->
+                                    <div class="provider-header px-5 py-3 flex items-center justify-between cursor-pointer hover:bg-[#0C1A18]/50 transition-colors bg-[#0C1A18]/30">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 bg-white rounded-lg p-1 flex items-center justify-center overflow-hidden">
+                                                <img src={provider.logo} class="w-full h-full object-contain" alt={provider.name} />
+                                            </div>
+                                            <div>
+                                                <h4 class="text-white font-bold text-xs">{provider.name}</h4>
+                                                <p class="text-gray-600 text-xs">{provider.products.length} produk • {provider.profitType === 'percentage' ? `${provider.profitValue}%` : `Rp ${provider.profitValue.toLocaleString('id-ID')}`}</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <div class="flex items-center gap-1" onclick="event.stopPropagation()">
+                                                <select class="px-1.5 py-1 bg-[#0C1A18] border border-[#1F3D36] rounded text-white text-xs">
+                                                    <option value="percentage" selected={provider.profitType === 'percentage'}>%</option>
+                                                    <option value="fixed" selected={provider.profitType === 'fixed'}>Rp</option>
+                                                </select>
+                                                <input type="number" value={provider.profitValue} class="w-14 px-1.5 py-1 bg-[#0C1A18] border border-[#1F3D36] rounded text-white text-xs text-center" />
+                                            </div>
+                                            <label class="status-toggle relative inline-flex items-center cursor-pointer" onclick="event.stopPropagation()">
+                                                <input type="checkbox" checked={provider.enabled} class="sr-only peer" />
+                                                <div class="toggle-indicator w-8 h-4 rounded-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:after:translate-x-full peer-checked:after:border-white transition-colors" style={`background-color: ${provider.enabled ? '#D4F24F' : '#4B5563'}`}></div>
+                                            </label>
+                                            <svg class="provider-chevron w-3 h-3 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Products Table -->
+                                    <div class="provider-products hidden">
+                                        <table class="w-full text-xs">
+                                            <thead>
+                                                <tr class="text-left bg-[#0C1A18]/50">
+                                                    <th class="px-5 py-2 text-xs font-bold text-gray-400 uppercase tracking-wider">Produk</th>
+                                                    <th class="px-5 py-2 text-xs font-bold text-gray-400 uppercase tracking-wider text-right">Modal</th>
+                                                    <th class="px-5 py-2 text-xs font-bold text-gray-400 uppercase tracking-wider text-right">Harga Jual</th>
+                                                    <th class="px-5 py-2 text-xs font-bold text-gray-400 uppercase tracking-wider text-right">Profit</th>
+                                                    <th class="px-5 py-2 text-xs font-bold text-gray-400 uppercase tracking-wider text-center">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="divide-y divide-[#1F3D36]/30">
+                                                {provider.products.map((product) => {
+                                                    const profit = product.sellPrice - product.basePrice;
+                                                    const profitPercent = product.basePrice > 0 ? ((profit / product.basePrice) * 100).toFixed(1) : '0';
+                                                    return (
+                                                        <tr class="hover:bg-[#1F3D36]/20 transition-colors">
+                                                            <td class="px-5 py-2">
+                                                                <p class="text-white text-xs">{product.name}</p>
+                                                                <p class="text-gray-600 text-xs font-mono">{product.id}</p>
+                                                            </td>
+                                                            <td class="px-5 py-2 text-right">
+                                                                <span class="text-gray-400 text-xs font-mono">Rp {product.basePrice.toLocaleString('id-ID')}</span>
+                                                            </td>
+                                                            <td class="px-5 py-2 text-right">
+                                                                <input type="number" value={product.sellPrice} class="w-24 px-2 py-1 bg-[#0C1A18] border border-[#1F3D36] rounded text-white text-xs text-right font-mono focus:outline-none focus:ring-1 focus:ring-[#D4F24F]/50" />
+                                                            </td>
+                                                            <td class="px-5 py-2 text-right">
+                                                                <span class="text-emerald-400 font-bold text-xs">+Rp {profit.toLocaleString('id-ID')}</span>
+                                                                <span class="text-gray-500 text-xs ml-1">({profitPercent}%)</span>
+                                                            </td>
+                                                            <td class="px-5 py-2 text-center">
+                                                                <label class="status-toggle relative inline-flex items-center cursor-pointer">
+                                                                    <input type="checkbox" checked={product.enabled} class="sr-only peer" />
+                                                                    <div class="toggle-indicator w-7 h-3.5 rounded-full after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:rounded-full after:h-2.5 after:w-2.5 after:transition-all peer-checked:after:translate-x-full transition-colors" style={`background-color: ${product.enabled ? '#D4F24F' : '#4B5563'}`}></div>
+                                                                </label>
+                                                            </td>
+                                                        </tr>
+                                                    );
+                                                })}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            ))}
+        </div>
+    </div>
+
+    <!-- PASCABAYAR Section -->
+    <div class="section-container" data-section="pascabayar">
+        <div class="flex items-center gap-3 mb-4">
+            <h2 class="text-xl font-bold text-white">Pascabayar</h2>
+            <span class="px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-bold rounded-full">{pascabayarCategories.length} Kategori</span>
+        </div>
+        
+        <div class="grid grid-cols-1 gap-3" id="pascabayar-container">
+            {pascabayarCategories.map((cat) => (
+                <div class="category-card bg-[#142925] rounded-2xl border border-[#1F3D36] overflow-hidden" data-category={cat.id} data-enabled={cat.enabled.toString()}>
+                    <!-- Category Header -->
+                    <div class="category-header px-4 md:px-5 py-3 md:py-4 flex items-center justify-between cursor-pointer hover:bg-[#1F3D36]/30 transition-colors gap-2">
+                        <div class="flex items-center gap-2 min-w-0 flex-1">
+                            <div class="min-w-0">
+                                <h3 class="text-white font-bold text-sm truncate">{cat.name}</h3>
+                                <p class="text-gray-500 text-xs whitespace-nowrap">
+                                    {cat.providers.length > 0 
+                                        ? `${cat.providers.length} prov • ${cat.providers.reduce((a, p) => a + p.products.length, 0)} produk` 
+                                        : 'Belum ada provider'}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 flex-shrink-0">
+                            {!cat.enabled && (
+                                <span class="hidden md:inline px-2 py-0.5 bg-gray-600/30 text-gray-400 text-xs font-bold rounded">Nonaktif</span>
+                            )}
+                            <!-- Global Margin Settings (hidden on mobile) -->
+                            {cat.providers.length > 0 && (
+                                <div class="hidden md:flex items-center gap-1" onclick="event.stopPropagation()">
+                                    <span class="text-gray-500 text-xs">Admin:</span>
+                                    <span class="text-gray-400 text-xs">Rp</span>
+                                    <input type="number" placeholder="0" class="category-margin-value w-14 px-1 py-1 bg-[#0C1A18] border border-[#1F3D36] rounded text-white text-xs text-center" />
+                                    <button class="apply-margin-btn px-2 py-1 bg-[#D4F24F] hover:bg-[#c3e33b] text-[#0F1F1C] rounded text-xs font-bold transition-colors">
+                                        ✓
+                                    </button>
+                                </div>
+                            )}
+                            <label class="status-toggle relative inline-flex items-center cursor-pointer flex-shrink-0" onclick="event.stopPropagation()">
+                                <input type="checkbox" checked={cat.enabled} class="sr-only peer" />
+                                <div class="toggle-indicator w-9 h-5 rounded-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full peer-checked:after:border-white transition-colors" style={`background-color: ${cat.enabled ? '#D4F24F' : '#4B5563'}`}></div>
+                            </label>
+                            <svg class="chevron-icon w-4 h-4 text-gray-500 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Providers Content (Hidden by default) -->
+                    {cat.providers.length > 0 && (
+                        <div class="category-content hidden border-t border-[#1F3D36]">
+                            {cat.providers.map((provider) => (
+                                <div class="provider-card border-b border-[#1F3D36]/50 last:border-0" data-provider={provider.id} data-enabled={provider.enabled.toString()}>
+                                    <div class="provider-header px-5 py-3 flex items-center justify-between cursor-pointer hover:bg-[#0C1A18]/50 transition-colors bg-[#0C1A18]/30">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 bg-white rounded-lg p-1 flex items-center justify-center overflow-hidden">
+                                                <img src={provider.logo} class="w-full h-full object-contain" alt={provider.name} />
+                                            </div>
+                                            <div>
+                                                <h4 class="text-white font-bold text-xs">{provider.name}</h4>
+                                                <p class="text-gray-600 text-xs">{provider.products.length} produk • Admin: Rp {provider.profitValue.toLocaleString('id-ID')}</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <label class="status-toggle relative inline-flex items-center cursor-pointer" onclick="event.stopPropagation()">
+                                                <input type="checkbox" checked={provider.enabled} class="sr-only peer" />
+                                                <div class="toggle-indicator w-8 h-4 rounded-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:after:translate-x-full peer-checked:after:border-white transition-colors" style={`background-color: ${provider.enabled ? '#D4F24F' : '#4B5563'}`}></div>
+                                            </label>
+                                            <svg class="provider-chevron w-3 h-3 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="provider-products hidden p-4 bg-[#0C1A18]/20">
+                                        <p class="text-gray-400 text-xs">Tagihan pascabayar akan dicek secara real-time saat user memasukkan ID Pelanggan.</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            ))}
+        </div>
+    </div>
+
+    <!-- Info Card -->
+    <div class="mt-8 bg-[#0C1A18] rounded-2xl p-6 border border-[#1F3D36]">
+        <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2">
+            <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            Cara Kerja
+        </h3>
+        <ul class="text-gray-400 text-sm space-y-2">
+            <li class="flex items-start gap-2">
+                <span class="text-[#D4F24F] font-bold">1.</span>
+                <span><strong class="text-white">Prabayar:</strong> Harga modal dari API, profit diatur per provider atau per produk.</span>
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="text-[#D4F24F] font-bold">2.</span>
+                <span><strong class="text-white">Pascabayar:</strong> Tagihan dicek real-time, admin fee tetap per transaksi.</span>
+            </li>
+            <li class="flex items-start gap-2">
+                <span class="text-[#D4F24F] font-bold">3.</span>
+                <span><strong class="text-white">Sync API:</strong> Update harga modal terbaru dari Digiflazz/Tokovoucher.</span>
+            </li>
+        </ul>
+    </div>
+</AdminLayout>
+
+<script>
+    // Toggle switch interactivity
+    document.querySelectorAll(".status-toggle").forEach((toggle) => {
+        const checkbox = toggle.querySelector('input[type="checkbox"]') as HTMLInputElement | null;
+        const indicator = toggle.querySelector(".toggle-indicator") as HTMLElement | null;
+
+        checkbox?.addEventListener("change", () => {
+            if (!indicator) return;
+            indicator.style.backgroundColor = checkbox.checked ? "#D4F24F" : "#4B5563";
+        });
+    });
+
+    // Category accordion
+    document.querySelectorAll(".category-header").forEach((header) => {
+        header.addEventListener("click", () => {
+            const card = header.closest(".category-card");
+            const content = card?.querySelector(".category-content");
+            const chevron = header.querySelector(".chevron-icon");
+            
+            if (content && chevron) {
+                content.classList.toggle("hidden");
+                chevron.classList.toggle("rotate-180");
+            }
+        });
+    });
+
+    // Provider accordion
+    document.querySelectorAll(".provider-header").forEach((header) => {
+        header.addEventListener("click", () => {
+            const card = header.closest(".provider-card");
+            const products = card?.querySelector(".provider-products");
+            const chevron = header.querySelector(".provider-chevron");
+            
+            if (products && chevron) {
+                products.classList.toggle("hidden");
+                chevron.classList.toggle("rotate-180");
+            }
+        });
+    });
+
+    // Search & Filter
+    const searchInput = document.getElementById("search-input") as HTMLInputElement;
+    const typeFilter = document.getElementById("type-filter") as HTMLSelectElement;
+    const statusFilter = document.getElementById("status-filter") as HTMLSelectElement;
+
+    function filterCategories() {
+        const searchTerm = searchInput?.value.toLowerCase() || "";
+        const selectedType = typeFilter?.value || "all";
+        const selectedStatus = statusFilter?.value || "all";
+
+        // Filter sections
+        document.querySelectorAll(".section-container").forEach((section) => {
+            const sectionType = section.getAttribute("data-section");
+            const typeMatch = selectedType === "all" || sectionType === selectedType;
+            (section as HTMLElement).style.display = typeMatch ? "block" : "none";
+        });
+
+        // Filter categories
+        document.querySelectorAll(".category-card").forEach((card) => {
+            const categoryName = card.querySelector("h3")?.textContent?.toLowerCase() || "";
+            const isEnabled = card.getAttribute("data-enabled") === "true";
+            
+            const searchMatch = categoryName.includes(searchTerm);
+            const statusMatch = selectedStatus === "all" || 
+                (selectedStatus === "active" && isEnabled) ||
+                (selectedStatus === "inactive" && !isEnabled);
+            
+            (card as HTMLElement).style.display = searchMatch && statusMatch ? "block" : "none";
+        });
+    }
+
+    searchInput?.addEventListener("input", filterCategories);
+    typeFilter?.addEventListener("change", filterCategories);
+    statusFilter?.addEventListener("change", filterCategories);
+</script>

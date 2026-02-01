@@ -48,6 +48,25 @@ const adminMenu = [
         ],
     },
     {
+        name: "Manage",
+        icon: "manage",
+        active: currentPath.startsWith("/admin/manage"),
+        submenu: [
+            {
+                name: "Pulsa & PPOB",
+                href: "/admin/manage/ppob",
+            },
+            {
+                name: "Social Booster",
+                href: "/admin/manage/social-booster",
+            },
+            {
+                name: "Clipper",
+                href: "/admin/manage/clipper",
+            },
+        ],
+    },
+    {
         name: "Settings",
         icon: "settings",
         href: "/admin/settings",
@@ -113,6 +132,18 @@ const menuItems = adminMenu;
                                                 : "invert opacity-60 group-hover:opacity-100",
                                         ]}
                                         alt="Campaigns"
+                                    />
+                                )}
+                                {item.icon === "manage" && (
+                                    <img
+                                        src="https://img.icons8.com/?size=100&id=40515&format=png&color=000000"
+                                        class:list={[
+                                            "w-5 h-5 transition-all duration-200",
+                                            item.active
+                                                ? ""
+                                                : "invert opacity-60 group-hover:opacity-100",
+                                        ]}
+                                        alt="Manage"
                                     />
                                 )}
                                 {item.name}

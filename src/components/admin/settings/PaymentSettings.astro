@@ -72,12 +72,12 @@
                         >
                     </button>
                     <label
-                        class="relative inline-flex items-center cursor-pointer"
+                        class="status-toggle relative inline-flex items-center cursor-pointer"
                     >
                         <input type="checkbox" checked class="sr-only peer" />
                         <div
-                            class="w-11 h-6 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#D4F24F]"
-                            style="background-color: #374151;"
+                            class="toggle-indicator w-11 h-6 rounded-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full peer-checked:after:border-white transition-colors"
+                            style="background-color: #D4F24F;"
                         >
                         </div>
                     </label>
@@ -136,12 +136,12 @@
                         >
                     </button>
                     <label
-                        class="relative inline-flex items-center cursor-pointer"
+                        class="status-toggle relative inline-flex items-center cursor-pointer"
                     >
                         <input type="checkbox" checked class="sr-only peer" />
                         <div
-                            class="w-11 h-6 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#D4F24F]"
-                            style="background-color: #374151;"
+                            class="toggle-indicator w-11 h-6 rounded-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full peer-checked:after:border-white transition-colors"
+                            style="background-color: #D4F24F;"
                         >
                         </div>
                     </label>
@@ -200,12 +200,12 @@
                         >
                     </button>
                     <label
-                        class="relative inline-flex items-center cursor-pointer"
+                        class="status-toggle relative inline-flex items-center cursor-pointer"
                     >
                         <input type="checkbox" checked class="sr-only peer" />
                         <div
-                            class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#D4F24F]"
-                            style="background-color: #374151;"
+                            class="toggle-indicator w-11 h-6 rounded-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full peer-checked:after:border-white transition-colors"
+                            style="background-color: #D4F24F;"
                         >
                         </div>
                     </label>
@@ -264,12 +264,12 @@
                         >
                     </button>
                     <label
-                        class="relative inline-flex items-center cursor-pointer"
+                        class="status-toggle relative inline-flex items-center cursor-pointer"
                     >
                         <input type="checkbox" checked class="sr-only peer" />
                         <div
-                            class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#D4F24F]"
-                            style="background-color: #374151;"
+                            class="toggle-indicator w-11 h-6 rounded-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full peer-checked:after:border-white transition-colors"
+                            style="background-color: #D4F24F;"
                         >
                         </div>
                     </label>
@@ -627,4 +627,20 @@
             input.type = "password";
         }
     }
+
+    // Toggle switch interactivity
+    document.querySelectorAll(".status-toggle").forEach((toggle) => {
+        const checkbox = toggle.querySelector('input[type="checkbox"]');
+        const indicator = toggle.querySelector(".toggle-indicator");
+
+        checkbox?.addEventListener("change", () => {
+            if (!indicator) return;
+
+            if (checkbox.checked) {
+                indicator.style.backgroundColor = "#D4F24F";
+            } else {
+                indicator.style.backgroundColor = "#4B5563";
+            }
+        });
+    });
 </script>
