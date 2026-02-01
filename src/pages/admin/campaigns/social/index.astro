@@ -1,0 +1,227 @@
+---
+import AdminLayout from "../../../../layouts/AdminLayout.astro";
+
+// Mock Social Booster Data
+const campaigns = Array.from({ length: 15 }).map((_, i) => ({
+    id: `CP-SOC-${5000 + i}`,
+    user: [
+        "Budi Santoso",
+        "Siti Aminah",
+        "Eko Prasetyo",
+        "Dewi Cahyani",
+        "Rizky",
+    ][i % 5],
+    userId: `USER-${1000 + (i % 5)}`,
+    platform: ["Instagram", "TikTok", "Youtube", "Twitter"][
+        Math.floor(Math.random() * 4)
+    ],
+    service: ["Followers", "Likes", "Views", "Comments"][
+        Math.floor(Math.random() * 4)
+    ],
+    target: Math.floor(Math.random() * 5000) + 100,
+    progress: Math.floor(Math.random() * 100),
+    status: ["Active", "Completed", "Cancelled", "Processing"][
+        Math.floor(Math.random() * 4)
+    ],
+    date: new Date(
+        Date.now() - Math.floor(Math.random() * 1000 * 60 * 60 * 24 * 7),
+    ).toLocaleDateString("id-ID", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+    }),
+}));
+
+const platformIcons: Record<string, string> = {
+    Instagram: "https://www.svgrepo.com/show/452229/instagram-1.svg",
+    TikTok: "https://www.svgrepo.com/show/340453/tiktok.svg",
+    Youtube: "https://www.svgrepo.com/show/354611/youtube-icon.svg",
+    Twitter: "https://www.svgrepo.com/show/475689/twitter-color.svg", // Using X logo usually but keeping consistent with existing
+};
+---
+
+<AdminLayout title="Kelola Social Booster - NexOne Admin">
+    <div
+        class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4"
+    >
+        <div>
+            <h1 class="text-2xl font-bold text-white tracking-tight">
+                Social Booster
+            </h1>
+            <p class="text-gray-400 text-sm mt-1">
+                Kelola campaign social media booster pengguna.
+            </p>
+        </div>
+        <div class="flex gap-2">
+            <button
+                class="px-4 py-2 bg-[#142925] text-white rounded-xl text-sm font-bold hover:bg-[#1F3D36] transition-colors border border-[#1F3D36] flex items-center gap-2"
+            >
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    ><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+                    ></path></svg
+                >
+                Filter
+            </button>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div
+        class="bg-[#142925] rounded-[2rem] border border-[#1F3D36] overflow-hidden shadow-sm"
+    >
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr
+                        class="text-left border-b border-[#1F3D36] bg-[#0C1A18]/50"
+                    >
+                        <th
+                            class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                            >Campaign ID</th
+                        >
+                        <th
+                            class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                            >User</th
+                        >
+                        <th
+                            class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                            >Platform & Service</th
+                        >
+                        <th
+                            class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                            >Progress</th
+                        >
+                        <th
+                            class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                            >Status</th
+                        >
+                        <th
+                            class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right"
+                            >Action</th
+                        >
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-[#1F3D36]">
+                    {
+                        campaigns.map((camp) => (
+                            <tr class="group hover:bg-[#1F3D36]/30 transition-colors">
+                                <td class="px-6 py-4">
+                                    <p class="text-white font-bold text-sm font-mono">
+                                        {camp.id}
+                                    </p>
+                                    <p class="text-gray-500 text-[10px] mt-0.5">
+                                        {camp.date}
+                                    </p>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <p class="text-white font-bold text-sm">
+                                        {camp.user}
+                                    </p>
+                                    <p class="text-gray-500 text-[10px] font-mono">
+                                        {camp.userId}
+                                    </p>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center p-1.5 border border-[#1F3D36]">
+                                            <img
+                                                src={
+                                                    platformIcons[camp.platform]
+                                                }
+                                                alt={camp.platform}
+                                                class="w-full h-full object-contain"
+                                            />
+                                        </div>
+                                        <div>
+                                            <p class="text-white font-bold text-sm">
+                                                {camp.platform}
+                                            </p>
+                                            <p class="text-gray-400 text-xs">
+                                                {camp.service} • {camp.target}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 align-middle">
+                                    <div class="w-full bg-[#0C1A18] rounded-full h-2 mb-1 border border-[#1F3D36]">
+                                        <div
+                                            class="bg-[#D4F24F] h-1.5 rounded-full"
+                                            style={`width: ${camp.progress}%`}
+                                        />
+                                    </div>
+                                    <p class="text-xs text-gray-400 font-mono text-right">
+                                        {camp.progress}%
+                                    </p>
+                                </td>
+                                <td class="px-6 py-4">
+                                    {camp.status === "Completed" && (
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-bold">
+                                            Completed
+                                        </span>
+                                    )}
+                                    {camp.status === "Active" && (
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs font-bold">
+                                            Active
+                                        </span>
+                                    )}
+                                    {camp.status === "Processing" && (
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-bold">
+                                            Processing
+                                        </span>
+                                    )}
+                                    {camp.status === "Cancelled" && (
+                                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-red-500/10 text-red-400 border border-red-500/20 text-xs font-bold">
+                                            Cancelled
+                                        </span>
+                                    )}
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <button class="text-gray-400 hover:text-white transition-colors bg-[#0C1A18] hover:bg-[#1F3D36] p-1.5 rounded-lg border border-[#1F3D36]">
+                                        <svg
+                                            class="w-4 h-4"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                                            />
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div
+            class="px-6 py-4 border-t border-[#1F3D36] flex items-center justify-between bg-[#0C1A18]/30"
+        >
+            <span class="text-xs font-bold text-gray-500"
+                >Showing 1 to 15 of 200 campaigns</span
+            >
+            <div class="flex gap-2">
+                <button
+                    class="px-3 py-1.5 rounded-lg bg-[#D4F24F] text-[#0C1A18] font-bold text-xs hover:bg-[#c3e33b] transition-all"
+                    >1</button
+                >
+                <button
+                    class="px-3 py-1.5 rounded-lg border border-[#1F3D36] text-gray-400 hover:text-white hover:bg-[#1F3D36] font-bold text-xs transition-all"
+                    >Next</button
+                >
+            </div>
+        </div>
+    </div>
+</AdminLayout>

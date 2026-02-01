@@ -1,0 +1,630 @@
+<div
+    class="bg-[#142925] rounded-[2rem] border border-[#1F3D36] overflow-hidden"
+>
+    <div class="px-8 py-6 border-b border-[#1F3D36] bg-[#0C1A18]/50">
+        <h2 class="text-lg font-bold text-white flex items-center gap-3">
+            <svg
+                class="w-5 h-5 text-[#D4F24F]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                ><path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                ></path></svg
+            >
+            Payment Gateways
+        </h2>
+    </div>
+    <div class="p-8">
+        <div class="space-y-4">
+            <!-- Gateway Item: Tripay -->
+            <div
+                class="flex items-center justify-between p-4 bg-[#0C1A18] border border-[#1F3D36] rounded-xl hover:border-[#D4F24F] transition-colors group"
+            >
+                <div
+                    class="flex items-center gap-4 cursor-pointer flex-1"
+                    onclick="openModal('tripay-modal')"
+                >
+                    <div
+                        class="w-12 h-12 bg-white rounded-lg p-2 flex items-center justify-center"
+                    >
+                        <img
+                            src="https://img.icons8.com/?size=100&id=aFhDqXfqjTFa&format=png&color=000000"
+                            class="w-8 h-8 object-contain"
+                            alt="Tripay"
+                        />
+                    </div>
+                    <div>
+                        <h3
+                            class="text-white font-bold group-hover:text-[#D4F24F] transition-colors"
+                        >
+                            Tripay Auto Payment
+                        </h3>
+                        <p class="text-gray-500 text-xs">
+                            Klik untuk konfigurasi API Key & Merchant Code.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 md:gap-4">
+                    <button
+                        class="p-2 text-gray-400 hover:text-white transition-colors"
+                        onclick="openModal('tripay-modal')"
+                    >
+                        <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                            ></path><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                            ></path></svg
+                        >
+                    </button>
+                    <label
+                        class="relative inline-flex items-center cursor-pointer"
+                    >
+                        <input type="checkbox" checked class="sr-only peer" />
+                        <div
+                            class="w-11 h-6 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#D4F24F]"
+                            style="background-color: #374151;"
+                        >
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Gateway Item: Manual Bank -->
+            <div
+                class="flex items-center justify-between p-4 bg-[#0C1A18] border border-[#1F3D36] rounded-xl hover:border-[#D4F24F] transition-colors group"
+            >
+                <div
+                    class="flex items-center gap-4 cursor-pointer flex-1"
+                    onclick="openModal('bank-modal')"
+                >
+                    <div
+                        class="w-12 h-12 bg-white rounded-lg p-2 flex items-center justify-center"
+                    >
+                        <img
+                            src="https://img.icons8.com/?size=100&id=uRpF18pruKCD&format=png&color=000000"
+                            class="w-8 h-8 object-contain"
+                            alt="Bank Transfer"
+                        />
+                    </div>
+                    <div>
+                        <h3
+                            class="text-white font-bold group-hover:text-[#D4F24F] transition-colors"
+                        >
+                            Manual Bank Transfer
+                        </h3>
+                        <p class="text-gray-500 text-xs">
+                            Klik untuk atur No. Rekening & Nama Bank.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 md:gap-4">
+                    <button
+                        class="p-2 text-gray-400 hover:text-white transition-colors"
+                        onclick="openModal('bank-modal')"
+                    >
+                        <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                            ></path><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                            ></path></svg
+                        >
+                    </button>
+                    <label
+                        class="relative inline-flex items-center cursor-pointer"
+                    >
+                        <input type="checkbox" checked class="sr-only peer" />
+                        <div
+                            class="w-11 h-6 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#D4F24F]"
+                            style="background-color: #374151;"
+                        >
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Gateway Item: Manual Dana -->
+            <div
+                class="flex items-center justify-between p-4 bg-[#0C1A18] border border-[#1F3D36] rounded-xl hover:border-[#D4F24F] transition-colors group"
+            >
+                <div
+                    class="flex items-center gap-4 cursor-pointer flex-1"
+                    onclick="openModal('dana-modal')"
+                >
+                    <div
+                        class="w-12 h-12 bg-white rounded-lg p-2 flex items-center justify-center"
+                    >
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_dana_blue.svg/1200px-Logo_dana_blue.svg.png"
+                            class="w-8 h-8 object-contain"
+                            alt="DANA"
+                        />
+                    </div>
+                    <div>
+                        <h3
+                            class="text-white font-bold group-hover:text-[#D4F24F] transition-colors"
+                        >
+                            Manual DANA
+                        </h3>
+                        <p class="text-gray-500 text-xs">
+                            Klik untuk atur No. DANA & Atas Nama.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 md:gap-4">
+                    <button
+                        class="p-2 text-gray-400 hover:text-white transition-colors"
+                        onclick="openModal('dana-modal')"
+                    >
+                        <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                            ></path><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                            ></path></svg
+                        >
+                    </button>
+                    <label
+                        class="relative inline-flex items-center cursor-pointer"
+                    >
+                        <input type="checkbox" checked class="sr-only peer" />
+                        <div
+                            class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#D4F24F]"
+                            style="background-color: #374151;"
+                        >
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Gateway Item: Manual Gopay -->
+            <div
+                class="flex items-center justify-between p-4 bg-[#0C1A18] border border-[#1F3D36] rounded-xl hover:border-[#D4F24F] transition-colors group"
+            >
+                <div
+                    class="flex items-center gap-4 cursor-pointer flex-1"
+                    onclick="openModal('gopay-modal')"
+                >
+                    <div
+                        class="w-12 h-12 bg-white rounded-lg p-2 flex items-center justify-center"
+                    >
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Gopay_logo.svg/1200px-Gopay_logo.svg.png"
+                            class="w-8 h-8 object-contain"
+                            alt="Gopay"
+                        />
+                    </div>
+                    <div>
+                        <h3
+                            class="text-white font-bold group-hover:text-[#D4F24F] transition-colors"
+                        >
+                            Manual Gopay
+                        </h3>
+                        <p class="text-gray-500 text-xs">
+                            Klik untuk atur No. Gopay & Atas Nama.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 md:gap-4">
+                    <button
+                        class="p-2 text-gray-400 hover:text-white transition-colors"
+                        onclick="openModal('gopay-modal')"
+                    >
+                        <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                            ></path><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                            ></path></svg
+                        >
+                    </button>
+                    <label
+                        class="relative inline-flex items-center cursor-pointer"
+                    >
+                        <input type="checkbox" checked class="sr-only peer" />
+                        <div
+                            class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#D4F24F]"
+                            style="background-color: #374151;"
+                        >
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modals -->
+<!-- Tripay Modal -->
+<div
+    id="tripay-modal"
+    class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4"
+>
+    <div
+        class="absolute inset-0 bg-black/80 backdrop-blur-sm"
+        onclick="closeModal('tripay-modal')"
+    >
+    </div>
+    <div
+        class="w-full max-w-lg bg-[#142925] border border-[#1F3D36] rounded-[2rem] p-6 md:p-8 shadow-2xl relative z-10 max-h-[90vh] overflow-y-auto"
+    >
+        <h3 class="text-xl font-bold text-white mb-6">Tripay Configuration</h3>
+        <div class="space-y-4">
+            <div class="space-y-2">
+                <label
+                    class="text-xs font-bold text-gray-400 uppercase tracking-wider"
+                    >API Key</label
+                >
+                <div class="relative">
+                    <input
+                        id="tripay-api"
+                        type="password"
+                        value="************************"
+                        class="w-full px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50 focus:border-[#D4F24F] transition-all pr-12"
+                    />
+                    <button
+                        type="button"
+                        onclick="togglePassword('tripay-api')"
+                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white"
+                    >
+                        <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                            ></path><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                            ></path></svg
+                        >
+                    </button>
+                </div>
+            </div>
+            <div class="space-y-2">
+                <label
+                    class="text-xs font-bold text-gray-400 uppercase tracking-wider"
+                    >Private Key</label
+                >
+                <div class="relative">
+                    <input
+                        id="tripay-private"
+                        type="password"
+                        value="************************"
+                        class="w-full px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50 focus:border-[#D4F24F] transition-all pr-12"
+                    />
+                    <button
+                        type="button"
+                        onclick="togglePassword('tripay-private')"
+                        class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white"
+                    >
+                        <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                            ></path><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                            ></path></svg
+                        >
+                    </button>
+                </div>
+            </div>
+            <div class="space-y-2">
+                <label
+                    class="text-xs font-bold text-gray-400 uppercase tracking-wider"
+                    >Merchant Code</label
+                >
+                <input
+                    type="text"
+                    value="T12345678"
+                    class="w-full px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50 focus:border-[#D4F24F] transition-all"
+                />
+            </div>
+            <div class="space-y-2">
+                <label
+                    class="text-xs font-bold text-gray-400 uppercase tracking-wider"
+                    >Mode</label
+                >
+                <select
+                    class="w-full px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50 focus:border-[#D4F24F] transition-all cursor-pointer"
+                >
+                    <option value="sandbox">Sandbox (Testing)</option>
+                    <option value="production">Production (Live)</option>
+                </select>
+            </div>
+        </div>
+        <div class="flex gap-4 mt-8">
+            <button
+                onclick="closeModal('tripay-modal')"
+                class="flex-1 py-3 rounded-xl border border-[#1F3D36] text-gray-300 font-bold hover:bg-[#1F3D36] transition-colors"
+                >Cancel</button
+            >
+            <button
+                onclick="closeModal('tripay-modal')"
+                class="flex-1 py-3 rounded-xl bg-[#D4F24F] text-[#0C1A18] font-bold hover:bg-[#c3e33b] transition-colors shadow-lg hover:-translate-y-0.5 active:scale-95"
+                >Save Config</button
+            >
+        </div>
+    </div>
+</div>
+
+<!-- Bank Modal -->
+<div
+    id="bank-modal"
+    class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4"
+>
+    <div
+        class="absolute inset-0 bg-black/80 backdrop-blur-sm"
+        onclick="closeModal('bank-modal')"
+    >
+    </div>
+    <div
+        class="w-full max-w-lg bg-[#142925] border border-[#1F3D36] rounded-[2rem] p-6 md:p-8 shadow-2xl relative z-10 max-h-[90vh] overflow-y-auto"
+    >
+        <h3 class="text-xl font-bold text-white mb-6">
+            Bank Transfer Configuration
+        </h3>
+        <div class="space-y-4">
+            <div class="space-y-2">
+                <label
+                    class="text-xs font-bold text-gray-400 uppercase tracking-wider"
+                    >Bank Name</label
+                >
+                <input
+                    type="text"
+                    value="BCA"
+                    class="w-full px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50 focus:border-[#D4F24F] transition-all"
+                />
+            </div>
+            <div class="space-y-2">
+                <label
+                    class="text-xs font-bold text-gray-400 uppercase tracking-wider"
+                    >Account Number</label
+                >
+                <input
+                    type="text"
+                    value="1234567890"
+                    class="w-full px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50 focus:border-[#D4F24F] transition-all"
+                />
+            </div>
+            <div class="space-y-2">
+                <label
+                    class="text-xs font-bold text-gray-400 uppercase tracking-wider"
+                    >Account Holder Name</label
+                >
+                <input
+                    type="text"
+                    value="PT NEXONE DIGITAL INDONESIA"
+                    class="w-full px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50 focus:border-[#D4F24F] transition-all"
+                />
+            </div>
+            <div class="space-y-2">
+                <label
+                    class="text-xs font-bold text-gray-400 uppercase tracking-wider"
+                    >Payment Instructions</label
+                >
+                <textarea
+                    class="w-full px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50 focus:border-[#D4F24F] transition-all h-24 resize-none"
+                    >Silakan transfer sesuai nominal unik...</textarea
+                >
+            </div>
+        </div>
+        <div class="flex gap-4 mt-8">
+            <button
+                onclick="closeModal('bank-modal')"
+                class="flex-1 py-3 rounded-xl border border-[#1F3D36] text-gray-300 font-bold hover:bg-[#1F3D36] transition-colors"
+                >Cancel</button
+            >
+            <button
+                onclick="closeModal('bank-modal')"
+                class="flex-1 py-3 rounded-xl bg-[#D4F24F] text-[#0C1A18] font-bold hover:bg-[#c3e33b] transition-colors shadow-lg hover:-translate-y-0.5 active:scale-95"
+                >Save Config</button
+            >
+        </div>
+    </div>
+</div>
+
+<!-- Dana Modal -->
+<div
+    id="dana-modal"
+    class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4"
+>
+    <div
+        class="absolute inset-0 bg-black/80 backdrop-blur-sm"
+        onclick="closeModal('dana-modal')"
+    >
+    </div>
+    <div
+        class="w-full max-w-lg bg-[#142925] border border-[#1F3D36] rounded-[2rem] p-6 md:p-8 shadow-2xl relative z-10 max-h-[90vh] overflow-y-auto"
+    >
+        <h3 class="text-xl font-bold text-white mb-6">DANA Configuration</h3>
+        <div class="space-y-4">
+            <div class="space-y-2">
+                <label
+                    class="text-xs font-bold text-gray-400 uppercase tracking-wider"
+                    >DANA Number</label
+                >
+                <input
+                    type="text"
+                    value="081234567890"
+                    class="w-full px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50 focus:border-[#D4F24F] transition-all"
+                />
+            </div>
+            <div class="space-y-2">
+                <label
+                    class="text-xs font-bold text-gray-400 uppercase tracking-wider"
+                    >Account Holder Name</label
+                >
+                <input
+                    type="text"
+                    value="PT NEXONE DIGITAL"
+                    class="w-full px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50 focus:border-[#D4F24F] transition-all"
+                />
+            </div>
+            <div class="space-y-2">
+                <label
+                    class="text-xs font-bold text-gray-400 uppercase tracking-wider"
+                    >Payment Instructions</label
+                >
+                <textarea
+                    class="w-full px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50 focus:border-[#D4F24F] transition-all h-24 resize-none"
+                    >Silakan transfer via DANA ke nomor...</textarea
+                >
+            </div>
+        </div>
+        <div class="flex gap-4 mt-8">
+            <button
+                onclick="closeModal('dana-modal')"
+                class="flex-1 py-3 rounded-xl border border-[#1F3D36] text-gray-300 font-bold hover:bg-[#1F3D36] transition-colors"
+                >Cancel</button
+            >
+            <button
+                onclick="closeModal('dana-modal')"
+                class="flex-1 py-3 rounded-xl bg-[#D4F24F] text-[#0C1A18] font-bold hover:bg-[#c3e33b] transition-colors shadow-lg hover:-translate-y-0.5 active:scale-95"
+                >Save Config</button
+            >
+        </div>
+    </div>
+</div>
+
+<!-- Gopay Modal -->
+<div
+    id="gopay-modal"
+    class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4"
+>
+    <div
+        class="absolute inset-0 bg-black/80 backdrop-blur-sm"
+        onclick="closeModal('gopay-modal')"
+    >
+    </div>
+    <div
+        class="w-full max-w-lg bg-[#142925] border border-[#1F3D36] rounded-[2rem] p-6 md:p-8 shadow-2xl relative z-10 max-h-[90vh] overflow-y-auto"
+    >
+        <h3 class="text-xl font-bold text-white mb-6">Gopay Configuration</h3>
+        <div class="space-y-4">
+            <div class="space-y-2">
+                <label
+                    class="text-xs font-bold text-gray-400 uppercase tracking-wider"
+                    >Gopay Number</label
+                >
+                <input
+                    type="text"
+                    value="081234567890"
+                    class="w-full px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50 focus:border-[#D4F24F] transition-all"
+                />
+            </div>
+            <div class="space-y-2">
+                <label
+                    class="text-xs font-bold text-gray-400 uppercase tracking-wider"
+                    >Account Holder Name</label
+                >
+                <input
+                    type="text"
+                    value="PT NEXONE DIGITAL"
+                    class="w-full px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50 focus:border-[#D4F24F] transition-all"
+                />
+            </div>
+            <div class="space-y-2">
+                <label
+                    class="text-xs font-bold text-gray-400 uppercase tracking-wider"
+                    >Payment Instructions</label
+                >
+                <textarea
+                    class="w-full px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50 focus:border-[#D4F24F] transition-all h-24 resize-none"
+                    >Silakan transfer via Gopay ke nomor...</textarea
+                >
+            </div>
+        </div>
+        <div class="flex gap-4 mt-8">
+            <button
+                onclick="closeModal('gopay-modal')"
+                class="flex-1 py-3 rounded-xl border border-[#1F3D36] text-gray-300 font-bold hover:bg-[#1F3D36] transition-colors"
+                >Cancel</button
+            >
+            <button
+                onclick="closeModal('gopay-modal')"
+                class="flex-1 py-3 rounded-xl bg-[#D4F24F] text-[#0C1A18] font-bold hover:bg-[#c3e33b] transition-colors shadow-lg hover:-translate-y-0.5 active:scale-95"
+                >Save Config</button
+            >
+        </div>
+    </div>
+</div>
+
+<script is:inline>
+    function openModal(id) {
+        document.getElementById(id).classList.remove("hidden");
+        document.body.style.overflow = "hidden";
+    }
+    function closeModal(id) {
+        document.getElementById(id).classList.add("hidden");
+        document.body.style.overflow = "auto";
+    }
+    function togglePassword(id) {
+        const input = document.getElementById(id);
+        if (input.type === "password") {
+            input.type = "text";
+        } else {
+            input.type = "password";
+        }
+    }
+</script>

@@ -1,0 +1,88 @@
+---
+import "../styles/global.css";
+import "@fontsource/plus-jakarta-sans";
+import "@fontsource/plus-jakarta-sans/500.css";
+import "@fontsource/plus-jakarta-sans/600.css";
+import "@fontsource/plus-jakarta-sans/700.css";
+
+// Import Components
+import Sidebar from "../components/admin/Sidebar.astro";
+import Navbar from "../components/dashboard/Navbar.astro";
+import Footer from "../components/dashboard/Footer.astro";
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+    </head>
+    <body class="bg-white text-[#0F1F1C] font-['Plus_Jakarta_Sans',sans-serif]">
+        <div class="flex h-screen overflow-hidden">
+            <!-- Sidebar Component -->
+            <Sidebar />
+
+            <!-- Main Content Area -->
+            <main
+                class="flex-1 ml-0 md:ml-72 flex flex-col h-screen overflow-hidden bg-[#0C1A18]"
+            >
+                <!-- Navbar Component -->
+                <Navbar />
+
+                <!-- Page Content Scrollable -->
+                <div class="flex-1 overflow-y-auto flex flex-col">
+                    <div class="flex-1 p-4 md:p-8">
+                        <slot />
+                    </div>
+
+                    <!-- Footer Component -->
+                    <Footer />
+                </div>
+            </main>
+        </div>
+
+        <!-- Mobile Sidebar Overlay -->
+        <div
+            id="sidebar-overlay"
+            class="fixed inset-0 bg-black/50 z-40 hidden md:hidden glass-overlay opacity-0 transition-opacity duration-300"
+        >
+        </div>
+
+        <script>
+            const mobileBtn = document.getElementById("mobile-menu-btn");
+            const sidebar = document.getElementById("sidebar");
+            const overlay = document.getElementById("sidebar-overlay");
+
+            if (mobileBtn && sidebar && overlay) {
+                mobileBtn.addEventListener("click", () => {
+                    sidebar.classList.toggle("-translate-x-full");
+                    overlay.classList.toggle("hidden");
+                    mobileBtn.classList.toggle("rotate-180");
+                    // Small timeout to allow display:block to apply before opacity transition
+                    setTimeout(() => {
+                        overlay.classList.toggle("opacity-0");
+                    }, 10);
+                });
+
+                overlay.addEventListener("click", () => {
+                    sidebar.classList.add("-translate-x-full");
+                    overlay.classList.add("opacity-0");
+                    setTimeout(() => {
+                        overlay.classList.add("hidden");
+                    }, 300);
+                });
+            }
+        </script>
+    </body>
+</html>

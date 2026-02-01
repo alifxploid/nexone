@@ -1,0 +1,355 @@
+---
+import AdminLayout from "../../../layouts/AdminLayout.astro";
+
+const pageTitle = "Deposit Requests - Admin";
+
+// Mock deposit data
+const deposits = [
+    {
+        id: "DEP001",
+        user: "john_doe",
+        email: "john@mail.com",
+        amount: 150000,
+        method: "Bank BCA",
+        status: "pending",
+        date: "01/02/2026 10:30",
+        proof: "/uploads/proof1.png",
+    },
+    {
+        id: "DEP002",
+        user: "jane_smith",
+        email: "jane@mail.com",
+        amount: 500000,
+        method: "Manual DANA",
+        status: "approved",
+        date: "01/02/2026 09:15",
+        proof: "/uploads/proof2.png",
+    },
+    {
+        id: "DEP003",
+        user: "budi_k",
+        email: "budi@mail.com",
+        amount: 75000,
+        method: "Tripay QRIS",
+        status: "rejected",
+        date: "31/01/2026 18:45",
+        proof: null,
+    },
+    {
+        id: "DEP004",
+        user: "siti_n",
+        email: "siti@mail.com",
+        amount: 250000,
+        method: "Bank BCA",
+        status: "pending",
+        date: "31/01/2026 14:20",
+        proof: "/uploads/proof4.png",
+    },
+    {
+        id: "DEP005",
+        user: "andi_p",
+        email: "andi@mail.com",
+        amount: 100000,
+        method: "Gopay",
+        status: "approved",
+        date: "30/01/2026 11:00",
+        proof: "/uploads/proof5.png",
+    },
+];
+
+const statusColors: Record<string, string> = {
+    pending: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
+    approved: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+    rejected: "bg-red-500/20 text-red-400 border-red-500/30",
+};
+---
+
+<AdminLayout title={pageTitle}>
+    <!-- Header -->
+    <div
+        class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4"
+    >
+        <div>
+            <h1 class="text-2xl font-bold text-white tracking-tight">
+                Deposit Requests
+            </h1>
+            <p class="text-gray-400 text-sm mt-1">
+                Kelola semua permintaan deposit masuk
+            </p>
+        </div>
+    </div>
+
+    <!-- Filters & Search -->
+    <div
+        class="bg-[#142925] rounded-[2rem] p-6 border border-[#1F3D36] mb-8 shadow-sm"
+    >
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <!-- Search -->
+            <div class="md:col-span-2 relative">
+                <div
+                    class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400"
+                >
+                    <svg
+                        class="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        ></path></svg
+                    >
+                </div>
+                <input
+                    type="text"
+                    placeholder="Cari ID Deposit atau Nama User..."
+                    class="w-full pl-12 pr-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50 focus:border-[#D4F24F] transition-all"
+                />
+            </div>
+
+            <!-- Filters -->
+            <select
+                class="px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white text-sm outline-none focus:ring-2 focus:ring-[#D4F24F]/50 focus:border-[#D4F24F] transition-all cursor-pointer"
+            >
+                <option value="">Semua Status</option>
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+            </select>
+            <select
+                class="px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white text-sm outline-none focus:ring-2 focus:ring-[#D4F24F]/50 focus:border-[#D4F24F] transition-all cursor-pointer"
+            >
+                <option value="">Semua Metode</option>
+                <option value="bank">Bank Transfer</option>
+                <option value="dana">DANA</option>
+                <option value="gopay">Gopay</option>
+                <option value="tripay">Tripay</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+
+    <!-- Deposits Table -->
+    <div
+        class="bg-[#142925] rounded-[2rem] border border-[#1F3D36] overflow-hidden shadow-sm"
+    >
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr class="border-b border-[#1F3D36] bg-[#0C1A18]/50">
+                        <th
+                            class="text-left px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                            >ID</th
+                        >
+                        <th
+                            class="text-left px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                            >User</th
+                        >
+                        <th
+                            class="text-left px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                            >Amount</th
+                        >
+                        <th
+                            class="text-left px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                            >Method</th
+                        >
+                        <th
+                            class="text-left px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                            >Status</th
+                        >
+                        <th
+                            class="text-left px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                            >Date</th
+                        >
+                        <th
+                            class="text-center px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                            >Actions</th
+                        >
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-[#1F3D36]">
+                    {
+                        deposits.map((dep) => (
+                            <tr class="group hover:bg-[#1F3D36]/30 transition-colors">
+                                <td class="px-6 py-4">
+                                    <span class="text-white font-mono text-sm">
+                                        {dep.id}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div>
+                                        <p class="text-white font-bold text-sm">
+                                            {dep.user}
+                                        </p>
+                                        <p class="text-gray-500 text-xs">
+                                            {dep.email}
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="text-[#D4F24F] font-bold">
+                                        Rp {dep.amount.toLocaleString("id-ID")}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="text-gray-300 text-sm">
+                                        {dep.method}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span
+                                        class={`px-3 py-1 text-xs font-bold rounded-full border ${statusColors[dep.status]}`}
+                                    >
+                                        {dep.status.charAt(0).toUpperCase() +
+                                            dep.status.slice(1)}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="text-gray-400 text-sm">
+                                        {dep.date}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-center">
+                                    <button class="text-gray-400 hover:text-white transition-colors bg-[#0C1A18] hover:bg-[#1F3D36] p-1.5 rounded-lg border border-[#1F3D36]">
+                                        <svg
+                                            class="w-4 h-4"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <>
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                                />
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    stroke-width="2"
+                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                                                />
+                                            </>
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div
+            class="px-6 py-4 border-t border-[#1F3D36] flex items-center justify-between bg-[#0C1A18]/30"
+        >
+            <span class="text-xs font-bold text-gray-500"
+                >Showing 1 to 5 of 5 entries</span
+            >
+            <div class="flex gap-2">
+                <button
+                    disabled
+                    class="px-3 py-1.5 rounded-lg border border-[#1F3D36] text-gray-600 font-bold text-xs cursor-not-allowed"
+                    >Prev</button
+                >
+                <button
+                    class="px-3 py-1.5 rounded-lg bg-[#D4F24F] text-[#0C1A18] font-bold text-xs hover:bg-[#c3e33b] transition-all"
+                    >1</button
+                >
+                <button
+                    class="px-3 py-1.5 rounded-lg border border-[#1F3D36] text-gray-400 hover:text-white hover:bg-[#1F3D36] font-bold text-xs transition-all"
+                    >Next</button
+                >
+            </div>
+        </div>
+    </div>
+</AdminLayout>
+
+<!-- Proof Modal -->
+<div
+    id="proof-modal"
+    class="fixed inset-0 z-[100] hidden items-center justify-center p-4"
+>
+    <div
+        class="absolute inset-0 bg-black/80 backdrop-blur-sm"
+        onclick="closeProofModal()"
+    >
+    </div>
+    <div
+        class="w-full max-w-2xl bg-[#142925] border border-[#1F3D36] rounded-[2rem] p-6 md:p-8 shadow-2xl relative z-10"
+    >
+        <div class="flex items-center justify-between mb-6">
+            <h3 class="text-xl font-bold text-white">Bukti Transfer</h3>
+            <button
+                onclick="closeProofModal()"
+                class="text-gray-400 hover:text-white transition-colors"
+            >
+                <svg
+                    class="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    ><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"></path></svg
+                >
+            </button>
+        </div>
+        <div
+            class="bg-[#0C1A18] rounded-xl border border-[#1F3D36] p-4 flex items-center justify-center min-h-[300px]"
+        >
+            <img
+                id="proof-image"
+                src=""
+                alt="Bukti Transfer"
+                class="max-w-full max-h-[400px] object-contain rounded-lg"
+            />
+        </div>
+        <div class="flex gap-4 mt-6">
+            <button
+                onclick="closeProofModal()"
+                class="flex-1 py-3 rounded-xl border border-[#1F3D36] text-gray-300 font-bold hover:bg-[#1F3D36] transition-colors"
+                >Tutup</button
+            >
+        </div>
+    </div>
+</div>
+
+<script is:inline>
+    function openProofModal(imageSrc) {
+        document.getElementById("proof-image").src = imageSrc;
+        document.getElementById("proof-modal").classList.remove("hidden");
+        document.getElementById("proof-modal").classList.add("flex");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeProofModal() {
+        document.getElementById("proof-modal").classList.add("hidden");
+        document.getElementById("proof-modal").classList.remove("flex");
+        document.body.style.overflow = "auto";
+    }
+
+    function approveDeposit(id) {
+        if (confirm(`Approve deposit ${id}?`)) {
+            alert(`Deposit ${id} has been approved! (Simulated)`);
+            // In real app: send API request
+        }
+    }
+
+    function rejectDeposit(id) {
+        const reason = prompt(`Reject deposit ${id}? Enter reason (optional):`);
+        if (reason !== null) {
+            alert(
+                `Deposit ${id} has been rejected. Reason: ${reason || "No reason provided"} (Simulated)`,
+            );
+            // In real app: send API request
+        }
+    }
+</script>

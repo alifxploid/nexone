@@ -1,0 +1,349 @@
+---
+const currentPath = Astro.url.pathname;
+
+const adminMenu = [
+    {
+        name: "Overview",
+        icon: "home",
+        href: "/admin",
+        active: currentPath === "/admin" || currentPath === "/admin/",
+    },
+    {
+        name: "Users",
+        icon: "users",
+        href: "/admin/users",
+        active: currentPath.startsWith("/admin/users"),
+    },
+    {
+        name: "Transactions",
+        icon: "list",
+        href: "/admin/transactions",
+        active: currentPath.startsWith("/admin/transactions"),
+    },
+    {
+        name: "Deposits",
+        icon: "deposit",
+        href: "/admin/deposits",
+        active: currentPath.startsWith("/admin/deposits"),
+    },
+    {
+        name: "Withdrawals",
+        icon: "withdraw",
+        href: "/admin/withdrawals",
+        active: currentPath.startsWith("/admin/withdrawals"),
+    },
+    {
+        name: "Campaigns",
+        icon: "megaphone",
+        active: currentPath.startsWith("/admin/campaigns"),
+        submenu: [
+            {
+                name: "Social Booster",
+                href: "/admin/campaigns/social",
+            },
+            {
+                name: "Clipper",
+                href: "/admin/campaigns/clipper",
+            },
+        ],
+    },
+    {
+        name: "Settings",
+        icon: "settings",
+        href: "/admin/settings",
+        active: currentPath.startsWith("/admin/settings"),
+    },
+];
+
+const menuItems = adminMenu;
+---
+
+<aside
+    id="sidebar"
+    class="w-72 bg-[#0C1A18] border-r border-[#1F3D36] flex flex-col fixed inset-y-0 left-0 z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300"
+>
+    <!-- Logo Area -->
+    <div class="px-6 py-6 border-b border-[#1F3D36] flex items-center gap-3">
+        <a href="/admin" class="flex items-center gap-3 group">
+            <div
+                class="w-10 h-10 bg-[#142925] rounded-xl flex items-center justify-center text-[#D4F24F] font-bold text-xl group-hover:scale-110 transition-transform shadow-lg shadow-[#D4F24F]/5 border border-[#1F3D36]"
+            >
+                N
+            </div>
+            <h1 class="text-2xl font-bold text-white tracking-tight">NexOne</h1>
+        </a>
+    </div>
+
+    <!-- Workspace Switcher -->
+    <div class="px-4 mb-6 mt-6">
+        <!-- Role Badge -->
+        <div
+            class="w-full flex items-center justify-center p-3 rounded-xl bg-[#0C1A18] border border-[#D4F24F] shadow-[0_0_15px_rgba(212,242,79,0.05)] group hover:shadow-[0_0_20px_rgba(212,242,79,0.1)] transition-all"
+        >
+            <p
+                class="text-sm font-black text-[#D4F24F] uppercase tracking-wide group-hover:tracking-widest transition-all"
+            >
+                Administrator
+            </p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 px-4 space-y-1.5 overflow-y-auto">
+        {
+            menuItems.map((item) =>
+                item.submenu ? (
+                    <div class="mb-1">
+                        <button
+                            class:list={[
+                                "w-full flex items-center justify-between gap-3 px-4 py-3.5 rounded-xl text-[15px] font-bold transition-all duration-200 group submenu-toggle",
+                                item.active
+                                    ? "bg-[#D4F24F] text-[#0F1F1C] shadow-[0_4px_12px_-4px_rgba(212,242,79,0.3)]"
+                                    : "text-gray-400 hover:text-white hover:bg-[#142925]",
+                            ]}
+                        >
+                            <div class="flex items-center gap-3">
+                                {item.icon === "megaphone" && (
+                                    <img
+                                        src="https://img.icons8.com/?size=100&id=H8QAnPUC9iU0&format=png&color=000000"
+                                        class:list={[
+                                            "w-6 h-6 transition-all duration-200",
+                                            item.active
+                                                ? ""
+                                                : "invert opacity-60 group-hover:opacity-100",
+                                        ]}
+                                        alt="Campaigns"
+                                    />
+                                )}
+                                {item.name}
+                            </div>
+                            <svg
+                                class:list={[
+                                    "w-4 h-4 transition-transform duration-200 chevron",
+                                    item.active ? "rotate-180" : "",
+                                ]}
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M19 9l-7 7-7-7"
+                                />
+                            </svg>
+                        </button>
+                        <div
+                            class:list={[
+                                "pl-4 mt-1 space-y-1 submenu-content",
+                                !item.active && "hidden",
+                            ]}
+                        >
+                            {item.submenu.map((sub) => {
+                                const isSubActive =
+                                    currentPath === sub.href ||
+                                    currentPath.startsWith(sub.href + "/");
+                                return (
+                                    <a
+                                        href={sub.href}
+                                        class:list={[
+                                            "flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-bold transition-all ml-4",
+                                            isSubActive
+                                                ? "text-white bg-[#142925]"
+                                                : "text-gray-500 hover:text-white hover:bg-[#142925]",
+                                        ]}
+                                    >
+                                        <div
+                                            class:list={[
+                                                "w-1.5 h-1.5 rounded-full transition-colors",
+                                                isSubActive
+                                                    ? "bg-[#D4F24F] shadow-[0_0_8px_rgba(212,242,79,0.5)]"
+                                                    : "bg-gray-600",
+                                            ]}
+                                        />
+                                        {sub.name}
+                                    </a>
+                                );
+                            })}
+                        </div>
+                    </div>
+                ) : (
+                    <a
+                        href={item.href}
+                        class:list={[
+                            "flex items-center gap-3 px-4 py-3.5 rounded-xl text-[15px] font-bold transition-all duration-200 mb-1",
+                            item.active
+                                ? "bg-[#D4F24F] text-[#0F1F1C] shadow-[0_4px_12px_-4px_rgba(212,242,79,0.3)]"
+                                : "text-gray-400 hover:text-white hover:bg-[#142925]",
+                        ]}
+                    >
+                        {item.icon === "home" && (
+                            <svg
+                                class="w-5 h-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                                />
+                            </svg>
+                        )}
+                        {item.icon === "users" && (
+                            <svg
+                                class="w-5 h-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                                />
+                            </svg>
+                        )}
+                        {item.icon === "list" && (
+                            <svg
+                                class="w-5 h-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                                />
+                            </svg>
+                        )}
+                        {item.icon === "deposit" && (
+                            <img
+                                src="https://img.icons8.com/?size=100&id=61475&format=png&color=000000"
+                                class:list={[
+                                    "w-5 h-5 transition-all duration-200",
+                                    item.active
+                                        ? ""
+                                        : "invert opacity-60 group-hover:opacity-100",
+                                ]}
+                                alt="Deposits"
+                            />
+                        )}
+                        {item.icon === "withdraw" && (
+                            <img
+                                src="https://img.icons8.com/?size=100&id=73812&format=png&color=000000"
+                                class:list={[
+                                    "w-5 h-5 transition-all duration-200",
+                                    item.active
+                                        ? ""
+                                        : "invert opacity-60 group-hover:opacity-100",
+                                ]}
+                                alt="Withdrawals"
+                            />
+                        )}
+                        {item.icon === "settings" && (
+                            <svg
+                                class="w-5 h-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                                />
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                />
+                            </svg>
+                        )}
+                        {item.name}
+                    </a>
+                ),
+            )
+        }
+    </nav>
+
+    <!-- User Profile at Bottom -->
+    <div
+        class="p-4 m-4 border-t border-[#1F3D36] relative"
+        id="sidebar-profile-container"
+    >
+        <button
+            id="sidebar-profile-btn"
+            class="w-full flex items-center gap-3 cursor-pointer hover:bg-[#142925] p-2 rounded-xl transition-colors group text-left"
+        >
+            <div class="relative w-10 h-10 flex-shrink-0">
+                <div
+                    class="w-10 h-10 rounded-full bg-[#142925] flex items-center justify-center overflow-hidden border border-[#1F3D36]"
+                >
+                    <img
+                        src="https://api.dicebear.com/7.x/avataaars/svg?seed=Admin"
+                        alt="Admin"
+                        class="w-full h-full object-cover"
+                    />
+                </div>
+                <!-- Green Online Dot -->
+                <div
+                    class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-[#0C1A18] rounded-full"
+                >
+                </div>
+            </div>
+
+            <div class="flex-1 overflow-hidden">
+                <p
+                    class="text-sm font-bold text-white truncate group-hover:text-[#D4F24F] transition-colors"
+                >
+                    Super Admin
+                </p>
+                <p class="text-[11px] text-gray-400 truncate">
+                    admin@nexone.id
+                </p>
+            </div>
+        </button>
+        <!-- Logout Link (Since it's admin, straightforward logout) -->
+        <!-- For now just visual -->
+    </div>
+
+    <script is:inline>
+        // Use Astro page load event for View Transitions support
+        document.addEventListener("astro:page-load", () => {
+            const toggles = document.querySelectorAll(".submenu-toggle");
+            toggles.forEach((toggle) => {
+                toggle.addEventListener("click", () => {
+                    const content = toggle.nextElementSibling;
+                    const chevron = toggle.querySelector(".chevron");
+
+                    if (content && chevron) {
+                        content.classList.toggle("hidden");
+                        chevron.classList.toggle("rotate-180");
+                    }
+                });
+            });
+        });
+
+        // Initial load fallback
+        const toggles = document.querySelectorAll(".submenu-toggle");
+        toggles.forEach((toggle) => {
+            toggle.addEventListener("click", () => {
+                const content = toggle.nextElementSibling;
+                const chevron = toggle.querySelector(".chevron");
+                if (content && chevron) {
+                    content.classList.toggle("hidden");
+                    chevron.classList.toggle("rotate-180");
+                }
+            });
+        });
+    </script>
+</aside>

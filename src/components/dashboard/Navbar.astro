@@ -2,11 +2,13 @@
 const currentPath = Astro.url.pathname;
 const isPublisher = currentPath.startsWith("/dashboard/publisher");
 const isAdvertiser = currentPath.startsWith("/dashboard/advertiser");
+const isAdmin = currentPath.startsWith("/admin");
 
 // Determine base path for profile/settings
 let basePath = "/dashboard";
 if (isPublisher) basePath = "/dashboard/publisher";
 if (isAdvertiser) basePath = "/dashboard/advertiser";
+if (isAdmin) basePath = "/admin";
 ---
 
 <header
@@ -79,7 +81,9 @@ if (isAdvertiser) basePath = "/dashboard/advertiser";
                                 ? "PUBLISHER"
                                 : isAdvertiser
                                   ? "ADVERTISER"
-                                  : "USER"
+                                  : isAdmin
+                                    ? "ADMIN"
+                                    : "USER"
                         }
                     </p>
                 </div>
