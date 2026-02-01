@@ -1,5 +1,12 @@
 ---
+const currentPath = Astro.url.pathname;
+const isPublisher = currentPath.startsWith("/dashboard/publisher");
+const isAdvertiser = currentPath.startsWith("/dashboard/advertiser");
 
+// Determine base path for profile/settings
+let basePath = "/dashboard";
+if (isPublisher) basePath = "/dashboard/publisher";
+if (isAdvertiser) basePath = "/dashboard/advertiser";
 ---
 
 <header
@@ -67,7 +74,13 @@
                         James Passaquindici
                     </p>
                     <p class="text-[10px] text-gray-400 font-mono">
-                        ID: 8827632
+                        {
+                            isPublisher
+                                ? "PUBLISHER"
+                                : isAdvertiser
+                                  ? "ADVERTISER"
+                                  : "USER"
+                        }
                     </p>
                 </div>
                 <img
@@ -93,7 +106,7 @@
                     </div>
 
                     <a
-                        href="/dashboard/profile"
+                        href={`${basePath}/profile`}
                         class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-[#142925] transition-colors"
                     >
                         <svg
@@ -111,7 +124,7 @@
                         Profile Saya
                     </a>
                     <a
-                        href="/dashboard/settings"
+                        href={`${basePath}/settings`}
                         class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-[#142925] transition-colors"
                     >
                         <svg

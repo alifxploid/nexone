@@ -1,5 +1,5 @@
 ---
-import DashboardLayout from "../../layouts/DashboardLayout.astro";
+import DashboardLayout from "../../../layouts/DashboardLayout.astro";
 
 // Mock User Data
 const user = {
@@ -114,7 +114,7 @@ const user = {
                     Rp {new Intl.NumberFormat("id-ID").format(user.balance)}
                 </h3>
                 <a
-                    href="/dashboard/deposit"
+                    href="/dashboard/advertiser/deposit"
                     class="mt-4 w-full py-2.5 bg-[#D4F24F] hover:bg-[#c3e33b] text-[#0C1A18] text-sm font-bold rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95"
                 >
                     <svg

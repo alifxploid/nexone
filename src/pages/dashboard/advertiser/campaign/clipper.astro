@@ -1,0 +1,172 @@
+---
+import DashboardLayout from "../../../../layouts/DashboardLayout.astro";
+---
+
+<DashboardLayout title="Create Campaign - Clipper">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-2xl font-bold text-white tracking-tight">
+                Clipper Campaign
+            </h1>
+            <p class="text-gray-400 mt-1 text-sm">
+                Ajak user untuk mengunjungi website atau link Anda.
+            </p>
+        </div>
+
+        <!-- Form Card -->
+        <div
+            class="bg-white rounded-[2rem] p-6 md:p-8 shadow-sm border border-gray-100/50"
+        >
+            <form class="space-y-6" onsubmit="return false;">
+                <!-- Campaign Info -->
+                <div class="space-y-4">
+                    <h3
+                        class="text-lg font-bold text-gray-800 border-b border-gray-100 pb-2"
+                    >
+                        Detail Campaign
+                    </h3>
+
+                    <!-- Title -->
+                    <div class="space-y-2">
+                        <label
+                            class="text-[10px] font-bold text-gray-400 uppercase tracking-wider ml-1"
+                            >Judul Campaign</label
+                        >
+                        <input
+                            type="text"
+                            placeholder="Contoh: Kunjungi Website Kami"
+                            class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium placeholder-gray-400 text-sm"
+                        />
+                    </div>
+
+                    <!-- URL -->
+                    <div class="space-y-2">
+                        <label
+                            class="text-[10px] font-bold text-gray-400 uppercase tracking-wider ml-1"
+                            >Target URL</label
+                        >
+                        <input
+                            type="url"
+                            placeholder="https://example.com"
+                            class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium placeholder-gray-400 text-sm"
+                        />
+                    </div>
+
+                    <!-- Description -->
+                    <div class="space-y-2">
+                        <label
+                            class="text-[10px] font-bold text-gray-400 uppercase tracking-wider ml-1"
+                            >Instruksi / Deskripsi</label
+                        >
+                        <textarea
+                            rows="4"
+                            placeholder="Jelaskan apa yang harus dilakukan user..."
+                            class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium placeholder-gray-400 text-sm resize-none"
+                        ></textarea>
+                    </div>
+                </div>
+
+                <!-- Budget Settings -->
+                <div class="space-y-4 pt-4">
+                    <h3
+                        class="text-lg font-bold text-gray-800 border-b border-gray-100 pb-2"
+                    >
+                        Budget & Target
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Reward per Click -->
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider ml-1"
+                                >Reward per Visit (Rp)</label
+                            >
+                            <input
+                                type="number"
+                                id="reward-input"
+                                min="50"
+                                value="100"
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-bold text-sm"
+                            />
+                            <p class="text-[10px] text-gray-400">
+                                Min. Rp 50 per visit
+                            </p>
+                        </div>
+
+                        <!-- Total Target -->
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider ml-1"
+                                >Jumlah Target User</label
+                            >
+                            <input
+                                type="number"
+                                id="qty-input"
+                                min="100"
+                                placeholder="Min. 100"
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-bold text-sm"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Total & Submit -->
+                <div
+                    class="pt-6 border-t border-gray-100 flex items-center justify-between"
+                >
+                    <div>
+                        <p
+                            class="text-[10px] text-gray-400 font-bold uppercase tracking-wider"
+                        >
+                            Total Biaya
+                        </p>
+                        <h3
+                            class="text-2xl font-black text-[#0C1A18]"
+                            id="total-price"
+                        >
+                            Rp 0
+                        </h3>
+                    </div>
+                    <button
+                        type="submit"
+                        class="px-8 py-3.5 bg-[#0C1A18] text-white font-bold rounded-xl shadow-lg shadow-[#0C1A18]/20 hover:bg-[#152A26] transition-all hover:-translate-y-1 active:scale-95 text-sm flex items-center gap-2"
+                    >
+                        <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"
+                            ></path></svg
+                        >
+                        Publish Clipper
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script is:inline>
+        const rewardInput = document.getElementById("reward-input");
+        const qtyInput = document.getElementById("qty-input");
+
+        function calculateTotal() {
+            const reward = parseInt(rewardInput.value) || 0;
+            const qty = parseInt(qtyInput.value) || 0;
+            const total = reward * qty;
+
+            document.getElementById("total-price").innerText =
+                "Rp " + new Intl.NumberFormat("id-ID").format(total);
+        }
+
+        if (rewardInput && qtyInput) {
+            rewardInput.addEventListener("input", calculateTotal);
+            qtyInput.addEventListener("input", calculateTotal);
+        }
+    </script>
+</DashboardLayout>

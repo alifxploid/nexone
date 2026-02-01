@@ -1,60 +1,142 @@
 ---
 const currentPath = Astro.url.pathname;
+const isPublisher = currentPath.startsWith("/dashboard/publisher");
+const isAdvertiser = currentPath.startsWith("/dashboard/advertiser");
 
-const menuItems = [
+const publisherMenu = [
     {
         name: "Overview",
         icon: "home",
-        href: "/dashboard",
-        active: currentPath === "/dashboard" || currentPath === "/dashboard/",
+        href: "/dashboard/publisher",
+        active:
+            currentPath === "/dashboard/publisher" ||
+            currentPath === "/dashboard/publisher/",
     },
     {
         name: "Pulsa & PPOB",
         icon: "plus-circle",
-        active: currentPath.startsWith("/dashboard/ppob"),
+        active: currentPath.startsWith("/dashboard/publisher/ppob"),
         submenu: [
-            { name: "Pesanan", href: "/dashboard/ppob" },
-            { name: "Riwayat Pesanan", href: "/dashboard/ppob/history" },
+            { name: "Pesanan", href: "/dashboard/publisher/ppob" },
+            {
+                name: "Riwayat Pesanan",
+                href: "/dashboard/publisher/ppob/history",
+            },
         ],
     },
     {
         name: "Deposit",
         icon: "wallet",
-        active: currentPath.startsWith("/dashboard/deposit"),
+        active: currentPath.startsWith("/dashboard/publisher/deposit"),
         submenu: [
-            { name: "New Deposit", href: "/dashboard/deposit" },
-            { name: "Riwayat Deposit", href: "/dashboard/deposit/history" },
+            { name: "New Deposit", href: "/dashboard/publisher/deposit" },
+            {
+                name: "Riwayat Deposit",
+                href: "/dashboard/publisher/deposit/history",
+            },
         ],
     },
     {
         name: "Earnings",
         icon: "list",
-        active: currentPath.startsWith("/dashboard/earning"),
+        active: currentPath.startsWith("/dashboard/publisher/earning"),
         submenu: [
-            { name: "Sosial Booster", href: "/dashboard/earning/social" },
-            { name: "Clipper", href: "/dashboard/earning/clipper" },
-            { name: "Riwayat Task", href: "/dashboard/earning/history" },
+            {
+                name: "Sosial Booster",
+                href: "/dashboard/publisher/earning/social",
+            },
+            { name: "Clipper", href: "/dashboard/publisher/earning/clipper" },
+            {
+                name: "Riwayat Task",
+                href: "/dashboard/publisher/earning/history",
+            },
         ],
     },
     {
         name: "Withdraw",
         icon: "credit-card",
-        href: "/dashboard/withdraw",
-        active: currentPath.startsWith("/dashboard/withdraw"),
+        href: "/dashboard/publisher/withdraw",
+        active: currentPath.startsWith("/dashboard/publisher/withdraw"),
     },
     {
         name: "Share & Earn",
         icon: "share-earn",
-        href: "/dashboard/referral",
-        active: currentPath.startsWith("/dashboard/referral"),
+        href: "/dashboard/publisher/referral",
+        active: currentPath.startsWith("/dashboard/publisher/referral"),
     },
     {
         name: "Tiket Bantuan",
         icon: "help-circle",
-        href: "/dashboard/ticket",
-        active: currentPath.startsWith("/dashboard/ticket"),
+        href: "/dashboard/publisher/ticket",
+        active: currentPath.startsWith("/dashboard/publisher/ticket"),
     },
 ];
+
+const advertiserMenu = [
+    {
+        name: "Overview",
+        icon: "home",
+        href: "/dashboard/advertiser",
+        active:
+            currentPath === "/dashboard/advertiser" ||
+            currentPath === "/dashboard/advertiser/",
+    },
+    {
+        name: "Create Campaign",
+        icon: "plus-circle",
+        active: currentPath.startsWith("/dashboard/advertiser/campaign"),
+        submenu: [
+            {
+                name: "Social Booster",
+                href: "/dashboard/advertiser/campaign/social",
+            },
+            { name: "Clipper", href: "/dashboard/advertiser/campaign/clipper" },
+            {
+                name: "Riwayat Campaign",
+                href: "/dashboard/advertiser/campaign/history",
+            },
+        ],
+    },
+    {
+        name: "Pulsa & PPOB",
+        icon: "plus-circle",
+        active: currentPath.startsWith("/dashboard/advertiser/ppob"),
+        submenu: [
+            { name: "Pesanan", href: "/dashboard/advertiser/ppob" },
+            {
+                name: "Riwayat Pesanan",
+                href: "/dashboard/advertiser/ppob/history",
+            },
+        ],
+    },
+    {
+        name: "Deposit",
+        icon: "wallet",
+        active: currentPath.startsWith("/dashboard/advertiser/deposit"),
+        submenu: [
+            { name: "New Deposit", href: "/dashboard/advertiser/deposit" },
+            {
+                name: "Riwayat Deposit",
+                href: "/dashboard/advertiser/deposit/history",
+            },
+        ],
+    },
+    {
+        name: "Share & Earn",
+        icon: "share-earn",
+        href: "/dashboard/advertiser/referral",
+        active: currentPath.startsWith("/dashboard/advertiser/referral"),
+    },
+    {
+        name: "Tiket Bantuan",
+        icon: "help-circle",
+        href: "/dashboard/advertiser/ticket",
+        active: currentPath.startsWith("/dashboard/advertiser/ticket"),
+    },
+];
+
+const menuItems = isAdvertiser ? advertiserMenu : publisherMenu;
+const roleLabel = isAdvertiser ? "Advertiser Account" : "Publisher Account";
 ---
 
 <aside
@@ -82,7 +164,7 @@ const menuItems = [
             <p
                 class="text-sm font-black text-[#D4F24F] uppercase tracking-wide group-hover:tracking-widest transition-all"
             >
-                Publisher Account
+                {roleLabel}
             </p>
         </div>
     </div>

@@ -1,0 +1,511 @@
+---
+import DashboardLayout from "../../../layouts/DashboardLayout.astro";
+
+// Mock User Data
+const user = {
+    name: "James Passaquindici",
+    email: "jamespass@emi.com",
+    username: "james_cuan",
+    phone: "081234567890",
+    whatsapp: "081234567890",
+    instagram: "james_cuan",
+    threads: "james_cuan",
+    twitter: "james_cuan",
+    tiktok: "james_cuan",
+    facebook: "James Passaquindici",
+    shopee: "james_shop",
+    tokopedia: "james_store",
+    bankName: "BCA",
+    bankAccount: "1234567890",
+    bankHolder: "JAMES PASSAQUINDICI",
+    ewalletType: "DANA",
+    ewalletNumber: "081234567890",
+    role: "Publisher",
+    joinDate: "12 Jan 2026",
+    balance: 2500000,
+    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix",
+};
+---
+
+<DashboardLayout title="Profile Saya">
+    <!-- Header Section -->
+    <div class="mb-8">
+        <h1 class="text-2xl font-bold text-white tracking-tight">
+            Profile Saya
+        </h1>
+        <p class="text-gray-400 mt-1 text-sm">
+            Kelola informasi pribadi dan keamanan akun Anda.
+        </p>
+    </div>
+
+    <!-- Main Content Container with max-width and centering -->
+    <div
+        class="w-full max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 items-start"
+    >
+        <!-- Left Column: Profile Card (Fixed Width) -->
+        <div class="w-full lg:w-[350px] shrink-0 space-y-6 lg:sticky lg:top-8">
+            <div
+                class="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100/50 relative overflow-hidden text-center"
+            >
+                <div class="relative w-32 h-32 mx-auto mb-6">
+                    <div
+                        class="w-full h-full rounded-full bg-[#142925] flex items-center justify-center overflow-hidden border-4 border-white shadow-lg"
+                    >
+                        <img
+                            src={user.avatar}
+                            alt="User Avatar"
+                            class="w-full h-full object-cover"
+                        />
+                    </div>
+                    <!-- Edit Avatar Button -->
+                    <button
+                        class="absolute bottom-0 right-0 w-8 h-8 bg-[#D4F24F] rounded-full border-2 border-white flex items-center justify-center text-[#0C1A18] hover:scale-110 transition-transform shadow-md"
+                        title="Ganti Foto"
+                    >
+                        <svg
+                            class="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                            ></path><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                            ></path></svg
+                        >
+                    </button>
+                </div>
+
+                <h2 class="text-xl font-bold text-gray-800 mb-1">
+                    {user.name}
+                </h2>
+                <div class="flex items-center justify-center gap-2 mb-4">
+                    <span
+                        class="px-3 py-1 bg-[#0C1A18] text-[#D4F24F] text-xs font-bold rounded-full border border-[#D4F24F]/30"
+                    >
+                        {user.role} Account
+                    </span>
+                </div>
+                <p class="text-xs text-gray-400 font-medium">
+                    Member sejak {user.joinDate}
+                </p>
+            </div>
+
+            <!-- Stats Mini -->
+            <div
+                class="bg-[#0C1A18] rounded-[2rem] p-6 shadow-lg border border-[#1F3D36] relative overflow-hidden"
+            >
+                <div
+                    class="absolute top-0 right-0 w-24 h-24 bg-[#D4F24F]/10 rounded-full blur-xl -translate-y-1/2 translate-x-1/2"
+                >
+                </div>
+                <p
+                    class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-1"
+                >
+                    Total Saldo
+                </p>
+                <h3 class="text-2xl font-black text-white tracking-tight">
+                    Rp {new Intl.NumberFormat("id-ID").format(user.balance)}
+                </h3>
+                <a
+                    href="/dashboard/publisher/deposit"
+                    class="mt-4 w-full py-2.5 bg-[#D4F24F] hover:bg-[#c3e33b] text-[#0C1A18] text-sm font-bold rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95"
+                >
+                    <svg
+                        class="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    Topup Saldo
+                </a>
+            </div>
+        </div>
+
+        <!-- Right Column: Edit Form -->
+        <div class="flex-1 min-w-0 w-full">
+            <form class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Card 1: Personal Info -->
+                <div
+                    class="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100/50"
+                >
+                    <div class="flex items-center justify-between mb-8">
+                        <h3 class="text-lg font-bold text-gray-800">
+                            Edit Informasi
+                        </h3>
+                        <button
+                            type="button"
+                            class="text-sm font-bold text-[#0C1A18] hover:text-emerald-600 transition-colors"
+                        >
+                            Ganti Password?
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Full Name -->
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider"
+                                >Nama Lengkap</label
+                            >
+                            <input
+                                type="text"
+                                value={user.name}
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium placeholder-gray-400 text-sm"
+                            />
+                        </div>
+
+                        <!-- Username -->
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider"
+                                >Username</label
+                            >
+                            <div class="relative">
+                                <span
+                                    class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold"
+                                    >@</span
+                                >
+                                <input
+                                    type="text"
+                                    value={user.username}
+                                    class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium placeholder-gray-400 text-sm"
+                                />
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider"
+                                >Email Address</label
+                            >
+                            <input
+                                type="email"
+                                value={user.email}
+                                disabled
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-100 text-gray-500 font-medium cursor-not-allowed text-sm"
+                            />
+                            <p class="text-[10px] text-gray-400 italic">
+                                *Email tidak dapat diubah
+                            </p>
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider"
+                                >Nomor HP</label
+                            >
+                            <input
+                                type="tel"
+                                value={user.phone}
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium placeholder-gray-400 text-sm"
+                            />
+                        </div>
+
+                        <!-- WhatsApp -->
+                        <div class="space-y-2 md:col-span-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider"
+                                >Nomor WhatsApp (Aktif)</label
+                            >
+                            <input
+                                type="tel"
+                                value={user.whatsapp}
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium placeholder-gray-400 text-sm"
+                            />
+                            <p class="text-[11px] text-gray-400">
+                                Pastikan nomor WhatsApp aktif untuk menerima
+                                notifikasi transaksi dan misi.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Social Media Info -->
+                <div
+                    class="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100/50"
+                >
+                    <div class="mb-8">
+                        <h3 class="text-lg font-bold text-gray-800">
+                            Social Media Link
+                        </h3>
+                        <p class="text-xs text-gray-400 mt-1">
+                            Tautkan akun sosial media Anda untuk verifikasi
+                            misi.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Instagram -->
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1"
+                                >Instagram</label
+                            >
+                            <input
+                                type="text"
+                                value={user.instagram}
+                                placeholder="Username tanpa @"
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium placeholder-gray-400 text-sm"
+                            />
+                        </div>
+
+                        <!-- Threads -->
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1"
+                                >Threads</label
+                            >
+                            <input
+                                type="text"
+                                value={user.threads}
+                                placeholder="Username tanpa @"
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium placeholder-gray-400 text-sm"
+                            />
+                        </div>
+
+                        <!-- X / Twitter -->
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1"
+                                >X / Twitter</label
+                            >
+                            <input
+                                type="text"
+                                value={user.twitter}
+                                placeholder="Username tanpa @"
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium placeholder-gray-400 text-sm"
+                            />
+                        </div>
+
+                        <!-- TikTok -->
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1"
+                                >TikTok</label
+                            >
+                            <input
+                                type="text"
+                                value={user.tiktok}
+                                placeholder="Username tanpa @"
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium placeholder-gray-400 text-sm"
+                            />
+                        </div>
+
+                        <!-- Facebook -->
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1"
+                                >Facebook</label
+                            >
+                            <input
+                                type="text"
+                                value={user.facebook}
+                                placeholder="Username / Link profil"
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium placeholder-gray-400 text-sm"
+                            />
+                        </div>
+
+                        <!-- Shopee Video -->
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1"
+                                >Shopee Video</label
+                            >
+                            <input
+                                type="text"
+                                value={user.shopee}
+                                placeholder="Username Shopee"
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium placeholder-gray-400 text-sm"
+                            />
+                        </div>
+
+                        <!-- Tokopedia -->
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1"
+                                >Tokopedia</label
+                            >
+                            <input
+                                type="text"
+                                value={user.tokopedia}
+                                placeholder="Username Tokopedia"
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium placeholder-gray-400 text-sm"
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Payment Info -->
+                <div
+                    class="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100/50 md:col-span-2"
+                >
+                    <div class="mb-8">
+                        <h3 class="text-lg font-bold text-gray-800">
+                            Rekening & E-Wallet
+                        </h3>
+                        <p class="text-xs text-gray-400 mt-1">
+                            Informasi untuk pencairan dana (Withdraw). Pastikan
+                            data valid.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Bank Name -->
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider"
+                                >Nama Bank</label
+                            >
+                            <select
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium text-sm"
+                            >
+                                <option
+                                    value="BCA"
+                                    selected={user.bankName === "BCA"}
+                                    >BCA</option
+                                >
+                                <option
+                                    value="MANDIRI"
+                                    selected={user.bankName === "MANDIRI"}
+                                    >Mandiri</option
+                                >
+                                <option
+                                    value="BRI"
+                                    selected={user.bankName === "BRI"}
+                                    >BRI</option
+                                >
+                                <option
+                                    value="BNI"
+                                    selected={user.bankName === "BNI"}
+                                    >BNI</option
+                                >
+                                <option
+                                    value="JAGO"
+                                    selected={user.bankName === "JAGO"}
+                                    >Jago</option
+                                >
+                                <option
+                                    value="SEABANK"
+                                    selected={user.bankName === "SEABANK"}
+                                    >SeaBank</option
+                                >
+                            </select>
+                        </div>
+
+                        <!-- Account Number -->
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider"
+                                >Nomor Rekening</label
+                            >
+                            <input
+                                type="text"
+                                value={user.bankAccount}
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium placeholder-gray-400 text-sm"
+                            />
+                        </div>
+
+                        <!-- Account Holder -->
+                        <div class="space-y-2 md:col-span-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider"
+                                >Atas Nama Rekening</label
+                            >
+                            <input
+                                type="text"
+                                value={user.bankHolder}
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium placeholder-gray-400 uppercase"
+                            />
+                            <p class="text-[11px] text-gray-400">
+                                Harus sesuai dengan KTP pemilik akun.
+                            </p>
+                        </div>
+
+                        <div
+                            class="md:col-span-2 border-t-2 border-dashed border-gray-200 my-4"
+                        >
+                        </div>
+
+                        <!-- E-Wallet Type -->
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider"
+                                >E-Wallet Utama</label
+                            >
+                            <select
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium text-sm"
+                            >
+                                <option
+                                    value="DANA"
+                                    selected={user.ewalletType === "DANA"}
+                                    >DANA</option
+                                >
+                                <option
+                                    value="OVO"
+                                    selected={user.ewalletType === "OVO"}
+                                    >OVO</option
+                                >
+                                <option
+                                    value="GOPAY"
+                                    selected={user.ewalletType === "GOPAY"}
+                                    >GoPay</option
+                                >
+                                <option
+                                    value="SHOPEEPAY"
+                                    selected={user.ewalletType === "SHOPEEPAY"}
+                                    >ShopeePay</option
+                                >
+                            </select>
+                        </div>
+
+                        <!-- E-Wallet Number -->
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider"
+                                >Nomor E-Wallet</label
+                            >
+                            <input
+                                type="tel"
+                                value={user.ewalletNumber}
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium placeholder-gray-400 text-sm"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons inside the last card for better flow -->
+                    <div
+                        class="pt-6 flex items-center gap-4 border-t border-gray-100 mt-6"
+                    >
+                        <button
+                            type="submit"
+                            class="px-8 py-3.5 bg-[#0C1A18] text-white font-bold rounded-xl shadow-lg shadow-[#0C1A18]/20 hover:bg-[#152A26] transition-all hover:-translate-y-1 active:scale-95 text-sm"
+                        >
+                            Simpan Perubahan
+                        </button>
+                        <button
+                            type="button"
+                            class="px-8 py-3.5 rounded-xl border border-gray-200 font-bold text-gray-600 hover:bg-gray-50 transition-colors text-sm"
+                        >
+                            Batal
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</DashboardLayout>

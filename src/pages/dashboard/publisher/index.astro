@@ -1,0 +1,715 @@
+---
+import DashboardLayout from "../../../layouts/DashboardLayout.astro";
+
+// Mock Data Stats
+const stats = {
+    balance: 2500000,
+    withdraw: 5400000,
+    earnings: 15450000,
+    status: "Publisher",
+};
+
+// Mock Data History PPOB
+const ppobHistory = Array.from({ length: 15 }).map((_, i) => ({
+    id: `TRX-${15200 + i}`,
+    product: ["Pulsa Telkomsel 10K", "Token PLN 20K", "GoPay 50K", "Dana 100K"][
+        Math.floor(Math.random() * 4)
+    ],
+    target: "0812" + Math.floor(Math.random() * 90000000),
+    price: (Math.floor(Math.random() * 10) + 1) * 10000 + 1500,
+    date: new Date(
+        Date.now() - Math.floor(Math.random() * 1000 * 60 * 60 * 24 * 7),
+    ).toLocaleDateString("id-ID", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+    }),
+    status: ["success", "pending", "failed"][
+        Math.floor(Math.random() * (i < 3 ? 2 : 3))
+    ],
+}));
+
+// Mock Data History Earnings
+const earningsHistory = Array.from({ length: 15 }).map((_, i) => ({
+    id: `EARN-${8800 + i}`,
+    task: ["Social Booster", "Clipper Main", "Referral Bonus"][
+        Math.floor(Math.random() * 3)
+    ],
+    amount: (Math.floor(Math.random() * 50) + 1) * 1000,
+    date: new Date(
+        Date.now() - Math.floor(Math.random() * 1000 * 60 * 60 * 24 * 7),
+    ).toLocaleDateString("id-ID", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+    }),
+    status: ["success", "pending"][Math.floor(Math.random() * 2)],
+}));
+---
+
+<DashboardLayout title="Dashboard - Ringkasan">
+    <!-- Header -->
+    <div
+        class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4"
+    >
+        <div>
+            <h1 class="text-2xl font-bold text-white tracking-tight">
+                Dashboard
+            </h1>
+            <p class="text-gray-400 text-sm mt-1">
+                Ringkasan aktivitas dan performa akun Anda.
+            </p>
+        </div>
+        <a
+            href="/dashboard/deposit"
+            class="flex items-center gap-2 px-5 py-2.5 bg-[#D4F24F] hover:bg-[#c3e33b] text-[#0F1F1C] rounded-xl font-bold transition-all shadow-lg hover:-translate-y-0.5 active:scale-95 text-sm"
+        >
+            <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                ><path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg
+            >
+            Deposit Baru
+        </a>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <!-- Card 1: Sisa Saldo -->
+        <div
+            class="bg-white rounded-[2rem] p-6 border border-gray-200 shadow-sm relative overflow-hidden group hover:border-[#D4F24F] transition-colors"
+        >
+            <div
+                class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"
+            >
+            </div>
+            <p
+                class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
+            >
+                Sisa Saldo
+            </p>
+            <h3 class="text-2xl font-black text-[#0C1A18]">
+                Rp {new Intl.NumberFormat("id-ID").format(stats.balance)}
+            </h3>
+            <div class="mt-4 flex items-center gap-2">
+                <span
+                    class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-100"
+                    >+2.5%</span
+                >
+                <span class="text-[10px] text-gray-400 font-medium"
+                    >dari bulan lalu</span
+                >
+            </div>
+        </div>
+
+        <!-- Card 2: Total Withdraw -->
+        <div
+            class="bg-white rounded-[2rem] p-6 border border-gray-200 shadow-sm relative overflow-hidden group hover:border-[#D4F24F] transition-colors"
+        >
+            <div
+                class="absolute top-0 right-0 w-32 h-32 bg-orange-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"
+            >
+            </div>
+            <p
+                class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
+            >
+                Total Withdraw
+            </p>
+            <h3 class="text-2xl font-black text-[#0C1A18]">
+                Rp {new Intl.NumberFormat("id-ID").format(stats.withdraw)}
+            </h3>
+            <div class="mt-4 flex items-center gap-2">
+                <span class="text-[10px] text-gray-400 font-medium"
+                    >Total penarikan sukses</span
+                >
+            </div>
+        </div>
+
+        <!-- Card 3: Status Akun -->
+        <div
+            class="bg-white rounded-[2rem] p-6 border border-gray-200 shadow-sm relative overflow-hidden group hover:border-[#D4F24F] transition-colors"
+        >
+            <div
+                class="absolute top-0 right-0 w-32 h-32 bg-[#D4F24F]/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"
+            >
+            </div>
+            <p
+                class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
+            >
+                Status Akun
+            </p>
+            <div class="flex items-center gap-2">
+                <div
+                    class="w-8 h-8 rounded-full bg-[#0C1A18] flex items-center justify-center border border-[#D4F24F]"
+                >
+                    <svg
+                        class="w-4 h-4 text-[#D4F24F]"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        ></path></svg
+                    >
+                </div>
+                <h3 class="text-2xl font-black text-[#0C1A18]">
+                    {stats.status}
+                </h3>
+            </div>
+            <div class="mt-4 flex items-center gap-2">
+                <span
+                    class="text-[10px] font-bold text-[#0C1A18] bg-[#D4F24F] px-2 py-0.5 rounded-lg border border-[#D4F24F]"
+                    >Verified</span
+                >
+            </div>
+        </div>
+
+        <!-- Card 4: Total Pendapatan -->
+        <div
+            class="bg-white rounded-[2rem] p-6 border border-gray-200 shadow-sm relative overflow-hidden group hover:border-[#D4F24F] transition-colors"
+        >
+            <div
+                class="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"
+            >
+            </div>
+            <p
+                class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
+            >
+                Total Pendapatan
+            </p>
+            <h3 class="text-2xl font-black text-[#0C1A18]">
+                Rp {new Intl.NumberFormat("id-ID").format(stats.earnings)}
+            </h3>
+            <div class="mt-4 flex items-center gap-2">
+                <span
+                    class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-100"
+                    >+12%</span
+                >
+                <span class="text-[10px] text-gray-400 font-medium"
+                    >Bulan ini</span
+                >
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart Section -->
+    <div class="mb-8">
+        <div
+            class="bg-white rounded-[2rem] p-8 border border-gray-200 shadow-sm"
+        >
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h3 class="text-lg font-bold text-[#0C1A18]">
+                        Statistik Pendapatan
+                    </h3>
+                    <p class="text-sm text-gray-400 mt-1">
+                        Performa pendapatan Anda dalam 6 bulan terakhir
+                    </p>
+                </div>
+                <select
+                    class="px-4 py-2 rounded-xl border border-gray-200 text-sm font-bold text-[#0C1A18] outline-none focus:border-[#0C1A18] transition-colors"
+                >
+                    <option>6 Bulan Terakhir</option>
+                    <option>Tahun Ini</option>
+                </select>
+            </div>
+
+            <!-- Custom CSS Chart -->
+            <div class="relative h-64 w-full">
+                <!-- Grid Lines -->
+                <div
+                    class="absolute inset-0 flex flex-col justify-between pointer-events-none"
+                >
+                    <div class="border-b border-gray-50 h-0 w-full"></div>
+                    <div class="border-b border-gray-50 h-0 w-full"></div>
+                    <div class="border-b border-gray-50 h-0 w-full"></div>
+                    <div class="border-b border-gray-50 h-0 w-full"></div>
+                    <div class="border-b border-gray-50 h-0 w-full"></div>
+                </div>
+
+                <!-- Bars Container -->
+                <div
+                    class="absolute inset-0 flex items-end justify-between px-4 md:px-12 pt-8"
+                >
+                    <!-- Bar Item -->
+                    <div
+                        class="flex flex-col items-center gap-3 w-full group cursor-pointer"
+                    >
+                        <div
+                            class="relative w-full h-[200px] flex items-end justify-center"
+                        >
+                            <div
+                                class="w-3/4 md:w-16 bg-gray-100 rounded-t-xl h-[40%] group-hover:bg-[#0C1A18] transition-all duration-300 relative"
+                            >
+                                <span
+                                    class="absolute -top-8 left-1/2 -translate-x-1/2 bg-[#0C1A18] text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                                    >Rp 2.5jt</span
+                                >
+                            </div>
+                        </div>
+                        <span
+                            class="text-xs font-bold text-gray-400 group-hover:text-[#0C1A18] transition-colors"
+                            >Agu</span
+                        >
+                    </div>
+                    <!-- Bar Item -->
+                    <div
+                        class="flex flex-col items-center gap-3 w-full group cursor-pointer"
+                    >
+                        <div
+                            class="relative w-full h-[200px] flex items-end justify-center"
+                        >
+                            <div
+                                class="w-3/4 md:w-16 bg-gray-100 rounded-t-xl h-[65%] group-hover:bg-[#0C1A18] transition-all duration-300 relative"
+                            >
+                                <span
+                                    class="absolute -top-8 left-1/2 -translate-x-1/2 bg-[#0C1A18] text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                                    >Rp 4.2jt</span
+                                >
+                            </div>
+                        </div>
+                        <span
+                            class="text-xs font-bold text-gray-400 group-hover:text-[#0C1A18] transition-colors"
+                            >Sep</span
+                        >
+                    </div>
+                    <!-- Bar Item -->
+                    <div
+                        class="flex flex-col items-center gap-3 w-full group cursor-pointer"
+                    >
+                        <div
+                            class="relative w-full h-[200px] flex items-end justify-center"
+                        >
+                            <div
+                                class="w-3/4 md:w-16 bg-gray-100 rounded-t-xl h-[35%] group-hover:bg-[#0C1A18] transition-all duration-300 relative"
+                            >
+                                <span
+                                    class="absolute -top-8 left-1/2 -translate-x-1/2 bg-[#0C1A18] text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                                    >Rp 1.8jt</span
+                                >
+                            </div>
+                        </div>
+                        <span
+                            class="text-xs font-bold text-gray-400 group-hover:text-[#0C1A18] transition-colors"
+                            >Okt</span
+                        >
+                    </div>
+                    <!-- Bar Item -->
+                    <div
+                        class="flex flex-col items-center gap-3 w-full group cursor-pointer"
+                    >
+                        <div
+                            class="relative w-full h-[200px] flex items-end justify-center"
+                        >
+                            <div
+                                class="w-3/4 md:w-16 bg-[#D4F24F] rounded-t-xl h-[85%] shadow-[0_4px_20px_rgba(212,242,79,0.4)] relative"
+                            >
+                                <span
+                                    class="absolute -top-8 left-1/2 -translate-x-1/2 bg-[#0C1A18] text-white text-[10px] px-2 py-1 rounded"
+                                    >Rp 5.8jt</span
+                                >
+                            </div>
+                        </div>
+                        <span class="text-xs font-bold text-[#0C1A18]">Nov</span
+                        >
+                    </div>
+                    <!-- Bar Item -->
+                    <div
+                        class="flex flex-col items-center gap-3 w-full group cursor-pointer"
+                    >
+                        <div
+                            class="relative w-full h-[200px] flex items-end justify-center"
+                        >
+                            <div
+                                class="w-3/4 md:w-16 bg-gray-100 rounded-t-xl h-[55%] group-hover:bg-[#0C1A18] transition-all duration-300 relative"
+                            >
+                                <span
+                                    class="absolute -top-8 left-1/2 -translate-x-1/2 bg-[#0C1A18] text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                                    >Rp 3.1jt</span
+                                >
+                            </div>
+                        </div>
+                        <span
+                            class="text-xs font-bold text-gray-400 group-hover:text-[#0C1A18] transition-colors"
+                            >Des</span
+                        >
+                    </div>
+                    <!-- Bar Item -->
+                    <div
+                        class="flex flex-col items-center gap-3 w-full group cursor-pointer"
+                    >
+                        <div
+                            class="relative w-full h-[200px] flex items-end justify-center"
+                        >
+                            <div
+                                class="w-3/4 md:w-16 bg-gray-100 rounded-t-xl h-[70%] group-hover:bg-[#0C1A18] transition-all duration-300 relative"
+                            >
+                                <span
+                                    class="absolute -top-8 left-1/2 -translate-x-1/2 bg-[#0C1A18] text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                                    >Rp 4.5jt</span
+                                >
+                            </div>
+                        </div>
+                        <span
+                            class="text-xs font-bold text-gray-400 group-hover:text-[#0C1A18] transition-colors"
+                            >Jan</span
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- History Tables (Switchable) -->
+    <!-- History Tables (Switchable) -->
+    <div
+        class="bg-white rounded-[2rem] p-6 md:p-8 border border-gray-200 shadow-sm"
+        id="history-section"
+    >
+        <div
+            class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6"
+        >
+            <h3 class="text-lg font-bold text-[#0C1A18]">Riwayat Aktivitas</h3>
+
+            <!-- Tabs -->
+            <div class="flex bg-gray-100 p-1 rounded-xl w-full md:w-auto">
+                <button
+                    onclick="switchTab('ppob')"
+                    id="tab-ppob"
+                    class="flex-1 md:flex-none px-6 py-2 rounded-lg text-sm font-bold transition-all shadow-sm bg-white text-[#0C1A18]"
+                >
+                    Riwayat PPOB
+                </button>
+                <button
+                    onclick="switchTab('earnings')"
+                    id="tab-earnings"
+                    class="flex-1 md:flex-none px-6 py-2 rounded-lg text-sm font-bold transition-all text-gray-500 hover:text-[#0C1A18]"
+                >
+                    Earnings
+                </button>
+            </div>
+        </div>
+
+        <!-- PPOB Content -->
+        <div id="table-ppob" class="block">
+            <!-- Desktop Table -->
+            <div class="hidden md:block overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="text-left border-b border-gray-100">
+                            <th
+                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                                >ID Transaksi</th
+                            >
+                            <th
+                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                                >Produk</th
+                            >
+                            <th
+                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                                >Tujuan</th
+                            >
+                            <th
+                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right"
+                                >Harga</th
+                            >
+                            <th
+                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right"
+                                >Status</th
+                            >
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-50">
+                        {
+                            ppobHistory.slice(0, 5).map((item) => (
+                                <tr class="group hover:bg-gray-50/50 transition-colors">
+                                    <td class="py-4 font-mono text-xs text-gray-400 group-hover:text-[#0C1A18] transition-colors">
+                                        #{item.id}
+                                    </td>
+                                    <td class="py-4">
+                                        <span class="font-bold text-sm text-[#0C1A18]">
+                                            {item.product}
+                                        </span>
+                                    </td>
+                                    <td class="py-4 text-sm font-mono text-gray-500">
+                                        {item.target}
+                                    </td>
+                                    <td class="py-4 text-right font-bold text-sm text-[#0C1A18]">
+                                        Rp{" "}
+                                        {new Intl.NumberFormat("id-ID").format(
+                                            item.price,
+                                        )}
+                                    </td>
+                                    <td class="py-4 text-right">
+                                        {item.status === "success" && (
+                                            <span class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg border border-emerald-100">
+                                                Berhasil
+                                            </span>
+                                        )}
+                                        {item.status === "pending" && (
+                                            <span class="inline-flex items-center gap-1 text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-lg border border-amber-100">
+                                                Proses
+                                            </span>
+                                        )}
+                                        {item.status === "failed" && (
+                                            <span class="inline-flex items-center gap-1 text-[10px] font-bold text-red-600 bg-red-50 px-2 py-1 rounded-lg border border-red-100">
+                                                Gagal
+                                            </span>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Mobile Cards -->
+            <div class="md:hidden space-y-3">
+                {
+                    ppobHistory.slice(0, 5).map((item) => (
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <span class="text-[10px] font-bold text-gray-400 mb-1 block">
+                                        #{item.id}
+                                    </span>
+                                    <h4 class="font-bold text-sm text-[#0C1A18]">
+                                        {item.product}
+                                    </h4>
+                                </div>
+                                {item.status === "success" && (
+                                    <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg border border-emerald-100">
+                                        Berhasil
+                                    </span>
+                                )}
+                                {item.status === "pending" && (
+                                    <span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-lg border border-amber-100">
+                                        Proses
+                                    </span>
+                                )}
+                                {item.status === "failed" && (
+                                    <span class="text-[10px] font-bold text-red-600 bg-red-50 px-2 py-1 rounded-lg border border-red-100">
+                                        Gagal
+                                    </span>
+                                )}
+                            </div>
+                            <div class="flex justify-between items-center pt-3 border-t border-gray-200/50">
+                                <span class="text-xs font-mono text-gray-500 bg-white px-2 py-1 rounded border border-gray-100">
+                                    {item.target}
+                                </span>
+                                <span class="font-black text-sm text-[#0C1A18]">
+                                    Rp{" "}
+                                    {new Intl.NumberFormat("id-ID").format(
+                                        item.price,
+                                    )}
+                                </span>
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+
+            <!-- Simple Pagination -->
+            <div
+                class="flex items-center justify-between mt-6 pt-6 border-t border-gray-100"
+            >
+                <span class="text-xs font-bold text-gray-400">1-5 dari 50</span>
+                <div class="flex gap-2">
+                    <button
+                        disabled
+                        class="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-400 font-bold text-xs cursor-not-allowed"
+                        >Prev</button
+                    >
+                    <button
+                        class="px-3 py-1.5 rounded-lg bg-[#0C1A18] text-white font-bold text-xs hover:bg-[#152A26] transition-all"
+                        >Next</button
+                    >
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings Content -->
+        <div id="table-earnings" class="hidden">
+            <!-- Desktop Table -->
+            <div class="hidden md:block overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="text-left border-b border-gray-100">
+                            <th
+                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                                >ID Earnings</th
+                            >
+                            <th
+                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                                >Task / Sumber</th
+                            >
+                            <th
+                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                                >Tanggal</th
+                            >
+                            <th
+                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right"
+                                >Reward</th
+                            >
+                            <th
+                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right"
+                                >Status</th
+                            >
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-50">
+                        {
+                            earningsHistory.slice(0, 5).map((item) => (
+                                <tr class="group hover:bg-gray-50/50 transition-colors">
+                                    <td class="py-4 font-mono text-xs text-gray-400 group-hover:text-[#0C1A18] transition-colors">
+                                        #{item.id}
+                                    </td>
+                                    <td class="py-4">
+                                        <span class="font-bold text-sm text-[#0C1A18]">
+                                            {item.task}
+                                        </span>
+                                    </td>
+                                    <td class="py-4 text-sm font-medium text-gray-500">
+                                        {item.date}
+                                    </td>
+                                    <td class="py-4 text-right font-black text-sm text-emerald-600">
+                                        + Rp{" "}
+                                        {new Intl.NumberFormat("id-ID").format(
+                                            item.amount,
+                                        )}
+                                    </td>
+                                    <td class="py-4 text-right">
+                                        {item.status === "success" && (
+                                            <span class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg border border-emerald-100">
+                                                Cair
+                                            </span>
+                                        )}
+                                        {item.status === "pending" && (
+                                            <span class="inline-flex items-center gap-1 text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-lg border border-amber-100">
+                                                Pending
+                                            </span>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Mobile Cards -->
+            <div class="md:hidden space-y-3">
+                {
+                    earningsHistory.slice(0, 5).map((item) => (
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                            <div class="flex justify-between items-start mb-3">
+                                <div>
+                                    <span class="text-[10px] font-bold text-gray-400 mb-1 block">
+                                        #{item.id}
+                                    </span>
+                                    <h4 class="font-bold text-sm text-[#0C1A18]">
+                                        {item.task}
+                                    </h4>
+                                </div>
+                                {item.status === "success" && (
+                                    <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg border border-emerald-100">
+                                        Cair
+                                    </span>
+                                )}
+                                {item.status === "pending" && (
+                                    <span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-lg border border-amber-100">
+                                        Pending
+                                    </span>
+                                )}
+                            </div>
+                            <div class="flex justify-between items-center pt-3 border-t border-gray-200/50">
+                                <span class="text-xs font-medium text-gray-500">
+                                    {item.date}
+                                </span>
+                                <span class="font-black text-sm text-emerald-600">
+                                    + Rp{" "}
+                                    {new Intl.NumberFormat("id-ID").format(
+                                        item.amount,
+                                    )}
+                                </span>
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+
+            <!-- Simple Pagination -->
+            <div
+                class="flex items-center justify-between mt-6 pt-6 border-t border-gray-100"
+            >
+                <span class="text-xs font-bold text-gray-400">1-5 dari 24</span>
+                <div class="flex gap-2">
+                    <button
+                        disabled
+                        class="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-400 font-bold text-xs cursor-not-allowed"
+                        >Prev</button
+                    >
+                    <button
+                        class="px-3 py-1.5 rounded-lg bg-[#0C1A18] text-white font-bold text-xs hover:bg-[#152A26] transition-all"
+                        >Next</button
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script is:inline>
+        function switchTab(tab) {
+            const ppobTab = document.getElementById("tab-ppob");
+            const earningsTab = document.getElementById("tab-earnings");
+            const ppobTable = document.getElementById("table-ppob");
+            const earningsTable = document.getElementById("table-earnings");
+
+            if (tab === "ppob") {
+                ppobTable.classList.remove("hidden");
+                earningsTable.classList.add("hidden");
+
+                ppobTab.classList.add(
+                    "bg-white",
+                    "text-[#0C1A18]",
+                    "shadow-sm",
+                );
+                ppobTab.classList.remove("text-gray-500");
+
+                earningsTab.classList.remove(
+                    "bg-white",
+                    "text-[#0C1A18]",
+                    "shadow-sm",
+                );
+                earningsTab.classList.add("text-gray-500");
+            } else {
+                ppobTable.classList.add("hidden");
+                earningsTable.classList.remove("hidden");
+
+                earningsTab.classList.add(
+                    "bg-white",
+                    "text-[#0C1A18]",
+                    "shadow-sm",
+                );
+                earningsTab.classList.remove("text-gray-500");
+
+                ppobTab.classList.remove(
+                    "bg-white",
+                    "text-[#0C1A18]",
+                    "shadow-sm",
+                );
+                ppobTab.classList.add("text-gray-500");
+            }
+        }
+    </script>
+</DashboardLayout>

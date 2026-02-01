@@ -1,0 +1,450 @@
+---
+import DashboardLayout from "../../../../layouts/DashboardLayout.astro";
+import threadsLogo from "../../../../assets/threads.png";
+import tokopediaLogo from "../../../../assets/tokopedia.png";
+
+// Mock Data Platforms
+const platforms = [
+    {
+        id: "instagram",
+        name: "Instagram",
+        icon: "https://img.icons8.com/?size=100&id=32323&format=png&color=000000",
+    },
+    {
+        id: "facebook",
+        name: "Facebook",
+        icon: "https://img.icons8.com/?size=100&id=118497&format=png&color=000000",
+    },
+    {
+        id: "twitter",
+        name: "Twitter/X",
+        icon: "https://img.icons8.com/?size=100&id=01GWmP9aUoPj&format=png&color=000000",
+    },
+    {
+        id: "tiktok",
+        name: "TikTok",
+        icon: "https://img.icons8.com/?size=100&id=118640&format=png&color=000000",
+    },
+    {
+        id: "whatsapp",
+        name: "WhatsApp",
+        icon: "https://img.icons8.com/?size=100&id=16713&format=png&color=000000",
+    },
+    {
+        id: "youtube",
+        name: "YouTube",
+        icon: "https://img.icons8.com/?size=100&id=19318&format=png&color=000000",
+    },
+    {
+        id: "website",
+        name: "Website",
+        icon: "https://img.icons8.com/?size=100&id=9918&format=png&color=000000",
+    },
+    {
+        id: "gmaps",
+        name: "Google Maps",
+        icon: "https://img.icons8.com/?size=100&id=DcygmpZqBEd9&format=png&color=000000",
+    },
+    {
+        id: "shopee",
+        name: "Shopee",
+        icon: "https://img.icons8.com/?size=100&id=mBkyWceUPlkM&format=png&color=000000",
+    },
+    { id: "tokopedia", name: "Tokopedia", icon: tokopediaLogo },
+    {
+        id: "survey",
+        name: "Survey",
+        icon: "https://img.icons8.com/?size=100&id=124201&format=png&color=000000",
+    },
+    {
+        id: "playstore",
+        name: "Play Store",
+        icon: "https://img.icons8.com/?size=100&id=L1ws9zn2uD01&format=png&color=000000",
+    },
+    {
+        id: "appstore",
+        name: "App Store",
+        icon: "https://img.icons8.com/?size=100&id=4PbFeZOKAc61&format=png&color=000000",
+    },
+    { id: "threads", name: "Threads", icon: threadsLogo },
+];
+---
+
+<DashboardLayout title="Create Campaign - Social Booster">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-2xl font-bold text-white tracking-tight">
+                Social Booster
+            </h1>
+            <p class="text-gray-400 mt-1 text-sm">
+                Buat campaign sosial media untuk meningkatkan interaksi.
+            </p>
+        </div>
+
+        <!-- Form Card -->
+        <div
+            class="bg-white rounded-[2rem] p-6 md:p-8 shadow-sm border border-gray-100/50"
+        >
+            <form class="space-y-6" onsubmit="return false;">
+                <!-- 1. Platform Selection -->
+                <div class="space-y-3">
+                    <label
+                        class="text-[10px] font-bold text-gray-400 uppercase tracking-wider ml-1"
+                        >Pilih Platform</label
+                    >
+                    <div
+                        class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3"
+                    >
+                        {
+                            platforms.map((p) => (
+                                <button
+                                    type="button"
+                                    class="platform-btn group relative flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-200 hover:border-[#0C1A18] transition-all bg-gray-50 hover:bg-white"
+                                    data-id={p.id}
+                                    onclick={`selectPlatform(this, '${p.id}')`}
+                                >
+                                    <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm text-gray-600 group-hover:text-[#0C1A18] group-hover:scale-110 transition-all overflow-hidden">
+                                        {typeof p.icon === "object" ||
+                                        (typeof p.icon === "string" &&
+                                            p.icon.startsWith("http")) ? (
+                                            <img
+                                                src={
+                                                    typeof p.icon === "object"
+                                                        ? p.icon.src
+                                                        : p.icon
+                                                }
+                                                alt={p.name}
+                                                class="w-6 h-6 object-contain"
+                                            />
+                                        ) : (
+                                            <i
+                                                class={`bx ${p.icon} text-2xl`}
+                                            />
+                                        )}
+                                    </div>
+                                    <span class="text-xs font-bold text-gray-500 group-hover:text-[#0C1A18]">
+                                        {p.name}
+                                    </span>
+                                </button>
+                            ))
+                        }
+                    </div>
+                </div>
+
+                <!-- 2. Services Selection (Dynamic) -->
+                <div id="services-wrapper" class="hidden space-y-3">
+                    <label
+                        class="text-[10px] font-bold text-gray-400 uppercase tracking-wider ml-1"
+                        >Pilih Layanan</label
+                    >
+                    <div
+                        id="services-container"
+                        class="grid grid-cols-2 lg:grid-cols-3 gap-3"
+                    >
+                        <!-- Services injected via JS -->
+                    </div>
+                </div>
+
+                <!-- 3. Campaign Details -->
+                <div
+                    id="campaign-details"
+                    class="hidden space-y-6 pt-4 border-t border-gray-100"
+                >
+                    <div class="space-y-4">
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider ml-1"
+                                >Judul Campaign</label
+                            >
+                            <input
+                                type="text"
+                                placeholder="Contoh: Viral Post Instagram"
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium placeholder-gray-400 text-sm"
+                            />
+                        </div>
+
+                        <div class="space-y-2">
+                            <label
+                                class="text-[10px] font-bold text-gray-400 uppercase tracking-wider ml-1"
+                                >Deskripsi / Instruksi</label
+                            >
+                            <textarea
+                                rows="3"
+                                placeholder="Contoh: Berikan komentar positif tentang produk, atau isi survei sampai selesai..."
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium placeholder-gray-400 text-sm resize-none"
+                            ></textarea>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label
+                                    class="text-[10px] font-bold text-gray-400 uppercase tracking-wider ml-1"
+                                    >Target URL</label
+                                >
+                                <input
+                                    type="url"
+                                    placeholder="https://..."
+                                    class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium placeholder-gray-400 text-sm"
+                                />
+                            </div>
+                            <div class="space-y-2">
+                                <label
+                                    class="text-[10px] font-bold text-gray-400 uppercase tracking-wider ml-1"
+                                    >Jumlah Target</label
+                                >
+                                <input
+                                    type="number"
+                                    id="quantity-input"
+                                    min="100"
+                                    placeholder="Min. 100"
+                                    class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-bold text-sm"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Total & Submit -->
+                    <div
+                        class="pt-6 border-t border-gray-100 flex items-center justify-between"
+                    >
+                        <div>
+                            <p
+                                class="text-[10px] text-gray-400 font-bold uppercase tracking-wider"
+                            >
+                                Estimasi Biaya
+                            </p>
+                            <h3
+                                class="text-2xl font-black text-[#0C1A18]"
+                                id="total-price"
+                            >
+                                Rp 0
+                            </h3>
+                        </div>
+                        <button
+                            type="submit"
+                            class="px-8 py-3.5 bg-[#0C1A18] text-white font-bold rounded-xl shadow-lg shadow-[#0C1A18]/20 hover:bg-[#152A26] transition-all hover:-translate-y-1 active:scale-95 text-sm flex items-center gap-2"
+                        >
+                            Buat Campaign
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Need Boxicons for platform icons -->
+    <link
+        href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+        rel="stylesheet"
+    />
+
+    <script is:inline>
+        // Data Services Configuration
+        const platformServices = {
+            instagram: [
+                { id: "comment", name: "Comment", price: 250 },
+                { id: "views", name: "Reels View", price: 20 },
+                { id: "followers", name: "Followers", price: 150 },
+                { id: "likes", name: "Likes", price: 60 },
+                { id: "posting", name: "Kampanye Posting", price: 3000 },
+                { id: "share", name: "Share", price: 100 },
+            ],
+            facebook: [
+                { id: "comment", name: "Comment", price: 250 },
+                { id: "views", name: "Reels View", price: 20 },
+                { id: "followers", name: "Followers", price: 150 },
+                { id: "likes", name: "Likes", price: 60 },
+                { id: "posting", name: "Kampanye Posting", price: 3000 },
+                { id: "share", name: "Share", price: 100 },
+            ],
+            twitter: [
+                { id: "comment", name: "Comment", price: 250 },
+                { id: "followers", name: "Followers", price: 150 },
+                { id: "likes", name: "Likes", price: 60 },
+                { id: "posting", name: "Kampanye Posting", price: 3000 },
+                { id: "retweet", name: "Share / Retweet", price: 100 },
+                { id: "trending", name: "Trending Topic", price: 500000 },
+            ],
+            tiktok: [
+                { id: "comment", name: "Comment", price: 250 },
+                { id: "views", name: "Views", price: 20 },
+                { id: "likes", name: "Likes", price: 60 },
+                { id: "followers", name: "Followers", price: 100 },
+                { id: "posting", name: "Kampanye Posting", price: 3000 },
+                { id: "share", name: "Share", price: 100 },
+            ],
+            whatsapp: [
+                { id: "followers", name: "Followers Channel", price: 500 },
+                { id: "emote", name: "Emote Post", price: 150 },
+            ],
+            youtube: [
+                { id: "subscribe", name: "Subscribe", price: 300 },
+                { id: "likes", name: "Like", price: 100 },
+                { id: "comment", name: "Comment", price: 300 },
+                { id: "views", name: "Reels Views", price: 30 },
+                { id: "posting", name: "Kampanye Posting", price: 3500 },
+            ],
+            website: [
+                { id: "comment", name: "Comment", price: 300 },
+                { id: "view", name: "View Page", price: 50 },
+                { id: "share", name: "Share", price: 150 },
+            ],
+            gmaps: [
+                { id: "comment", name: "Comment", price: 1000 },
+                { id: "share", name: "Share", price: 200 },
+                { id: "rating", name: "Rating Star", price: 2000 },
+            ],
+            shopee: [
+                { id: "followers", name: "Followers", price: 200 },
+                { id: "checkout", name: "Checkout", price: 5000 },
+                {
+                    id: "order_rating",
+                    name: "Order & Rating Toko",
+                    price: 7500,
+                },
+            ],
+            tokopedia: [
+                { id: "followers", name: "Followers", price: 200 },
+                { id: "checkout", name: "Checkout", price: 5000 },
+                {
+                    id: "order_rating",
+                    name: "Order & Rating Toko",
+                    price: 7500,
+                },
+            ],
+            playstore: [
+                {
+                    id: "download_rating",
+                    name: "Download & Rating Star",
+                    price: 4000,
+                },
+            ],
+            appstore: [
+                {
+                    id: "download_rating",
+                    name: "Download & Rating Star",
+                    price: 5000,
+                },
+            ],
+            survey: [
+                {
+                    id: "fill_survey",
+                    name: "Isi & Selesaikan Survey",
+                    price: 1500,
+                },
+            ],
+            threads: [
+                // Keeping existing just in case, though not explicitly requested in new list, better safe than sorry to keep generic fallback or match closest
+                { id: "followers", name: "Followers", price: 150 },
+                { id: "likes", name: "Likes", price: 50 },
+            ],
+        };
+
+        let selectedPrice = 0;
+        let selectedPlatformId = "";
+
+        function selectPlatform(btn, id) {
+            selectedPlatformId = id;
+
+            // 1. Visual update for Platform Buttons
+            document.querySelectorAll(".platform-btn").forEach((b) => {
+                b.classList.remove(
+                    "border-[#0C1A18]",
+                    "bg-white",
+                    "ring-2",
+                    "ring-[#0C1A18]/5",
+                );
+                b.classList.add("border-gray-200", "bg-gray-50");
+            });
+            btn.classList.remove("border-gray-200", "bg-gray-50");
+            btn.classList.add(
+                "border-[#0C1A18]",
+                "bg-white",
+                "ring-2",
+                "ring-[#0C1A18]/5",
+            );
+
+            // 2. Render Services
+            const services = platformServices[id] || [];
+            const container = document.getElementById("services-container");
+            const wrapper = document.getElementById("services-wrapper");
+            const details = document.getElementById("campaign-details");
+
+            container.innerHTML = ""; // Clear prev services
+
+            if (services.length > 0) {
+                services.forEach((s) => {
+                    const btnHtml = `
+                        <button
+                            type="button"
+                            class="service-btn group flex flex-col items-start gap-1 p-4 rounded-xl border border-gray-200 hover:border-[#0C1A18] transition-all bg-white hover:shadow-md text-left w-full"
+                            onclick="selectService(this, ${s.price})"
+                        >
+                            <span class="text-sm font-bold text-gray-800 group-hover:text-[#0C1A18]">
+                                ${s.name}
+                            </span>
+                            <span class="text-[10px] text-gray-400">
+                                Mulai Rp ${s.price} / item
+                            </span>
+                        </button>
+                    `;
+                    container.innerHTML += btnHtml;
+                });
+                wrapper.classList.remove("hidden");
+                // Hide details until service is picked
+                details.classList.add("hidden");
+            } else {
+                wrapper.classList.add("hidden");
+                details.classList.add("hidden");
+            }
+
+            // Reset Price
+            selectedPrice = 0;
+            calculateTotal();
+        }
+
+        // Global function to be accessible from injected HTML
+        window.selectService = function (btn, price) {
+            // Visual Update
+            document.querySelectorAll(".service-btn").forEach((b) => {
+                b.classList.remove(
+                    "border-[#0C1A18]",
+                    "ring-2",
+                    "ring-[#0C1A18]/5",
+                    "shadow-md",
+                );
+                b.classList.add("border-gray-200");
+            });
+            btn.classList.remove("border-gray-200");
+            btn.classList.add(
+                "border-[#0C1A18]",
+                "ring-2",
+                "ring-[#0C1A18]/5",
+                "shadow-md",
+            );
+
+            // Logic
+            selectedPrice = price;
+            calculateTotal();
+
+            // Show Form Details
+            document
+                .getElementById("campaign-details")
+                .classList.remove("hidden");
+        };
+
+        const qtyInput = document.getElementById("quantity-input");
+        if (qtyInput) {
+            qtyInput.addEventListener("input", calculateTotal);
+        }
+
+        function calculateTotal() {
+            const qty =
+                parseInt(document.getElementById("quantity-input").value) || 0;
+            const total = qty * selectedPrice;
+            document.getElementById("total-price").innerText =
+                "Rp " + new Intl.NumberFormat("id-ID").format(total);
+        }
+    </script>
+</DashboardLayout>
