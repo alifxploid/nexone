@@ -89,7 +89,10 @@ const enabledCategories = getEnabledCategories(prabayarCategories) + getEnabledC
                 <!-- Pascabayar Global -->
                 <div class="flex items-center gap-2 bg-[#0C1A18] rounded-xl px-4 py-2.5 border border-[#1F3D36]">
                     <span class="text-blue-400 text-xs font-bold whitespace-nowrap">Pascabayar:</span>
-                    <span class="text-gray-400 text-xs">Rp</span>
+                    <select id="global-pascabayar-type" class="px-2 py-1 bg-[#142925] border border-[#1F3D36] rounded-lg text-white text-xs cursor-pointer">
+                        <option value="percentage">%</option>
+                        <option value="fixed">Rp</option>
+                    </select>
                     <input type="number" id="global-pascabayar-value" placeholder="0" class="w-16 px-2 py-1 bg-[#142925] border border-[#1F3D36] rounded-lg text-white text-xs text-center" />
                     <button id="apply-pascabayar-global" class="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-xs font-bold transition-colors whitespace-nowrap">
                         Apply All
