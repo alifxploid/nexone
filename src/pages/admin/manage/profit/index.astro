@@ -7,6 +7,9 @@ const profitStats = {
     today: 150000,
     thisMonth: 4500000,
     total: 154500000,
+    // New Metrics
+    omset: 3850000000, // 3.8 M
+    totalTrx: 25480,
 };
 
 const profitSettings = [
@@ -86,18 +89,51 @@ const allTransactions = Array.from({ length: 50 }).map((_, i) => {
 ---
 
 <AdminLayout title="Manage Profit - Admin NexOne">
-    <div class="mb-8">
-        <h1 class="text-2xl font-bold text-white tracking-tight">
-            Manage Profit
-        </h1>
-        <p class="text-gray-400 text-sm mt-1">
-            Pantau dan atur keuntungan dari setiap transaksi.
-        </p>
+    <div
+        class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8"
+    >
+        <div>
+            <h1 class="text-2xl font-bold text-white tracking-tight">
+                Manage Profit
+            </h1>
+            <p class="text-gray-400 text-sm mt-1">
+                Pantau dan atur keuntungan dari setiap transaksi.
+            </p>
+        </div>
+
+        <!-- Date Filter Dropdown -->
+        <div class="relative w-fit">
+            <select
+                id="profit-filter"
+                class="appearance-none bg-[#142925] border border-[#1F3D36] text-white text-sm rounded-xl pl-4 pr-10 py-2.5 outline-none focus:border-[#D4F24F] focus:ring-1 focus:ring-[#D4F24F] transition-all cursor-pointer font-bold"
+            >
+                <option value="today">Hari Ini</option>
+                <option value="yesterday">Kemarin</option>
+                <option value="7days">7 Hari Terakhir</option>
+                <option value="30days">30 Hari Terakhir</option>
+                <option value="this_month" selected>Bulan Ini</option>
+            </select>
+            <div
+                class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400"
+            >
+                <svg
+                    class="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    ><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 9l-7 7-7-7"></path></svg
+                >
+            </div>
+        </div>
     </div>
 
     <!-- Profit Overview Cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <!-- Today's Profit -->
+        <!-- Period Profit (Dynamic) -->
         <div
             class="bg-[#142925] border border-[#1F3D36] rounded-[2rem] p-6 relative overflow-hidden group hover:border-[#D4F24F] transition-colors"
         >
@@ -107,11 +143,15 @@ const allTransactions = Array.from({ length: 50 }).map((_, i) => {
             </div>
             <div class="relative z-10">
                 <p
+                    id="profit-card-label-1"
                     class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
                 >
                     Profit Hari Ini
                 </p>
-                <h3 class="text-2xl font-black text-[#D4F24F]">
+                <h3
+                    id="profit-card-value-1"
+                    class="text-2xl font-black text-[#D4F24F]"
+                >
                     Rp {
                         new Intl.NumberFormat("id-ID").format(profitStats.today)
                     }
@@ -119,7 +159,7 @@ const allTransactions = Array.from({ length: 50 }).map((_, i) => {
             </div>
         </div>
 
-        <!-- Month's Profit -->
+        <!-- Month/Comparative Profit (Dynamic) -->
         <div
             class="bg-[#142925] border border-[#1F3D36] rounded-[2rem] p-6 relative overflow-hidden group hover:border-[#D4F24F] transition-colors"
         >
@@ -129,11 +169,15 @@ const allTransactions = Array.from({ length: 50 }).map((_, i) => {
             </div>
             <div class="relative z-10">
                 <p
+                    id="profit-card-label-2"
                     class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
                 >
                     Profit Bulan Ini
                 </p>
-                <h3 class="text-2xl font-black text-white">
+                <h3
+                    id="profit-card-value-2"
+                    class="text-2xl font-black text-white"
+                >
                     Rp {
                         new Intl.NumberFormat("id-ID").format(
                             profitStats.thisMonth,
@@ -143,7 +187,7 @@ const allTransactions = Array.from({ length: 50 }).map((_, i) => {
             </div>
         </div>
 
-        <!-- Total Profit -->
+        <!-- Total Profit (Static/Accumulated) -->
         <div
             class="bg-[#142925] border border-[#1F3D36] rounded-[2rem] p-6 relative overflow-hidden group hover:border-[#D4F24F] transition-colors"
         >
@@ -155,13 +199,100 @@ const allTransactions = Array.from({ length: 50 }).map((_, i) => {
                 <p
                     class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
                 >
-                    Total Akumulasi
+                    Total Profit Bersih
                 </p>
                 <h3 class="text-2xl font-black text-white">
                     Rp {
                         new Intl.NumberFormat("id-ID").format(profitStats.total)
                     }
                 </h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Secondary Stats: Omset & Volume -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <!-- Total Omset -->
+        <div
+            class="bg-[#142925] border border-[#1F3D36] rounded-[2rem] p-6 relative overflow-hidden group hover:border-[#D4F24F] transition-colors"
+        >
+            <div
+                class="absolute top-0 right-0 w-24 h-24 bg-purple-500 rounded-full blur-[60px] opacity-10 group-hover:opacity-20 transition-opacity"
+            >
+            </div>
+            <div class="relative z-10 flex items-center justify-between">
+                <div>
+                    <p
+                        class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
+                    >
+                        Total Omset (Gross)
+                    </p>
+                    <h3 class="text-2xl font-black text-white">
+                        Rp {
+                            new Intl.NumberFormat("id-ID").format(
+                                profitStats.omset,
+                            )
+                        }
+                    </h3>
+                </div>
+                <div
+                    class="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-400"
+                >
+                    <svg
+                        class="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        ></path></svg
+                    >
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Transactions -->
+        <div
+            class="bg-[#142925] border border-[#1F3D36] rounded-[2rem] p-6 relative overflow-hidden group hover:border-[#D4F24F] transition-colors"
+        >
+            <div
+                class="absolute top-0 right-0 w-24 h-24 bg-orange-500 rounded-full blur-[60px] opacity-10 group-hover:opacity-20 transition-opacity"
+            >
+            </div>
+            <div class="relative z-10 flex items-center justify-between">
+                <div>
+                    <p
+                        class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
+                    >
+                        Total Transaksi
+                    </p>
+                    <h3 class="text-2xl font-black text-white">
+                        {
+                            new Intl.NumberFormat("id-ID").format(
+                                profitStats.totalTrx,
+                            )
+                        } TRX
+                    </h3>
+                </div>
+                <div
+                    class="w-12 h-12 rounded-full bg-orange-500/10 flex items-center justify-center text-orange-400"
+                >
+                    <svg
+                        class="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                        ></path></svg
+                    >
+                </div>
             </div>
         </div>
     </div>
@@ -528,6 +659,49 @@ const allTransactions = Array.from({ length: 50 }).map((_, i) => {
             fullHistoryModal?.classList.remove("hidden");
         });
 
+    // Filter Profit Period Logic
+    const profitFilter = document.getElementById(
+        "profit-filter",
+    ) as HTMLSelectElement | null;
+    const label1 = document.getElementById("profit-card-label-1");
+    const value1 = document.getElementById("profit-card-value-1");
+    const label2 = document.getElementById("profit-card-label-2");
+    const value2 = document.getElementById("profit-card-value-2");
+
+    profitFilter?.addEventListener("change", (e) => {
+        const target = e.target as HTMLSelectElement;
+        const val = target.value;
+
+        // Mock Logic for UI Simulation
+        if (val === "today") {
+            if (label1) label1.textContent = "Profit Hari Ini";
+            if (value1) value1.textContent = "Rp 150.000";
+            if (label2) label2.textContent = "Profit Bulan Ini";
+            if (value2) value2.textContent = "Rp 4.500.000";
+        } else if (val === "yesterday") {
+            if (label1) label1.textContent = "Profit Kemarin";
+            if (value1) value1.textContent = "Rp 125.000";
+            if (label2) label2.textContent = "Profit Bulan Ini"; // Context remains same
+            if (value2) value2.textContent = "Rp 4.500.000";
+        } else if (val === "7days") {
+            if (label1) label1.textContent = "Avg. 7 Hari";
+            if (value1) value1.textContent = "Rp 1.050.000";
+            if (label2) label2.textContent = "Total 7 Hari";
+            if (value2) value2.textContent = "Rp 1.050.000";
+        } else if (val === "30days") {
+            if (label1) label1.textContent = "Avg. 30 Hari";
+            if (value1) value1.textContent = "Rp 4.800.000";
+            if (label2) label2.textContent = "Total 30 Hari";
+            if (value2) value2.textContent = "Rp 4.800.000";
+        } else {
+            // Default / Reset
+            if (label1) label1.textContent = "Profit Hari Ini";
+            if (value1) value1.textContent = "Rp 150.000";
+            if (label2) label2.textContent = "Profit Bulan Ini";
+            if (value2) value2.textContent = "Rp 4.500.000";
+        }
+    });
+
     // Toggle switch interactivity
     document.querySelectorAll(".status-toggle").forEach((toggle) => {
         const checkbox = toggle.querySelector(
@@ -633,6 +807,7 @@ const allTransactions = Array.from({ length: 50 }).map((_, i) => {
                         <option value="">Semua Status</option>
                         <option value="Success">Success</option>
                         <option value="Pending">Pending</option>
+                        <option value="Failed">Failed</option>
                     </select>
                 </div>
             </div>
