@@ -10,6 +10,13 @@ const totalCategories = allCategories.length;
 const totalProviders = getTotalProviders(prabayarCategories) + getTotalProviders(pascabayarCategories);
 const totalProducts = getTotalProducts(prabayarCategories) + getTotalProducts(pascabayarCategories);
 const enabledCategories = getEnabledCategories(prabayarCategories) + getEnabledCategories(pascabayarCategories);
+
+// Mock Data for Point Rewards
+const pointLevels = [
+    { id: 1, name: "Basic", min: 50000, max: 150000, point: 5, type: "flat", isActive: true },
+    { id: 2, name: "Premium", min: 150001, max: 500000, point: 15, type: "multiplier", isActive: true },
+    { id: 3, name: "Sultan", min: 500001, max: null, point: 50, type: "multiplier", isActive: true },
+];
 ---
 
 <AdminLayout title={pageTitle}>
@@ -102,7 +109,101 @@ const enabledCategories = getEnabledCategories(prabayarCategories) + getEnabledC
         </div>
     </div>
 
-    <!-- Search & Filter -->
+    <!-- Point Reward Configuration -->
+    <div class="bg-[#142925] rounded-2xl p-6 border border-[#1F3D36] mb-6">
+        <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center">
+                    <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold text-sm">Konfigurasi Reward Poin</h3>
+                    <p class="text-gray-400 text-xs">Atur perolehan poin berdasarkan nominal transaksi.</p>
+                </div>
+            </div>
+            <button class="px-3 py-1.5 bg-[#1F3D36] hover:bg-[#2A4A42] text-white rounded-lg text-xs font-bold transition-colors flex items-center gap-2">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                Tambah Level
+            </button>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead>
+                    <tr class="border-b border-[#1F3D36]">
+                        <th class="py-3 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Nama Level</th>
+                        <th class="py-3 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Range Transaksi (IDR)</th>
+                        <th class="py-3 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Reward</th>
+                        <th class="py-3 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Tipe</th>
+                        <th class="py-3 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Status</th>
+                        <th class="py-3 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-[#1F3D36]">
+                    {pointLevels.map((level) => (
+                        <tr class="group hover:bg-[#0C1A18] transition-colors point-level-row" 
+                            data-id={level.id} 
+                            data-name={level.name} 
+                            data-min={level.min} 
+                            data-max={level.max} 
+                            data-point={level.point} 
+                            data-type={level.type}
+                        >
+                            <td class="py-3 px-4">
+                                <span class={`px-2 py-1 rounded text-xs font-bold ${level.id === 1 ? 'bg-gray-600/20 text-gray-300' : level.id === 2 ? 'bg-blue-500/20 text-blue-300' : 'bg-amber-500/20 text-amber-300'}`}>
+                                    {level.name}
+                                </span>
+                            </td>
+                            <td class="py-3 px-4">
+                                <span class="text-white text-xs font-bold">
+                                    {new Intl.NumberFormat('id-ID').format(level.min)} 
+                                    <span class="text-gray-500 mx-1">-</span> 
+                                    {level.max ? new Intl.NumberFormat('id-ID').format(level.max) : '∞'}
+                                </span>
+                            </td>
+                            <td class="py-3 px-4">
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[#D4F24F] font-bold text-sm">+{level.point}</span>
+                                    <span class="text-gray-500 text-xs">poin</span>
+                                </div>
+                            </td>
+                            <td class="py-3 px-4">
+                                <span class="text-gray-400 text-xs">{level.type === 'flat' ? 'Per Transaksi' : 'Kelipatan'}</span>
+                            </td>
+                             <td class="py-3 px-4">
+                                <label class="status-toggle relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked={level.isActive} class="sr-only peer" />
+                                    <div class="toggle-indicator w-8 h-4 rounded-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:after:translate-x-full peer-checked:after:border-white transition-colors" style={`background-color: ${level.isActive ? '#D4F24F' : '#4B5563'}`}></div>
+                                </label>
+                            </td>
+                            <td class="py-3 px-4 text-right">
+                                <button class="p-1.5 text-gray-400 hover:text-white hover:bg-[#1F3D36] rounded-lg transition-colors edit-point-btn">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+
+
+        <!-- Info Logic Poin -->
+        <div class="mt-4 bg-[#0C1A18]/50 rounded-xl p-4 border border-[#1F3D36] text-xs space-y-2">
+            <p class="font-bold text-gray-300 flex items-center gap-2">
+                <img src="https://img.icons8.com/?size=100&id=eHsuACNd0CuI&format=png&color=000000" class="w-5 h-5" alt="Info" />
+                Simulasi Perhitungan:
+            </p>
+            <ul class="list-disc pl-4 text-gray-400 space-y-1">
+                <li><strong class="text-white">Flat (Per Transaksi):</strong> Transaksi 100rb atau 500rb tetap dapat poin yang sama (misal 5 poin).</li>
+                <li><strong class="text-white">Kelipatan (Multiplier):</strong> Misal reward 10 poin per 50rb. Maka transaksi 150rb dapat <span class="text-[#D4F24F] font-mono">30 poin</span> (150rb / 50rb * 10).</li>
+            </ul>
+        </div>
+    </div>
+
+    <!--  Search & Filter -->
     <div class="bg-[#142925] rounded-2xl p-4 border border-[#1F3D36] mb-6 flex flex-col md:flex-row gap-4">
         <div class="flex-1 relative">
             <svg class="w-5 h-5 text-gray-500 absolute left-4 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -374,6 +475,60 @@ const enabledCategories = getEnabledCategories(prabayarCategories) + getEnabledC
     </div>
 </AdminLayout>
 
+<!-- Edit Point Modal -->
+<div id="edit-point-modal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" id="edit-point-backdrop"></div>
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+        <div class="bg-[#142925] rounded-3xl border border-[#1F3D36] w-full max-w-lg shadow-2xl transform transition-all scale-100">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-bold text-white">Edit Reward Poin</h2>
+                    <button id="close-edit-point-modal" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2">Nama Level</label>
+                        <input type="text" id="modal-point-name" class="w-full px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50" readonly />
+                    </div>
+                     <div class="grid grid-cols-2 gap-4">
+                        <div>
+                             <label class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2">Min Transaksi</label>
+                             <input type="number" id="modal-point-min" class="w-full px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50" />
+                        </div>
+                        <div>
+                             <label class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2">Max Transaksi</label>
+                             <input type="number" id="modal-point-max" class="w-full px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50" placeholder="0 (Unlimited)" />
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2">Reward Poin</label>
+                        <div class="relative">
+                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm">Pts</span>
+                            <input type="number" id="modal-point-value" class="w-full pl-12 pr-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50" />
+                        </div>
+                    </div>
+                    <div>
+                         <label class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2">Tipe Reward</label>
+                         <select id="modal-point-type" class="w-full px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white text-sm outline-none focus:ring-2 focus:ring-[#D4F24F]/50 cursor-pointer">
+                            <option value="flat">Flat (Per Transaksi)</option>
+                            <option value="multiplier">Kelipatan (Multiplier)</option>
+                        </select>
+                    </div>
+
+                    <div class="pt-4 border-t border-[#1F3D36] flex gap-3">
+                        <button class="flex-1 px-4 py-3 bg-[#D4F24F] hover:bg-[#c3e33b] text-[#0F1F1C] rounded-xl font-bold transition-all text-sm">
+                            Simpan Perubahan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     // Toggle switch interactivity
     document.querySelectorAll(".status-toggle").forEach((toggle) => {
@@ -448,4 +603,42 @@ const enabledCategories = getEnabledCategories(prabayarCategories) + getEnabledC
     searchInput?.addEventListener("input", filterCategories);
     typeFilter?.addEventListener("change", filterCategories);
     statusFilter?.addEventListener("change", filterCategories);
+
+    // Edit Point Level Modal Logic
+    const editPointModal = document.getElementById("edit-point-modal");
+    
+    // Close functions
+    ["close-edit-point-modal", "edit-point-backdrop"].forEach((id) => {
+        document.getElementById(id)?.addEventListener("click", () => {
+             editPointModal?.classList.add("hidden");
+        });
+    });
+
+    // Handle Edit Buttons
+    document.querySelectorAll(".edit-point-btn").forEach((btn) => {
+        btn.addEventListener("click", function(this: HTMLButtonElement) {
+            const row = this.closest(".point-level-row") as HTMLElement;
+            if(!row) return;
+
+            const name = row.dataset.name || "";
+            const min = row.dataset.min || "";
+            const max = row.dataset.max || "";
+            const point = row.dataset.point || "";
+            const type = row.dataset.type || "flat";
+
+            const nameInput = document.getElementById("modal-point-name") as HTMLInputElement;
+            const minInput = document.getElementById("modal-point-min") as HTMLInputElement;
+            const maxInput = document.getElementById("modal-point-max") as HTMLInputElement;
+            const pointInput = document.getElementById("modal-point-value") as HTMLInputElement;
+            const typeSelect = document.getElementById("modal-point-type") as HTMLSelectElement;
+
+            if(nameInput) nameInput.value = name;
+            if(minInput) minInput.value = min;
+            if(maxInput) maxInput.value = max;
+            if(pointInput) pointInput.value = point;
+            if(typeSelect) typeSelect.value = type;
+
+            editPointModal?.classList.remove("hidden");
+        });
+    });
 </script>

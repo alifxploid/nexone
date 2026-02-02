@@ -308,3 +308,443 @@ const users = Array.from({ length: 15 }).map((_, i) => ({
         </div>
     </div>
 </AdminLayout>
+
+<!-- Edit User Modal -->
+<div id="edit-user-modal" class="fixed inset-0 z-50 hidden">
+    <div
+        class="absolute inset-0 bg-black/80 backdrop-blur-sm"
+        id="edit-modal-backdrop"
+    >
+    </div>
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+        <div
+            class="bg-[#142925] rounded-3xl border border-[#1F3D36] w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl transform transition-all scale-100"
+        >
+            <div class="p-6 md:p-8">
+                <div class="flex items-start justify-between mb-6">
+                    <div>
+                        <h2
+                            class="text-2xl font-bold text-white tracking-tight"
+                        >
+                            Detail User
+                        </h2>
+                        <p class="text-gray-400 text-sm mt-1">
+                            Informasi lengkap akun pengguna.
+                        </p>
+                    </div>
+                    <button
+                        id="close-edit-modal"
+                        class="text-gray-400 hover:text-white transition-colors"
+                    >
+                        <svg
+                            class="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Profile Header -->
+                    <div
+                        class="flex items-center gap-4 p-4 bg-[#0C1A18] rounded-2xl border border-[#1F3D36]"
+                    >
+                        <div
+                            class="w-16 h-16 rounded-full bg-[#1F3D36] flex items-center justify-center text-white font-bold text-2xl"
+                            id="modal-user-avatar"
+                        >
+                            U
+                        </div>
+                        <div>
+                            <h3
+                                class="text-lg font-bold text-white"
+                                id="modal-user-name"
+                            >
+                                User Name
+                            </h3>
+                            <p class="text-gray-400 text-sm" id="modal-user-id">
+                                USER-000
+                            </p>
+                            <div class="flex gap-2 mt-2">
+                                <span
+                                    class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#D4F24F]/10 text-[#D4F24F] border border-[#D4F24F]/20 uppercase"
+                                    id="modal-user-role">ROLE</span
+                                >
+                                <span
+                                    class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase"
+                                    id="modal-user-status">STATUS</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Details Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-1">
+                            <label
+                                class="text-xs font-bold text-gray-500 uppercase tracking-wider"
+                                >Email Address</label
+                            >
+                            <input
+                                type="email"
+                                id="modal-input-email"
+                                class="w-full px-4 py-2.5 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50"
+                                readonly
+                            />
+                        </div>
+                        <div class="space-y-1">
+                            <label
+                                class="text-xs font-bold text-gray-500 uppercase tracking-wider"
+                                >Phone Number</label
+                            >
+                            <input
+                                type="text"
+                                value="+62 812 3456 7890"
+                                class="w-full px-4 py-2.5 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50"
+                                readonly
+                            />
+                        </div>
+                        <div class="space-y-1">
+                            <label
+                                class="text-xs font-bold text-gray-500 uppercase tracking-wider"
+                                >Current Balance</label
+                            >
+                            <div class="relative">
+                                <span
+                                    class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"
+                                    >Rp</span
+                                >
+                                <input
+                                    type="text"
+                                    id="modal-input-balance"
+                                    class="w-full pl-10 pr-4 py-2.5 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50"
+                                />
+                            </div>
+                        </div>
+                        <div class="space-y-1">
+                            <label
+                                class="text-xs font-bold text-gray-500 uppercase tracking-wider"
+                                >Join Date</label
+                            >
+                            <input
+                                type="text"
+                                id="modal-input-joined"
+                                class="w-full px-4 py-2.5 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50"
+                                readonly
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Additional Stats -->
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        <div
+                            class="bg-[#0C1A18] p-3 rounded-xl border border-[#1F3D36] text-center"
+                        >
+                            <p class="text-xs text-gray-500 mb-1">
+                                Total Deposit
+                            </p>
+                            <p class="text-white font-bold text-sm">
+                                Rp 15.000.000
+                            </p>
+                        </div>
+                        <div
+                            class="bg-[#0C1A18] p-3 rounded-xl border border-[#1F3D36] text-center"
+                        >
+                            <p class="text-xs text-gray-500 mb-1">
+                                Total Withdraw
+                            </p>
+                            <p class="text-white font-bold text-sm">
+                                Rp 2.500.000
+                            </p>
+                        </div>
+                        <div
+                            class="bg-[#0C1A18] p-3 rounded-xl border border-[#1F3D36] text-center"
+                        >
+                            <p class="text-xs text-gray-500 mb-1">Total Trx</p>
+                            <p class="text-white font-bold text-sm">1.245</p>
+                        </div>
+                        <div
+                            class="bg-[#0C1A18] p-3 rounded-xl border border-[#1F3D36] text-center"
+                        >
+                            <p class="text-xs text-gray-500 mb-1">
+                                Total Point
+                            </p>
+                            <p class="text-[#D4F24F] font-bold text-sm">
+                                850 Poin
+                            </p>
+                        </div>
+                        <div
+                            class="bg-[#0C1A18] p-3 rounded-xl border border-[#1F3D36] text-center"
+                        >
+                            <p class="text-xs text-gray-500 mb-1">Referrals</p>
+                            <p class="text-white font-bold text-sm">12</p>
+                        </div>
+                        <div
+                            class="bg-[#0C1A18] p-3 rounded-xl border border-[#1F3D36] text-center"
+                        >
+                            <p class="text-xs text-gray-500 mb-1">Last Login</p>
+                            <p
+                                class="text-white font-bold text-sm truncate"
+                                id="modal-last-active"
+                            >
+                                Now
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex gap-3 pt-4 border-t border-[#1F3D36]">
+                        <button
+                            class="flex-1 px-4 py-2.5 bg-[#D4F24F] hover:bg-[#c3e33b] text-[#0F1F1C] rounded-xl font-bold transition-all text-sm"
+                        >
+                            Simpan Perubahan
+                        </button>
+                        <button
+                            class="px-4 py-2.5 bg-[#0C1A18] hover:bg-[#1F3D36] text-white rounded-xl font-bold transition-all text-sm border border-[#1F3D36]"
+                        >
+                            Reset Password
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Suspend Confirmation Modal -->
+<div id="suspend-modal" class="fixed inset-0 z-50 hidden">
+    <div
+        class="absolute inset-0 bg-black/80 backdrop-blur-sm"
+        id="suspend-backdrop"
+    >
+    </div>
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+        <div
+            class="bg-[#142925] rounded-3xl border border-[#1F3D36] w-full max-w-md shadow-2xl p-6 text-center"
+        >
+            <div
+                class="w-16 h-16 bg-amber-500/20 text-amber-500 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+                <svg
+                    class="w-8 h-8"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                    ></path>
+                </svg>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">Suspend User Ini?</h3>
+            <p class="text-gray-400 text-sm mb-6">
+                User <span class="text-white font-bold" id="suspend-user-name"
+                    >Full Name</span
+                > tidak akan bisa login atau melakukan transaksi sampai statusnya
+                diaktifkan kembali.
+            </p>
+            <div class="flex gap-3">
+                <button
+                    id="cancel-suspend"
+                    class="flex-1 px-4 py-2.5 bg-[#0C1A18] border border-[#1F3D36] text-white rounded-xl font-bold text-sm hover:bg-[#1F3D36] transition-colors"
+                >
+                    Batal
+                </button>
+                <button
+                    class="flex-1 px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-[#0F1F1C] rounded-xl font-bold text-sm transition-colors shadow-lg shadow-amber-500/20"
+                >
+                    Ya, Suspend
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="delete-modal" class="fixed inset-0 z-50 hidden">
+    <div
+        class="absolute inset-0 bg-black/80 backdrop-blur-sm"
+        id="delete-backdrop"
+    >
+    </div>
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+        <div
+            class="bg-[#142925] rounded-3xl border border-[#1F3D36] w-full max-w-md shadow-2xl p-6 text-center"
+        >
+            <div
+                class="w-16 h-16 bg-red-500/20 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+                <svg
+                    class="w-8 h-8"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                    ></path>
+                </svg>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">
+                Hapus User Permanen?
+            </h3>
+            <p class="text-gray-400 text-sm mb-6">
+                Anda akan menghapus user <span
+                    class="text-white font-bold"
+                    id="delete-user-name">Full Name</span
+                >. Tindakan ini tidak dapat dibatalkan dan semua data terkait
+                akan hilang.
+            </p>
+            <div class="flex gap-3">
+                <button
+                    id="cancel-delete"
+                    class="flex-1 px-4 py-2.5 bg-[#0C1A18] border border-[#1F3D36] text-white rounded-xl font-bold text-sm hover:bg-[#1F3D36] transition-colors"
+                >
+                    Batal
+                </button>
+                <button
+                    class="flex-1 px-4 py-2.5 bg-red-500 hover:bg-red-600 text-white rounded-xl font-bold text-sm transition-colors shadow-lg shadow-red-500/20"
+                >
+                    Ya, Hapus Permanen
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Elements
+    const editModal = document.getElementById("edit-user-modal");
+    const suspendModal = document.getElementById("suspend-modal");
+    const deleteModal = document.getElementById("delete-modal");
+
+    // Close buttons logic
+    [
+        { btn: "close-edit-modal", modal: editModal },
+        { btn: "edit-modal-backdrop", modal: editModal },
+        { btn: "cancel-suspend", modal: suspendModal },
+        { btn: "suspend-backdrop", modal: suspendModal },
+        { btn: "cancel-delete", modal: deleteModal },
+        { btn: "delete-backdrop", modal: deleteModal },
+    ].forEach(({ btn, modal }) => {
+        const btnEl = document.getElementById(btn);
+        if (btnEl && modal) {
+            btnEl.addEventListener("click", () => {
+                modal.classList.add("hidden");
+            });
+        }
+    });
+
+    // Handle Edit Buttons
+    document.querySelectorAll('button[title="Edit User"]').forEach((btn) => {
+        btn.addEventListener("click", function (this: HTMLButtonElement) {
+            if (!editModal) return;
+
+            // Find parent row data
+            const row = this.closest("tr");
+            if (!row) return;
+
+            // Extract data from row (mock data extraction)
+            const nameEl = row.querySelector("p.text-white.font-bold");
+            const emailEl = row.querySelector("p.text-gray-500");
+            const idEl = row.querySelector("p.text-gray-600");
+            const roleEl = row.querySelector("td:nth-child(2) span");
+            const balanceEl = row.querySelector("td:nth-child(3) p");
+            const statusEl = row.querySelector("td:nth-child(4) span");
+            const joinedEl = row.querySelector("td:nth-child(5)");
+            const lastActiveEl = row.querySelector(
+                "td:nth-child(4) span:last-child",
+            );
+
+            const name = nameEl?.textContent?.trim() || "";
+            const email = emailEl?.textContent?.trim() || "";
+            const id = idEl?.textContent?.trim() || "";
+            const role = roleEl?.textContent?.trim() || "";
+            const balance =
+                balanceEl?.textContent?.replace("Rp", "").trim() || "";
+            const status = statusEl?.textContent?.trim() || "";
+            const joined = joinedEl?.textContent?.trim() || "";
+            const lastActive = lastActiveEl?.textContent?.trim() || "Now";
+
+            // Populate Modal
+            const nameTarget = document.getElementById("modal-user-name");
+            const idTarget = document.getElementById("modal-user-id");
+            const emailTarget = document.getElementById("modal-user-email");
+            const emailInput = document.getElementById(
+                "modal-input-email",
+            ) as HTMLInputElement;
+            const avatarTarget = document.getElementById("modal-user-avatar");
+            const roleTarget = document.getElementById("modal-user-role");
+            const statusTarget = document.getElementById("modal-user-status");
+            const balanceInput = document.getElementById(
+                "modal-input-balance",
+            ) as HTMLInputElement;
+            const joinedInput = document.getElementById(
+                "modal-input-joined",
+            ) as HTMLInputElement;
+            const lastActiveTarget =
+                document.getElementById("modal-last-active");
+
+            if (nameTarget) nameTarget.textContent = name;
+            if (idTarget) idTarget.textContent = id;
+            if (emailTarget) emailTarget.textContent = email;
+            if (emailInput) emailInput.value = email;
+
+            if (avatarTarget) avatarTarget.textContent = name.charAt(0);
+            if (roleTarget) roleTarget.textContent = role;
+            if (statusTarget) statusTarget.textContent = status;
+
+            if (balanceInput) balanceInput.value = balance;
+            if (joinedInput) joinedInput.value = joined;
+            if (lastActiveTarget) lastActiveTarget.textContent = lastActive;
+
+            // Show Modal
+            editModal.classList.remove("hidden");
+        });
+    });
+
+    // Handle Suspend Buttons
+    document.querySelectorAll('button[title="Suspend User"]').forEach((btn) => {
+        btn.addEventListener("click", function (this: HTMLButtonElement) {
+            if (!suspendModal) return;
+
+            const row = this.closest("tr");
+            const nameEl = row?.querySelector("p.text-white.font-bold");
+            const name = nameEl?.textContent?.trim();
+
+            const targetName = document.getElementById("suspend-user-name");
+            if (targetName) targetName.textContent = name || "User";
+
+            suspendModal.classList.remove("hidden");
+        });
+    });
+
+    // Handle Delete Buttons
+    document.querySelectorAll('button[title="Delete User"]').forEach((btn) => {
+        btn.addEventListener("click", function (this: HTMLButtonElement) {
+            if (!deleteModal) return;
+
+            const row = this.closest("tr");
+            const nameEl = row?.querySelector("p.text-white.font-bold");
+            const name = nameEl?.textContent?.trim();
+
+            const targetName = document.getElementById("delete-user-name");
+            if (targetName) targetName.textContent = name || "User";
+
+            deleteModal.classList.remove("hidden");
+        });
+    });
+</script>

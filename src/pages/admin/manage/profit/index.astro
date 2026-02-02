@@ -1,0 +1,768 @@
+---
+import AdminLayout from "../../../../layouts/AdminLayout.astro";
+import { ChartAreaInteractive } from "@/components/shared/ChartAreaInteractive";
+
+// Mock Data
+const profitStats = {
+    today: 150000,
+    thisMonth: 4500000,
+    total: 154500000,
+};
+
+const profitSettings = [
+    {
+        id: 2,
+        name: "Fee Admin Topup (MANUAL)",
+        type: "fixed",
+        value: 0,
+        target: "Deposit Saldo",
+        isActive: false,
+    },
+    {
+        id: 3,
+        name: "Fee Tarik Saldo",
+        type: "fixed",
+        value: 2500,
+        target: "Withdrawal",
+        isActive: true,
+    },
+];
+
+const recentTransactions = Array.from({ length: 10 }).map((_, i) => {
+    const types = ["PPOB", "Social Booster", "Withdrawal Fee", "Deposit Fee"];
+    const type = types[Math.floor(Math.random() * types.length)];
+    const amount = (Math.floor(Math.random() * 50) + 1) * 10000;
+    const profit = type.includes("Fee") ? amount : Math.floor(amount * 0.05); // 5% profit or full fee
+
+    return {
+        id: `TRX-${54000 + i}`,
+        user: ["Budi S", "Siti A", "Rizky M", "Dewi L", "Andi P"][i % 5],
+        type: type,
+        detail:
+            type === "PPOB"
+                ? "Pulsa 20K"
+                : type === "Social Booster"
+                  ? "1000 Likes"
+                  : "-",
+        amount: amount,
+        profit: profit,
+        status: "Success",
+        date: new Date(Date.now() - i * 3600000).toLocaleString("id-ID", {
+            day: "numeric",
+            month: "short",
+            hour: "2-digit",
+            minute: "2-digit",
+        }),
+    };
+});
+
+// Full Data for Modal
+const allTransactions = Array.from({ length: 50 }).map((_, i) => {
+    const types = ["PPOB", "Social Booster", "Withdrawal Fee", "Deposit Fee"];
+    const statuses = ["Success", "Pending", "Failed"];
+    const type = types[Math.floor(Math.random() * types.length)];
+    const status = statuses[Math.floor(Math.random() * (i < 5 ? 2 : 3))]; // Mixed statuses
+    const amount = (Math.floor(Math.random() * 100) + 1) * 5000;
+    const profit = type.includes("Fee") ? amount : Math.floor(amount * 0.05);
+
+    return {
+        id: `TRX-${10000 + i}`,
+        user: ["User A", "User B", "User C", "User D", "User E"][i % 5],
+        type: type,
+        detail: "Transaction Details",
+        amount: amount,
+        profit: profit,
+        status: status,
+        date: new Date(
+            Date.now() - Math.floor(Math.random() * 1000000000),
+        ).toLocaleString("id-ID", {
+            day: "numeric",
+            month: "short",
+            hour: "2-digit",
+            minute: "2-digit",
+        }),
+    };
+});
+---
+
+<AdminLayout title="Manage Profit - Admin NexOne">
+    <div class="mb-8">
+        <h1 class="text-2xl font-bold text-white tracking-tight">
+            Manage Profit
+        </h1>
+        <p class="text-gray-400 text-sm mt-1">
+            Pantau dan atur keuntungan dari setiap transaksi.
+        </p>
+    </div>
+
+    <!-- Profit Overview Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <!-- Today's Profit -->
+        <div
+            class="bg-[#142925] border border-[#1F3D36] rounded-[2rem] p-6 relative overflow-hidden group hover:border-[#D4F24F] transition-colors"
+        >
+            <div
+                class="absolute top-0 right-0 w-24 h-24 bg-[#D4F24F] rounded-full blur-[60px] opacity-10 group-hover:opacity-20 transition-opacity"
+            >
+            </div>
+            <div class="relative z-10">
+                <p
+                    class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
+                >
+                    Profit Hari Ini
+                </p>
+                <h3 class="text-2xl font-black text-[#D4F24F]">
+                    Rp {
+                        new Intl.NumberFormat("id-ID").format(profitStats.today)
+                    }
+                </h3>
+            </div>
+        </div>
+
+        <!-- Month's Profit -->
+        <div
+            class="bg-[#142925] border border-[#1F3D36] rounded-[2rem] p-6 relative overflow-hidden group hover:border-[#D4F24F] transition-colors"
+        >
+            <div
+                class="absolute top-0 right-0 w-24 h-24 bg-emerald-500 rounded-full blur-[60px] opacity-10 group-hover:opacity-20 transition-opacity"
+            >
+            </div>
+            <div class="relative z-10">
+                <p
+                    class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
+                >
+                    Profit Bulan Ini
+                </p>
+                <h3 class="text-2xl font-black text-white">
+                    Rp {
+                        new Intl.NumberFormat("id-ID").format(
+                            profitStats.thisMonth,
+                        )
+                    }
+                </h3>
+            </div>
+        </div>
+
+        <!-- Total Profit -->
+        <div
+            class="bg-[#142925] border border-[#1F3D36] rounded-[2rem] p-6 relative overflow-hidden group hover:border-[#D4F24F] transition-colors"
+        >
+            <div
+                class="absolute top-0 right-0 w-24 h-24 bg-blue-500 rounded-full blur-[60px] opacity-10 group-hover:opacity-20 transition-opacity"
+            >
+            </div>
+            <div class="relative z-10">
+                <p
+                    class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
+                >
+                    Total Akumulasi
+                </p>
+                <h3 class="text-2xl font-black text-white">
+                    Rp {
+                        new Intl.NumberFormat("id-ID").format(profitStats.total)
+                    }
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-8">
+        <ChartAreaInteractive client:load />
+    </div>
+
+    <!-- Recent Transactions Table -->
+    <div class="bg-[#142925] border border-[#1F3D36] rounded-[2rem] p-8 mb-8">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-lg font-bold text-white">10 Transaksi Terakhir</h2>
+            <button
+                id="view-all-trx-btn"
+                class="text-xs font-bold text-[#D4F24F] hover:underline"
+            >
+                Lihat Semua
+            </button>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr
+                        class="text-left border-b border-[#1F3D36] bg-[#0C1A18]/50"
+                    >
+                        <th
+                            class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                            >ID & Date</th
+                        >
+                        <th
+                            class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                            >User</th
+                        >
+                        <th
+                            class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                            >Type / Detail</th
+                        >
+                        <th
+                            class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right"
+                            >Nilai Transaksi</th
+                        >
+                        <th
+                            class="px-6 py-4 text-xs font-bold text-[#D4F24F] uppercase tracking-wider text-right"
+                            >Profit</th
+                        >
+                        <th
+                            class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right"
+                            >Status</th
+                        >
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-[#1F3D36]">
+                    {
+                        recentTransactions.map((trx) => (
+                            <tr class="group hover:bg-[#1F3D36]/30 transition-colors">
+                                <td class="px-6 py-4">
+                                    <p class="text-white font-bold text-sm font-mono">
+                                        {trx.id}
+                                    </p>
+                                    <p class="text-gray-500 text-[10px] mt-0.5">
+                                        {trx.date}
+                                    </p>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <p class="text-white font-bold text-sm">
+                                        {trx.user}
+                                    </p>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span
+                                        class={`inline-block px-2 py-0.5 rounded text-[10px] font-bold border mb-1
+                                    ${trx.type.includes("Fee") ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" : "bg-blue-500/10 text-blue-400 border-blue-500/20"}`}
+                                    >
+                                        {trx.type}
+                                    </span>
+                                    <p class="text-gray-400 text-xs">
+                                        {trx.detail}
+                                    </p>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <p class="text-gray-300 font-bold text-sm">
+                                        Rp{" "}
+                                        {new Intl.NumberFormat("id-ID").format(
+                                            trx.amount,
+                                        )}
+                                    </p>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <p class="text-[#D4F24F] font-bold text-sm">
+                                        + Rp{" "}
+                                        {new Intl.NumberFormat("id-ID").format(
+                                            trx.profit,
+                                        )}
+                                    </p>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-bold">
+                                        Success
+                                    </span>
+                                </td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Profit Configuration -->
+    <div class="bg-[#142925] border border-[#1F3D36] rounded-[2rem] p-8">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-lg font-bold text-white">
+                Konfigurasi Margin & Fee
+            </h2>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead>
+                    <tr class="border-b border-[#1F3D36]">
+                        <th
+                            class="py-4 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                            >Nama Pengaturan</th
+                        >
+                        <th
+                            class="py-4 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                            >Target</th
+                        >
+                        <th
+                            class="py-4 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                            >Nilai Margin/Fee</th
+                        >
+                        <th
+                            class="py-4 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                            >Status</th
+                        >
+                        <th
+                            class="py-4 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right"
+                            >Action</th
+                        >
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-[#1F3D36]">
+                    {
+                        profitSettings.map((item) => (
+                            <tr class="group hover:bg-[#0C1A18] transition-colors">
+                                <td class="py-4 px-4">
+                                    <p class="text-white font-bold text-sm rule-name">
+                                        {item.name}
+                                    </p>
+                                </td>
+                                <td class="py-4 px-4">
+                                    <span class="px-2.5 py-1 rounded-lg bg-[#1F3D36] text-gray-300 text-xs font-bold rule-target">
+                                        {item.target}
+                                    </span>
+                                </td>
+                                <td class="py-4 px-4">
+                                    <p
+                                        class="text-white font-bold text-sm rule-value"
+                                        data-value={item.value}
+                                        data-type={item.type}
+                                    >
+                                        {item.type === "percentage"
+                                            ? `${item.value}%`
+                                            : `Rp ${new Intl.NumberFormat("id-ID").format(item.value)}`}
+                                    </p>
+                                </td>
+                                <td class="py-4 px-4">
+                                    <label class="status-toggle relative inline-flex items-center cursor-pointer">
+                                        <input
+                                            type="checkbox"
+                                            class="sr-only peer"
+                                            checked={item.isActive}
+                                        />
+                                        <div
+                                            class="toggle-indicator w-11 h-6 rounded-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full peer-checked:after:border-white transition-colors"
+                                            style={`background-color: ${item.isActive ? "#D4F24F" : "#4B5563"}`}
+                                        />
+                                    </label>
+                                </td>
+                                <td class="py-4 px-4 text-right">
+                                    <button
+                                        class="p-2 text-gray-400 hover:text-white hover:bg-[#1F3D36] rounded-lg transition-colors edit-rule-btn"
+                                        title="Edit Rule"
+                                    >
+                                        <svg
+                                            class="w-5 h-5"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                            />
+                                        </svg>
+                                    </button>
+                                </td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</AdminLayout>
+
+<!-- Edit Rule Modal -->
+<div id="edit-rule-modal" class="fixed inset-0 z-50 hidden">
+    <div
+        class="absolute inset-0 bg-black/80 backdrop-blur-sm"
+        id="edit-rule-backdrop"
+    >
+    </div>
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+        <div
+            class="bg-[#142925] rounded-3xl border border-[#1F3D36] w-full max-w-lg shadow-2xl transform transition-all scale-100"
+        >
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-bold text-white">
+                        Edit Konfigurasi
+                    </h2>
+                    <button
+                        id="close-edit-rule-modal"
+                        class="text-gray-400 hover:text-white transition-colors"
+                    >
+                        <svg
+                            class="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label
+                            class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2"
+                            >Nama Pengaturan</label
+                        >
+                        <input
+                            type="text"
+                            id="modal-rule-name"
+                            class="w-full px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50"
+                            readonly
+                        />
+                    </div>
+                    <div>
+                        <label
+                            class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2"
+                            >Target</label
+                        >
+                        <input
+                            type="text"
+                            id="modal-rule-target"
+                            class="w-full px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50"
+                            readonly
+                        />
+                    </div>
+                    <div>
+                        <label
+                            class="text-xs font-bold text-gray-500 uppercase tracking-wider block mb-2"
+                            >Nilai Margin/Fee</label
+                        >
+                        <div class="relative">
+                            <span
+                                class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"
+                                id="modal-rule-prefix">Rp</span
+                            >
+                            <input
+                                type="number"
+                                id="modal-rule-value"
+                                class="w-full pl-10 pr-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-[#1F3D36] flex gap-3">
+                        <button
+                            class="flex-1 px-4 py-3 bg-[#D4F24F] hover:bg-[#c3e33b] text-[#0F1F1C] rounded-xl font-bold transition-all text-sm"
+                        >
+                            Simpan Perubahan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Elements
+    const editModal = document.getElementById("edit-rule-modal");
+    const fullHistoryModal = document.getElementById("full-history-modal");
+
+    // Close buttons logic for Edit Rule Modal
+    ["close-edit-rule-modal", "edit-rule-backdrop"].forEach((id) => {
+        document.getElementById(id)?.addEventListener("click", () => {
+            editModal?.classList.add("hidden");
+        });
+    });
+
+    // Close buttons logic for Full History Modal
+    ["close-full-history-modal", "full-history-backdrop"].forEach((id) => {
+        document.getElementById(id)?.addEventListener("click", () => {
+            fullHistoryModal?.classList.add("hidden");
+        });
+    });
+
+    // Handle Edit Buttons
+    document.querySelectorAll(".edit-rule-btn").forEach((btn) => {
+        btn.addEventListener("click", function (this: HTMLButtonElement) {
+            const row = this.closest("tr");
+            if (!row) return;
+
+            const name =
+                row.querySelector(".rule-name")?.textContent?.trim() || "";
+            const target =
+                row.querySelector(".rule-target")?.textContent?.trim() || "";
+
+            const valueEl = row.querySelector(".rule-value");
+            const value = valueEl?.getAttribute("data-value") || "0";
+            const type = valueEl?.getAttribute("data-type") || "fixed";
+
+            // Populate Modal
+            const nameInput = document.getElementById(
+                "modal-rule-name",
+            ) as HTMLInputElement;
+            const targetInput = document.getElementById(
+                "modal-rule-target",
+            ) as HTMLInputElement;
+            const valueInput = document.getElementById(
+                "modal-rule-value",
+            ) as HTMLInputElement;
+            const prefixLabel = document.getElementById("modal-rule-prefix");
+
+            if (nameInput) nameInput.value = name;
+            if (targetInput) targetInput.value = target;
+            if (valueInput) valueInput.value = value;
+
+            if (prefixLabel) {
+                prefixLabel.textContent = type === "percentage" ? "%" : "Rp";
+            }
+
+            // Show Modal
+            editModal?.classList.remove("hidden");
+        });
+    });
+
+    // Handle "Lihat Semua" Button
+    document
+        .getElementById("view-all-trx-btn")
+        ?.addEventListener("click", () => {
+            fullHistoryModal?.classList.remove("hidden");
+        });
+
+    // Toggle switch interactivity
+    document.querySelectorAll(".status-toggle").forEach((toggle) => {
+        const checkbox = toggle.querySelector(
+            'input[type="checkbox"]',
+        ) as HTMLInputElement | null;
+        const indicator = toggle.querySelector(
+            ".toggle-indicator",
+        ) as HTMLElement | null;
+
+        checkbox?.addEventListener("change", () => {
+            if (!indicator) return;
+
+            if (checkbox.checked) {
+                indicator.style.backgroundColor = "#D4F24F";
+            } else {
+                indicator.style.backgroundColor = "#4B5563";
+            }
+        });
+    });
+</script>
+
+<!-- Full Transaction History Modal -->
+<div id="full-history-modal" class="fixed inset-0 z-50 hidden">
+    <div
+        class="absolute inset-0 bg-black/80 backdrop-blur-sm"
+        id="full-history-backdrop"
+    >
+    </div>
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+        <div
+            class="bg-[#142925] rounded-3xl border border-[#1F3D36] w-full max-w-5xl h-[85vh] flex flex-col shadow-2xl transform transition-all scale-100"
+        >
+            <!-- Header -->
+            <div
+                class="p-6 border-b border-[#1F3D36] flex items-center justify-between shrink-0"
+            >
+                <div>
+                    <h2 class="text-xl font-bold text-white">
+                        Semua Riwayat Transaksi
+                    </h2>
+                    <p class="text-gray-400 text-sm mt-1">
+                        Data lengkap seluruh transaksi user.
+                    </p>
+                </div>
+                <button
+                    id="close-full-history-modal"
+                    class="text-gray-400 hover:text-white transition-colors"
+                >
+                    <svg
+                        class="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Filters -->
+            <div class="p-6 border-b border-[#1F3D36] shrink-0 bg-[#0C1A18]/30">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="md:col-span-2 relative">
+                        <div
+                            class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400"
+                        >
+                            <svg
+                                class="w-5 h-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                ><path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                ></path></svg
+                            >
+                        </div>
+                        <input
+                            type="text"
+                            placeholder="Cari TRX ID atau User..."
+                            class="w-full pl-12 pr-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-[#D4F24F]/50"
+                        />
+                    </div>
+                    <select
+                        class="px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white text-sm outline-none focus:ring-2 focus:ring-[#D4F24F]/50 cursor-pointer"
+                    >
+                        <option value="">Semua Tipe</option>
+                        <option value="Deposit">Deposit</option>
+                        <option value="Withdraw">Withdraw</option>
+                        <option value="PPOB">PPOB</option>
+                        <option value="Social Booster">Social Booster</option>
+                        <option value="Clipper">Clipper</option>
+                    </select>
+                    <select
+                        class="px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white text-sm outline-none focus:ring-2 focus:ring-[#D4F24F]/50 cursor-pointer"
+                    >
+                        <option value="">Semua Status</option>
+                        <option value="Success">Success</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Table Container (Scrollable) -->
+            <div class="flex-1 overflow-auto p-0">
+                <table class="w-full">
+                    <thead class="sticky top-0 bg-[#142925] z-10 shadow-sm">
+                        <tr class="text-left border-b border-[#1F3D36]">
+                            <th
+                                class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                                >ID & Date</th
+                            >
+                            <th
+                                class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                                >User</th
+                            >
+                            <th
+                                class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
+                                >Type / Detail</th
+                            >
+                            <th
+                                class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right"
+                                >Nilai</th
+                            >
+                            <th
+                                class="px-6 py-4 text-xs font-bold text-[#D4F24F] uppercase tracking-wider text-right"
+                                >Profit</th
+                            >
+                            <th
+                                class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right"
+                                >Status</th
+                            >
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-[#1F3D36]">
+                        {
+                            allTransactions.map((trx) => (
+                                <tr class="group hover:bg-[#1F3D36]/30 transition-colors">
+                                    <td class="px-6 py-4">
+                                        <p class="text-white font-bold text-sm font-mono">
+                                            {trx.id}
+                                        </p>
+                                        <p class="text-gray-500 text-[10px] mt-0.5">
+                                            {trx.date}
+                                        </p>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <p class="text-white font-bold text-sm">
+                                            {trx.user}
+                                        </p>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span
+                                            class={`inline-block px-2 py-0.5 rounded text-[10px] font-bold border mb-1
+                                        ${trx.type.includes("Fee") ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" : "bg-blue-500/10 text-blue-400 border-blue-500/20"}`}
+                                        >
+                                            {trx.type}
+                                        </span>
+                                        <p class="text-gray-400 text-xs">
+                                            {trx.detail}
+                                        </p>
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        <p class="text-gray-300 font-bold text-sm">
+                                            Rp{" "}
+                                            {new Intl.NumberFormat(
+                                                "id-ID",
+                                            ).format(trx.amount)}
+                                        </p>
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        <p class="text-[#D4F24F] font-bold text-sm">
+                                            + Rp{" "}
+                                            {new Intl.NumberFormat(
+                                                "id-ID",
+                                            ).format(trx.profit)}
+                                        </p>
+                                    </td>
+                                    <td class="px-6 py-4 text-right">
+                                        <span
+                                            class={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border text-xs font-bold ${
+                                                trx.status === "Success"
+                                                    ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+                                                    : trx.status === "Pending"
+                                                      ? "bg-amber-500/10 text-amber-400 border-amber-500/20"
+                                                      : "bg-red-500/10 text-red-400 border-red-500/20"
+                                            }`}
+                                        >
+                                            {trx.status}
+                                        </span>
+                                    </td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Footer / Pagination -->
+            <div
+                class="p-6 border-t border-[#1F3D36] bg-[#0C1A18]/30 flex items-center justify-between shrink-0 rounded-b-3xl"
+            >
+                <span class="text-xs font-bold text-gray-500"
+                    >Showing 1 to 50 of 2,500 entries</span
+                >
+                <div class="flex gap-2">
+                    <button
+                        disabled
+                        class="px-3 py-1.5 rounded-lg border border-[#1F3D36] text-gray-600 font-bold text-xs cursor-not-allowed"
+                        >Prev</button
+                    >
+                    <button
+                        class="px-3 py-1.5 rounded-lg bg-[#D4F24F] text-[#0C1A18] font-bold text-xs hover:bg-[#c3e33b] transition-all"
+                        >1</button
+                    >
+                    <button
+                        class="px-3 py-1.5 rounded-lg border border-[#1F3D36] text-gray-400 hover:text-white hover:bg-[#1F3D36] font-bold text-xs transition-all"
+                        >2</button
+                    >
+                    <button
+                        class="px-3 py-1.5 rounded-lg border border-[#1F3D36] text-gray-400 hover:text-white hover:bg-[#1F3D36] font-bold text-xs transition-all"
+                        >3</button
+                    >
+                    <button
+                        class="px-3 py-1.5 rounded-lg border border-[#1F3D36] text-gray-400 hover:text-white hover:bg-[#1F3D36] font-bold text-xs transition-all"
+                        >Next</button
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

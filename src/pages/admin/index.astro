@@ -6,6 +6,11 @@ const stats = {
     totalUsers: 1250,
     activeCampaigns: 45,
     pendingTransactions: 12,
+    totalTrx: 12450,
+    totalTrxValue: 4500000000,
+    totalDeposit: 1545000000,
+    totalWithdraw: 450000000,
+    totalPoints: 850000,
     revenue: 15450000,
 };
 ---
@@ -33,7 +38,7 @@ const stats = {
     </div>
 
     <!-- Stats Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         <!-- Banner Users -->
         <div
             class="p-6 rounded-[2rem] bg-[#142925] border border-[#1F3D36] relative overflow-hidden group hover:border-[#D4F24F] transition-colors shadow-sm"
@@ -54,7 +59,7 @@ const stats = {
             </div>
         </div>
 
-        <!-- Banner Active Campaigns -->
+        <!-- Banner Total Trx -->
         <div
             class="p-6 rounded-[2rem] bg-[#142925] border border-[#1F3D36] relative overflow-hidden group hover:border-[#D4F24F] transition-colors shadow-sm"
         >
@@ -66,30 +71,87 @@ const stats = {
                 <p
                     class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
                 >
-                    Active Campaigns
+                    Total Trx
                 </p>
-                <h3 class="text-2xl font-black text-white">
-                    {stats.activeCampaigns}
-                </h3>
+                <div class="flex items-baseline gap-2">
+                    <h3 class="text-2xl font-black text-white">
+                        Rp {
+                            new Intl.NumberFormat("id-ID").format(
+                                stats.totalTrxValue,
+                            )
+                        }
+                    </h3>
+                    <span class="text-gray-400 text-sm font-bold"
+                        >({stats.totalTrx})</span
+                    >
+                </div>
             </div>
         </div>
 
-        <!-- Banner Pending Trx -->
+        <!-- Banner Total Deposit -->
         <div
             class="p-6 rounded-[2rem] bg-[#142925] border border-[#1F3D36] relative overflow-hidden group hover:border-[#D4F24F] transition-colors shadow-sm"
         >
             <div
-                class="absolute top-0 right-0 w-24 h-24 bg-orange-500 rounded-full blur-[60px] opacity-5 group-hover:opacity-10 transition-opacity"
+                class="absolute top-0 right-0 w-24 h-24 bg-emerald-500 rounded-full blur-[60px] opacity-5 group-hover:opacity-10 transition-opacity"
             >
             </div>
             <div class="relative z-10">
                 <p
                     class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
                 >
-                    Pending Trx
+                    Total Deposit
                 </p>
                 <h3 class="text-2xl font-black text-white">
-                    {stats.pendingTransactions}
+                    Rp {
+                        new Intl.NumberFormat("id-ID").format(
+                            stats.totalDeposit,
+                        )
+                    }
+                </h3>
+            </div>
+        </div>
+
+        <!-- Banner Total Withdraw -->
+        <div
+            class="p-6 rounded-[2rem] bg-[#142925] border border-[#1F3D36] relative overflow-hidden group hover:border-[#D4F24F] transition-colors shadow-sm"
+        >
+            <div
+                class="absolute top-0 right-0 w-24 h-24 bg-red-500 rounded-full blur-[60px] opacity-5 group-hover:opacity-10 transition-opacity"
+            >
+            </div>
+            <div class="relative z-10">
+                <p
+                    class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
+                >
+                    Total Withdraw
+                </p>
+                <h3 class="text-2xl font-black text-white">
+                    Rp {
+                        new Intl.NumberFormat("id-ID").format(
+                            stats.totalWithdraw,
+                        )
+                    }
+                </h3>
+            </div>
+        </div>
+
+        <!-- Banner Total Points -->
+        <div
+            class="p-6 rounded-[2rem] bg-[#142925] border border-[#1F3D36] relative overflow-hidden group hover:border-[#D4F24F] transition-colors shadow-sm"
+        >
+            <div
+                class="absolute top-0 right-0 w-24 h-24 bg-purple-500 rounded-full blur-[60px] opacity-5 group-hover:opacity-10 transition-opacity"
+            >
+            </div>
+            <div class="relative z-10">
+                <p
+                    class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
+                >
+                    Total Points
+                </p>
+                <h3 class="text-2xl font-black text-[#D4F24F]">
+                    {new Intl.NumberFormat("id-ID").format(stats.totalPoints)} Poin
                 </h3>
             </div>
         </div>

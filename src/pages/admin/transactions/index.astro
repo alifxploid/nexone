@@ -40,6 +40,13 @@ const transactions = Array.from({ length: 20 }).map((_, i) => {
         status: status,
     };
 });
+
+// Mock Stats Data
+const transactionStats = {
+    success: { count: 15234, total: 452500000 },
+    pending: { count: 45, total: 1250000 },
+    failed: { count: 12, total: 500000 },
+};
 ---
 
 <AdminLayout title="Kelola Transaksi - Admin Dashboard">
@@ -55,24 +62,174 @@ const transactions = Array.from({ length: 20 }).map((_, i) => {
                 Pantau seluruh arus transaksi keuangan dalam sistem.
             </p>
         </div>
-        <div class="flex gap-2">
-            <button
-                class="px-4 py-2 bg-[#142925] text-white rounded-xl text-sm font-bold hover:bg-[#1F3D36] transition-colors border border-[#1F3D36] flex items-center gap-2"
+    </div>
+
+    <!-- Transaction Stats Cards -->
+    <div class="mb-8">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-white font-bold text-sm">Ringkasan Transaksi</h3>
+            <select
+                class="bg-[#142925] border border-[#1F3D36] text-gray-300 text-xs rounded-lg px-3 py-1.5 outline-none focus:border-[#D4F24F] cursor-pointer"
             >
-                <svg
-                    class="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    ><path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                    ></path></svg
+                <option>Hari Ini</option>
+                <option>7 Hari Terakhir</option>
+                <option>Bulan Ini</option>
+                <option>Tahun Ini</option>
+                <option>Semua Waktu</option>
+            </select>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Success Card -->
+            <div
+                class="bg-[#142925] border border-[#1F3D36] rounded-[1.5rem] p-5 relative overflow-hidden group hover:border-[#D4F24F] transition-all"
+            >
+                <div
+                    class="absolute top-0 right-0 w-20 h-20 bg-emerald-500 rounded-full blur-[50px] opacity-10 group-hover:opacity-20 transition-opacity"
                 >
-                Export CSV
-            </button>
+                </div>
+                <div class="flex items-center justify-between mb-3">
+                    <div
+                        class="bg-emerald-500/10 p-2 rounded-xl text-emerald-400"
+                    >
+                        <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                            ></path></svg
+                        >
+                    </div>
+                    <span
+                        class="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-lg"
+                        >Success</span
+                    >
+                </div>
+                <div>
+                    <p
+                        class="text-gray-400 text-xs font-medium uppercase tracking-wider mb-1"
+                    >
+                        Total Sukses
+                    </p>
+                    <h3 class="text-2xl font-black text-white">
+                        {transactionStats.success.count.toLocaleString("id-ID")}
+                        <span class="text-sm font-normal text-gray-500"
+                            >Trx</span
+                        >
+                    </h3>
+                    <p class="text-emerald-400 font-bold text-sm mt-1">
+                        Rp {
+                            new Intl.NumberFormat("id-ID").format(
+                                transactionStats.success.total,
+                            )
+                        }
+                    </p>
+                </div>
+            </div>
+
+            <!-- Pending Card -->
+            <div
+                class="bg-[#142925] border border-[#1F3D36] rounded-[1.5rem] p-5 relative overflow-hidden group hover:border-amber-400 transition-all"
+            >
+                <div
+                    class="absolute top-0 right-0 w-20 h-20 bg-amber-500 rounded-full blur-[50px] opacity-10 group-hover:opacity-20 transition-opacity"
+                >
+                </div>
+                <div class="flex items-center justify-between mb-3">
+                    <div class="bg-amber-500/10 p-2 rounded-xl text-amber-400">
+                        <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                            ></path></svg
+                        >
+                    </div>
+                    <span
+                        class="text-xs font-bold text-amber-400 bg-amber-500/10 px-2 py-1 rounded-lg"
+                        >Pending</span
+                    >
+                </div>
+                <div>
+                    <p
+                        class="text-gray-400 text-xs font-medium uppercase tracking-wider mb-1"
+                    >
+                        Total Pending
+                    </p>
+                    <h3 class="text-2xl font-black text-white">
+                        {transactionStats.pending.count}
+                        <span class="text-sm font-normal text-gray-500"
+                            >Trx</span
+                        >
+                    </h3>
+                    <p class="text-amber-400 font-bold text-sm mt-1">
+                        Rp {
+                            new Intl.NumberFormat("id-ID").format(
+                                transactionStats.pending.total,
+                            )
+                        }
+                    </p>
+                </div>
+            </div>
+
+            <!-- Failed Card -->
+            <div
+                class="bg-[#142925] border border-[#1F3D36] rounded-[1.5rem] p-5 relative overflow-hidden group hover:border-red-500 transition-all"
+            >
+                <div
+                    class="absolute top-0 right-0 w-20 h-20 bg-red-500 rounded-full blur-[50px] opacity-10 group-hover:opacity-20 transition-opacity"
+                >
+                </div>
+                <div class="flex items-center justify-between mb-3">
+                    <div class="bg-red-500/10 p-2 rounded-xl text-red-400">
+                        <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                            ></path></svg
+                        >
+                    </div>
+                    <span
+                        class="text-xs font-bold text-red-400 bg-red-500/10 px-2 py-1 rounded-lg"
+                        >Failed</span
+                    >
+                </div>
+                <div>
+                    <p
+                        class="text-gray-400 text-xs font-medium uppercase tracking-wider mb-1"
+                    >
+                        Total Gagal
+                    </p>
+                    <h3 class="text-2xl font-black text-white">
+                        {transactionStats.failed.count}
+                        <span class="text-sm font-normal text-gray-500"
+                            >Trx</span
+                        >
+                    </h3>
+                    <p class="text-red-400 font-bold text-sm mt-1">
+                        Rp {
+                            new Intl.NumberFormat("id-ID").format(
+                                transactionStats.failed.total,
+                            )
+                        }
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -115,6 +272,7 @@ const transactions = Array.from({ length: 20 }).map((_, i) => {
                 <option value="Withdraw">Withdraw</option>
                 <option value="PPOB">PPOB</option>
                 <option value="Social Booster">Social Booster</option>
+                <option value="Clipper">Clipper</option>
             </select>
             <select
                 class="px-4 py-3 bg-[#0C1A18] border border-[#1F3D36] rounded-xl text-white text-sm outline-none focus:ring-2 focus:ring-[#D4F24F]/50 focus:border-[#D4F24F] transition-all cursor-pointer"
