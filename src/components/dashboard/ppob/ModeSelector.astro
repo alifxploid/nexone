@@ -1,0 +1,40 @@
+---
+/**
+ * Mode Selector Component for PPOB
+ * Displays Prabayar/Pascabayar selection cards
+ */
+---
+
+<div class="grid grid-cols-2 gap-3">
+    <button
+        id="btn-mode-prabayar"
+        class="mode-btn active group relative overflow-hidden bg-[#ff6b6b] text-white p-4 rounded-2xl text-left shadow-lg shadow-red-200 transition-all hover:-translate-y-0.5"
+        onclick="setMode('prabayar')"
+    >
+        <div class="relative z-10 flex flex-col justify-between h-full gap-2">
+            <div class="p-2 bg-white/20 w-fit rounded-lg">
+                <i class="fa-solid fa-mobile-screen-button text-lg"></i>
+            </div>
+            <div>
+                <h3 class="font-bold text-sm leading-tight">Prabayar</h3>
+                <p class="text-[10px] text-white/70 mt-0.5">Isi Ulang</p>
+            </div>
+        </div>
+    </button>
+
+    <button
+        id="btn-mode-pascabayar"
+        class="mode-btn relative overflow-hidden bg-white border border-gray-200 text-gray-500 p-4 rounded-2xl text-left transition-all hover:border-[#ff6b6b] hover:text-[#ff6b6b] hover:-translate-y-0.5"
+        onclick="setMode('pascabayar')"
+    >
+        <div class="relative z-10 flex flex-col justify-between h-full gap-2">
+            <div class="p-2 bg-gray-50 w-fit rounded-lg">
+                <i class="fa-solid fa-file-invoice text-lg"></i>
+            </div>
+            <div>
+                <h3 class="font-bold text-sm leading-tight">Pascabayar</h3>
+                <p class="text-[10px] text-gray-400 mt-0.5">Tagihan</p>
+            </div>
+        </div>
+    </button>
+</div>

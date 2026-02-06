@@ -50,499 +50,580 @@ const earningsHistory = Array.from({ length: 15 }).map((_, i) => ({
 ---
 
 <DashboardLayout title="Dashboard - Ringkasan">
-    <!-- Header -->
-    <div
-        class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4"
-    >
-        <div>
-            <h1 class="text-2xl font-bold text-white tracking-tight">
-                Dashboard
-            </h1>
-            <p class="text-gray-400 text-sm mt-1">
-                Ringkasan aktivitas dan performa akun Anda.
-            </p>
-        </div>
-        <a
-            href="/dashboard/deposit"
-            class="flex items-center gap-2 px-5 py-2.5 bg-[#D4F24F] hover:bg-[#c3e33b] text-[#0F1F1C] rounded-xl font-bold transition-all shadow-lg hover:-translate-y-0.5 active:scale-95 text-sm"
-        >
-            <svg
-                class="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                ><path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg
-            >
-            Deposit Baru
-        </a>
-    </div>
+    <!-- Custom Styles for New Template -->
+    <style>
+        .chart-grid-bg {
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .nav-pill-active {
+            background-color: #ff6b6b;
+            color: white;
+            box-shadow: 0 4px 14px rgba(255, 107, 107, 0.25);
+        }
+    </style>
 
-    <!-- Stats Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <!-- Card 1: Informasi Saldo (Gabungan) -->
-        <div
-            class="bg-white rounded-[2rem] p-6 border border-gray-200 shadow-sm relative overflow-hidden group hover:border-[#D4F24F] transition-colors"
-        >
+    <!-- BEGIN: Hero Section -->
+    <section class="mb-4 md:mb-8">
+        <h1 class="text-2xl md:text-4xl font-bold text-gray-800 mb-1 md:mb-2">
+            Good day, <span class="text-[#ff6b6b]">NexOne Publisher!</span>
+        </h1>
+        <p class="text-gray-400 font-light text-base md:text-lg">
+            Ready to discover new creative milestones and scale your vision
+            today?
+        </p>
+    </section>
+    <!-- END: Hero Section -->
+
+    <!-- BEGIN: Dashboard Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+        <!-- Left Column: Financial Stats -->
+        <div class="lg:col-span-2 grid grid-cols-2 gap-3 md:gap-6">
+            <!-- Card 1: Saldo PPOB -->
             <div
-                class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"
+                class="soft-card p-4 md:p-6 flex flex-col justify-between h-auto min-h-[140px] md:h-40"
             >
-            </div>
-            <p
-                class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-4"
-            >
-                Informasi Saldo
-            </p>
-
-            <div class="space-y-4">
-                <!-- PPOB Section -->
-                <div>
-                    <p
-                        class="text-[10px] uppercase font-bold text-gray-400 mb-1"
-                    >
-                        Saldo PPOB
-                    </p>
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-xl font-black text-[#0C1A18]">
-                            Rp {
-                                new Intl.NumberFormat("id-ID").format(
-                                    stats.ppobBalance,
-                                )
-                            }
-                        </h3>
-                        <span
-                            class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-100"
-                            >PPOB</span
-                        >
-                    </div>
+                <div class="flex justify-between items-start">
+                    <h3 class="text-gray-600 font-medium">Saldo PPOB</h3>
                 </div>
-
-                <!-- Divider -->
-                <div class="h-px w-full bg-gray-100"></div>
-
-                <!-- Social Section -->
                 <div>
-                    <p
-                        class="text-[10px] uppercase font-bold text-gray-400 mb-1"
+                    <div
+                        class="text-xl md:text-3xl font-bold text-gray-800 mb-2 break-all"
                     >
-                        Saldo Social Booster
-                    </p>
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-xl font-black text-[#0C1A18]">
-                            Rp {
-                                new Intl.NumberFormat("id-ID").format(
-                                    stats.socialBalance,
-                                )
-                            }
-                        </h3>
-                        <span
-                            class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-lg border border-blue-100"
-                            >Earnings</span
-                        >
+                        Rp {
+                            new Intl.NumberFormat("id-ID").format(
+                                stats.ppobBalance,
+                            )
+                        }
+                    </div>
+                    <div
+                        class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-500 px-3 py-1 rounded-full text-xs font-bold"
+                    >
+                        <i class="fa-solid fa-arrow-trend-up"></i> +5%
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Card 2: Total Withdraw -->
-        <div
-            class="bg-white rounded-[2rem] p-6 border border-gray-200 shadow-sm relative overflow-hidden group hover:border-[#D4F24F] transition-colors"
-        >
+            <!-- Card 2: Social Earnings -->
             <div
-                class="absolute top-0 right-0 w-32 h-32 bg-orange-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"
+                class="soft-card p-4 md:p-6 flex flex-col justify-between h-auto min-h-[140px] md:h-40"
             >
+                <div class="flex justify-between items-start">
+                    <h3 class="text-gray-600 font-medium">Social Earnings</h3>
+                </div>
+                <div>
+                    <div
+                        class="text-xl md:text-3xl font-bold text-gray-800 mb-2 break-all"
+                    >
+                        Rp {
+                            new Intl.NumberFormat("id-ID").format(
+                                stats.socialBalance,
+                            )
+                        }
+                    </div>
+                    <div
+                        class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-500 px-3 py-1 rounded-full text-xs font-bold"
+                    >
+                        <i class="fa-solid fa-arrow-trend-up"></i> +10%
+                    </div>
+                </div>
             </div>
-            <p
-                class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
-            >
-                Total Withdraw
-            </p>
-            <h3 class="text-2xl font-black text-[#0C1A18]">
-                Rp {new Intl.NumberFormat("id-ID").format(stats.withdraw)}
-            </h3>
-            <div class="mt-4 flex items-center gap-2">
-                <span class="text-[10px] text-gray-400 font-medium"
-                    >Total penarikan sukses</span
-                >
-            </div>
-        </div>
 
-        <!-- Card 3: Status Akun -->
-        <div
-            class="bg-white rounded-[2rem] p-6 border border-gray-200 shadow-sm relative overflow-hidden group hover:border-[#D4F24F] transition-colors"
-        >
+            <!-- Card 3: Total Withdraw -->
             <div
-                class="absolute top-0 right-0 w-32 h-32 bg-[#D4F24F]/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"
+                class="soft-card p-4 md:p-6 flex flex-col justify-center h-auto min-h-[140px] md:h-40 relative overflow-hidden"
             >
-            </div>
-            <p
-                class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
-            >
-                Status Akun
-            </p>
-            <div class="flex items-center gap-2">
                 <div
-                    class="w-8 h-8 rounded-full bg-[#0C1A18] flex items-center justify-center border border-[#D4F24F]"
+                    class="w-12 h-12 rounded-xl bg-red-50 flex items-center justify-center mb-3"
                 >
-                    <svg
-                        class="w-4 h-4 text-[#D4F24F]"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        ><path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        ></path></svg
-                    >
+                    <img
+                        src="https://img.icons8.com/?size=100&id=rb7SAr3UOu4l&format=png&color=FA5252"
+                        alt="Withdraw"
+                        class="w-6 h-6"
+                    />
                 </div>
-                <h3 class="text-2xl font-black text-[#0C1A18]">
-                    {stats.status}
+                <h3 class="text-gray-500 text-sm font-medium mb-1">
+                    Total Withdraw
                 </h3>
-            </div>
-            <div class="mt-4 flex items-center gap-2">
-                <span
-                    class="text-[10px] font-bold text-[#0C1A18] bg-[#D4F24F] px-2 py-0.5 rounded-lg border border-[#D4F24F]"
-                    >Verified</span
+                <div
+                    class="text-xl md:text-3xl font-bold text-gray-800 break-all"
                 >
+                    Rp {new Intl.NumberFormat("id-ID").format(stats.withdraw)}
+                </div>
             </div>
-        </div>
 
-        <!-- Card 4: Total Pendapatan -->
-        <div
-            class="bg-white rounded-[2rem] p-6 border border-gray-200 shadow-sm relative overflow-hidden group hover:border-[#D4F24F] transition-colors"
-        >
+            <!-- Card 4: Total Pendapatan -->
             <div
-                class="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"
+                class="soft-card p-4 md:p-6 flex flex-col justify-center h-auto min-h-[140px] md:h-40 relative overflow-hidden"
             >
-            </div>
-            <p
-                class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
-            >
-                Total Pendapatan
-            </p>
-            <h3 class="text-2xl font-black text-[#0C1A18]">
-                Rp {new Intl.NumberFormat("id-ID").format(stats.earnings)}
-            </h3>
-            <div class="mt-4 flex items-center gap-2">
-                <span
-                    class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-100"
-                    >+12%</span
+                <div
+                    class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-3"
                 >
-                <span class="text-[10px] text-gray-400 font-medium"
-                    >Bulan ini</span
+                    <img
+                        src="https://img.icons8.com/?size=100&id=64896&format=png&color=000000"
+                        alt="Income"
+                        class="w-6 h-6"
+                    />
+                </div>
+                <h3 class="text-gray-500 text-sm font-medium mb-1">
+                    Total Pendapatan
+                </h3>
+                <div
+                    class="text-xl md:text-3xl font-bold text-gray-800 break-all"
                 >
-            </div>
-        </div>
-    </div>
-
-    <!-- Chart Section -->
-    <div class="mb-8">
-        <ChartOverview client:load />
-    </div>
-
-    <!-- History Tables (Switchable) -->
-    <!-- History Tables (Switchable) -->
-    <div
-        class="bg-white rounded-[2rem] p-6 md:p-8 border border-gray-200 shadow-sm"
-        id="history-section"
-    >
-        <div
-            class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6"
-        >
-            <h3 class="text-lg font-bold text-[#0C1A18]">Riwayat Aktivitas</h3>
-
-            <!-- Tabs -->
-            <div class="flex bg-gray-100 p-1 rounded-xl w-full md:w-auto">
-                <button
-                    onclick="switchTab('ppob')"
-                    id="tab-ppob"
-                    class="flex-1 md:flex-none px-6 py-2 rounded-lg text-sm font-bold transition-all shadow-sm bg-white text-[#0C1A18]"
-                >
-                    Riwayat PPOB
-                </button>
-                <button
-                    onclick="switchTab('earnings')"
-                    id="tab-earnings"
-                    class="flex-1 md:flex-none px-6 py-2 rounded-lg text-sm font-bold transition-all text-gray-500 hover:text-[#0C1A18]"
-                >
-                    Earnings
-                </button>
-            </div>
-        </div>
-
-        <!-- PPOB Content -->
-        <div id="table-ppob" class="block">
-            <!-- Desktop Table -->
-            <div class="hidden md:block overflow-x-auto">
-                <table class="w-full">
-                    <thead>
-                        <tr class="text-left border-b border-gray-100">
-                            <th
-                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
-                                >ID Transaksi</th
-                            >
-                            <th
-                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
-                                >Produk</th
-                            >
-                            <th
-                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
-                                >Tujuan</th
-                            >
-                            <th
-                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right"
-                                >Harga</th
-                            >
-                            <th
-                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right"
-                                >Status</th
-                            >
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-50">
-                        {
-                            ppobHistory.slice(0, 5).map((item) => (
-                                <tr class="group hover:bg-gray-50/50 transition-colors">
-                                    <td class="py-4 font-mono text-xs text-gray-400 group-hover:text-[#0C1A18] transition-colors">
-                                        #{item.id}
-                                    </td>
-                                    <td class="py-4">
-                                        <span class="font-bold text-sm text-[#0C1A18]">
-                                            {item.product}
-                                        </span>
-                                    </td>
-                                    <td class="py-4 text-sm font-mono text-gray-500">
-                                        {item.target}
-                                    </td>
-                                    <td class="py-4 text-right font-bold text-sm text-[#0C1A18]">
-                                        Rp{" "}
-                                        {new Intl.NumberFormat("id-ID").format(
-                                            item.price,
-                                        )}
-                                    </td>
-                                    <td class="py-4 text-right">
-                                        {item.status === "success" && (
-                                            <span class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg border border-emerald-100">
-                                                Berhasil
-                                            </span>
-                                        )}
-                                        {item.status === "pending" && (
-                                            <span class="inline-flex items-center gap-1 text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-lg border border-amber-100">
-                                                Proses
-                                            </span>
-                                        )}
-                                        {item.status === "failed" && (
-                                            <span class="inline-flex items-center gap-1 text-[10px] font-bold text-red-600 bg-red-50 px-2 py-1 rounded-lg border border-red-100">
-                                                Gagal
-                                            </span>
-                                        )}
-                                    </td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Mobile Cards -->
-            <div class="md:hidden space-y-3">
-                {
-                    ppobHistory.slice(0, 5).map((item) => (
-                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
-                            <div class="flex justify-between items-start mb-3">
-                                <div>
-                                    <span class="text-[10px] font-bold text-gray-400 mb-1 block">
-                                        #{item.id}
-                                    </span>
-                                    <h4 class="font-bold text-sm text-[#0C1A18]">
-                                        {item.product}
-                                    </h4>
-                                </div>
-                                {item.status === "success" && (
-                                    <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg border border-emerald-100">
-                                        Berhasil
-                                    </span>
-                                )}
-                                {item.status === "pending" && (
-                                    <span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-lg border border-amber-100">
-                                        Proses
-                                    </span>
-                                )}
-                                {item.status === "failed" && (
-                                    <span class="text-[10px] font-bold text-red-600 bg-red-50 px-2 py-1 rounded-lg border border-red-100">
-                                        Gagal
-                                    </span>
-                                )}
-                            </div>
-                            <div class="flex justify-between items-center pt-3 border-t border-gray-200/50">
-                                <span class="text-xs font-mono text-gray-500 bg-white px-2 py-1 rounded border border-gray-100">
-                                    {item.target}
-                                </span>
-                                <span class="font-black text-sm text-[#0C1A18]">
-                                    Rp{" "}
-                                    {new Intl.NumberFormat("id-ID").format(
-                                        item.price,
-                                    )}
-                                </span>
-                            </div>
-                        </div>
-                    ))
-                }
-            </div>
-
-            <!-- Simple Pagination -->
-            <div
-                class="flex items-center justify-between mt-6 pt-6 border-t border-gray-100"
-            >
-                <span class="text-xs font-bold text-gray-400">1-5 dari 50</span>
-                <div class="flex gap-2">
-                    <button
-                        disabled
-                        class="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-400 font-bold text-xs cursor-not-allowed"
-                        >Prev</button
-                    >
-                    <button
-                        class="px-3 py-1.5 rounded-lg bg-[#0C1A18] text-white font-bold text-xs hover:bg-[#152A26] transition-all"
-                        >Next</button
-                    >
+                    Rp {new Intl.NumberFormat("id-ID").format(stats.earnings)}
                 </div>
             </div>
         </div>
 
-        <!-- Earnings Content -->
-        <div id="table-earnings" class="hidden">
-            <!-- Desktop Table -->
-            <div class="hidden md:block overflow-x-auto">
-                <table class="w-full">
-                    <thead>
-                        <tr class="text-left border-b border-gray-100">
-                            <th
-                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
-                                >ID Earnings</th
-                            >
-                            <th
-                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
-                                >Task / Sumber</th
-                            >
-                            <th
-                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
-                                >Tanggal</th
-                            >
-                            <th
-                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right"
-                                >Reward</th
-                            >
-                            <th
-                                class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right"
-                                >Status</th
-                            >
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-50">
-                        {
-                            earningsHistory.slice(0, 5).map((item) => (
-                                <tr class="group hover:bg-gray-50/50 transition-colors">
-                                    <td class="py-4 font-mono text-xs text-gray-400 group-hover:text-[#0C1A18] transition-colors">
-                                        #{item.id}
-                                    </td>
-                                    <td class="py-4">
-                                        <span class="font-bold text-sm text-[#0C1A18]">
-                                            {item.task}
-                                        </span>
-                                    </td>
-                                    <td class="py-4 text-sm font-medium text-gray-500">
-                                        {item.date}
-                                    </td>
-                                    <td class="py-4 text-right font-black text-sm text-emerald-600">
-                                        + Rp{" "}
-                                        {new Intl.NumberFormat("id-ID").format(
-                                            item.amount,
-                                        )}
-                                    </td>
-                                    <td class="py-4 text-right">
-                                        {item.status === "success" && (
-                                            <span class="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg border border-emerald-100">
-                                                Cair
-                                            </span>
-                                        )}
-                                        {item.status === "pending" && (
-                                            <span class="inline-flex items-center gap-1 text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-lg border border-amber-100">
-                                                Pending
-                                            </span>
-                                        )}
-                                    </td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Mobile Cards -->
-            <div class="md:hidden space-y-3">
-                {
-                    earningsHistory.slice(0, 5).map((item) => (
-                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
-                            <div class="flex justify-between items-start mb-3">
-                                <div>
-                                    <span class="text-[10px] font-bold text-gray-400 mb-1 block">
-                                        #{item.id}
-                                    </span>
-                                    <h4 class="font-bold text-sm text-[#0C1A18]">
-                                        {item.task}
-                                    </h4>
-                                </div>
-                                {item.status === "success" && (
-                                    <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-lg border border-emerald-100">
-                                        Cair
-                                    </span>
-                                )}
-                                {item.status === "pending" && (
-                                    <span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded-lg border border-amber-100">
-                                        Pending
-                                    </span>
-                                )}
-                            </div>
-                            <div class="flex justify-between items-center pt-3 border-t border-gray-200/50">
-                                <span class="text-xs font-medium text-gray-500">
-                                    {item.date}
-                                </span>
-                                <span class="font-black text-sm text-emerald-600">
-                                    + Rp{" "}
-                                    {new Intl.NumberFormat("id-ID").format(
-                                        item.amount,
-                                    )}
-                                </span>
-                            </div>
-                        </div>
-                    ))
-                }
-            </div>
-
-            <!-- Simple Pagination -->
-            <div
-                class="flex items-center justify-between mt-6 pt-6 border-t border-gray-100"
-            >
-                <span class="text-xs font-bold text-gray-400">1-5 dari 24</span>
-                <div class="flex gap-2">
-                    <button
-                        disabled
-                        class="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-400 font-bold text-xs cursor-not-allowed"
-                        >Prev</button
+        <!-- Right Column: Financial Pulse Chart -->
+        <div class="soft-card p-4 md:p-6 lg:col-span-1 flex flex-col">
+            <div class="flex justify-between items-start mb-4 md:mb-6">
+                <div>
+                    <h3 class="text-base md:text-xl font-bold text-gray-800">
+                        Financial Pulse
+                    </h3>
+                    <p
+                        class="text-[10px] text-gray-400 uppercase tracking-widest mt-1"
                     >
-                    <button
-                        class="px-3 py-1.5 rounded-lg bg-[#0C1A18] text-white font-bold text-xs hover:bg-[#152A26] transition-all"
-                        >Next</button
+                        Efficiency Report 2026
+                    </p>
+                </div>
+                <div class="flex items-center gap-3 text-[10px] md:text-xs">
+                    <div class="flex items-center gap-1">
+                        <span class="w-2 h-2 rounded-full bg-[#ff6b6b]"></span>
+                        <span class="text-gray-500">PPOB</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <span class="w-2 h-2 rounded-full bg-[#4d96ff]"></span>
+                        <span class="text-gray-500">Earnings</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Chart Visualization (CSS Only Representation) -->
+            <div
+                class="flex-1 flex items-end justify-between px-1 md:px-2 gap-1 md:gap-2 h-40 md:h-64 mt-2 md:mt-4 chart-grid-bg"
+            >
+                <!-- JAN -->
+                <div
+                    class="flex flex-col items-center gap-2 group w-full h-full justify-end"
+                >
+                    <div
+                        class="flex gap-1.5 items-end h-full w-full justify-center"
+                    >
+                        <div
+                            class="w-2.5 bg-[#ff6b6b] rounded-t-[10px] h-[35%] opacity-90 group-hover:opacity-100 transition-all"
+                        >
+                        </div>
+                        <div
+                            class="w-2.5 bg-[#4d96ff] rounded-t-[10px] h-[45%] opacity-90 group-hover:opacity-100 transition-all"
+                        >
+                        </div>
+                    </div>
+                    <span class="text-[10px] text-gray-400 font-medium mt-1"
+                        >JAN</span
+                    >
+                </div>
+                <!-- FEB -->
+                <div
+                    class="flex flex-col items-center gap-2 group w-full h-full justify-end"
+                >
+                    <div
+                        class="flex gap-1.5 items-end h-full w-full justify-center"
+                    >
+                        <div
+                            class="w-2.5 bg-[#ff6b6b] rounded-t-[10px] h-[45%] opacity-90 group-hover:opacity-100 transition-all"
+                        >
+                        </div>
+                        <div
+                            class="w-2.5 bg-[#4d96ff] rounded-t-[10px] h-[55%] opacity-90 group-hover:opacity-100 transition-all"
+                        >
+                        </div>
+                    </div>
+                    <span class="text-[10px] text-gray-400 font-medium mt-1"
+                        >FEB</span
+                    >
+                </div>
+                <!-- MAR -->
+                <div
+                    class="flex flex-col items-center gap-2 group w-full h-full justify-end"
+                >
+                    <div
+                        class="flex gap-1.5 items-end h-full w-full justify-center"
+                    >
+                        <div
+                            class="w-2.5 bg-[#ff6b6b] rounded-t-[10px] h-[58%] opacity-90 group-hover:opacity-100 transition-all"
+                        >
+                        </div>
+                        <div
+                            class="w-2.5 bg-[#4d96ff] rounded-t-[10px] h-[70%] opacity-90 group-hover:opacity-100 transition-all"
+                        >
+                        </div>
+                    </div>
+                    <span class="text-[10px] text-gray-400 font-medium mt-1"
+                        >MAR</span
+                    >
+                </div>
+                <!-- APR -->
+                <div
+                    class="flex flex-col items-center gap-2 group w-full h-full justify-end"
+                >
+                    <div
+                        class="flex gap-1.5 items-end h-full w-full justify-center"
+                    >
+                        <div
+                            class="w-2.5 bg-[#ff6b6b] rounded-t-[10px] h-[72%] opacity-90 group-hover:opacity-100 transition-all"
+                        >
+                        </div>
+                        <div
+                            class="w-2.5 bg-[#4d96ff] rounded-t-[10px] h-[85%] opacity-90 group-hover:opacity-100 transition-all"
+                        >
+                        </div>
+                    </div>
+                    <span class="text-[10px] text-gray-400 font-medium mt-1"
+                        >APR</span
+                    >
+                </div>
+                <!-- MAY -->
+                <div
+                    class="flex flex-col items-center gap-2 group w-full h-full justify-end"
+                >
+                    <div
+                        class="flex gap-1.5 items-end h-full w-full justify-center"
+                    >
+                        <div
+                            class="w-2.5 bg-[#ff6b6b] rounded-t-[10px] h-[85%] opacity-90 group-hover:opacity-100 transition-all"
+                        >
+                        </div>
+                        <div
+                            class="w-2.5 bg-[#4d96ff] rounded-t-[10px] h-[95%] opacity-90 group-hover:opacity-100 transition-all"
+                        >
+                        </div>
+                    </div>
+                    <span class="text-[10px] text-gray-400 font-medium mt-1"
+                        >MAY</span
                     >
                 </div>
             </div>
         </div>
     </div>
+    <!-- END: Dashboard Grid -->
+
+    <!-- BEGIN: Bottom Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6 mt-4 md:mt-8">
+        <!-- Quick Action Center -->
+        <div class="soft-card p-4 lg:col-span-1 h-fit self-start">
+            <div class="flex justify-between items-center mb-4">
+                <div>
+                    <h3 class="text-base font-bold text-gray-800">
+                        Quick Action Center
+                    </h3>
+                    <p
+                        class="text-[10px] text-gray-400 uppercase tracking-widest mt-0.5"
+                    >
+                        Frequently Used
+                    </p>
+                </div>
+                <i class="fa-solid fa-bolt text-[#4d96ff] text-sm"></i>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+                <!-- Button 1: Deposit -->
+                <a
+                    href="/dashboard/deposit"
+                    class="flex flex-col items-center justify-center p-3 rounded-xl bg-gray-50 hover:bg-red-50 transition-colors group"
+                >
+                    <div
+                        class="w-14 h-14 rounded-full bg-red-100 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform"
+                    >
+                        <img
+                            src="https://img.icons8.com/?size=100&id=IQcQ5T9wEyFV&format=png&color=000000"
+                            class="w-8 h-8"
+                            alt="Deposit"
+                        />
+                    </div>
+                    <span
+                        class="text-sm font-semibold text-gray-800 text-center leading-tight"
+                        >Deposit</span
+                    >
+                </a>
+                <!-- Button 2: Withdraw -->
+                <a
+                    href="/dashboard/publisher/withdraw"
+                    class="flex flex-col items-center justify-center p-3 rounded-xl bg-gray-50 hover:bg-blue-50 transition-colors group"
+                >
+                    <div
+                        class="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform"
+                    >
+                        <img
+                            src="https://img.icons8.com/?size=100&id=rb7SAr3UOu4l&format=png&color=000000"
+                            class="w-8 h-8"
+                            alt="Withdraw"
+                        />
+                    </div>
+                    <span
+                        class="text-sm font-semibold text-gray-800 text-center leading-tight"
+                        >Withdraw</span
+                    >
+                </a>
+                <!-- Button 3: Share (formerly Social) -->
+                <a
+                    href="/dashboard/publisher/share"
+                    class="flex flex-col items-center justify-center p-3 rounded-xl bg-gray-50 hover:bg-emerald-50 transition-colors group"
+                >
+                    <div
+                        class="w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform"
+                    >
+                        <img
+                            src="https://img.icons8.com/?size=100&id=67414&format=png&color=000000"
+                            class="w-8 h-8"
+                            alt="Share"
+                        />
+                    </div>
+                    <span
+                        class="text-sm font-semibold text-gray-800 text-center leading-tight"
+                        >Share</span
+                    >
+                </a>
+                <!-- Button 4: Referral -->
+                <a
+                    href="/dashboard/publisher/referral"
+                    class="flex flex-col items-center justify-center p-3 rounded-xl bg-gray-50 hover:bg-purple-50 transition-colors group"
+                >
+                    <div
+                        class="w-14 h-14 rounded-full bg-purple-100 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform"
+                    >
+                        <img
+                            src="https://img.icons8.com/?size=100&id=dQr0GlAlElvz&format=png&color=000000"
+                            class="w-8 h-8"
+                            alt="Referral"
+                        />
+                    </div>
+                    <span
+                        class="text-sm font-semibold text-gray-800 text-center leading-tight"
+                        >Referral</span
+                    >
+                </a>
+            </div>
+        </div>
+
+        <!-- Activity Table -->
+        <div class="soft-card p-4 md:p-6 lg:col-span-2" id="history-section">
+            <div
+                class="flex flex-wrap justify-between items-center mb-4 md:mb-6 gap-4"
+            >
+                <h3 class="text-lg md:text-xl font-bold text-gray-800">
+                    Riwayat Aktivitas
+                </h3>
+                <!-- Toggle Switch -->
+                <div
+                    class="flex items-center gap-1 bg-gray-100 rounded-full p-1 text-xs font-medium"
+                >
+                    <button
+                        onclick="switchTab('ppob')"
+                        id="tab-ppob"
+                        class="px-3 md:px-4 py-1.5 rounded-full transition-all nav-pill-active"
+                    >
+                        PPOB
+                    </button>
+                    <button
+                        onclick="switchTab('earnings')"
+                        id="tab-earnings"
+                        class="px-3 md:px-4 py-1.5 rounded-full transition-all text-gray-500 hover:text-gray-800"
+                    >
+                        Earnings
+                    </button>
+                </div>
+            </div>
+
+            <!-- PPOB Content -->
+            <div id="table-ppob" class="block">
+                <div class="overflow-x-auto">
+                    <table
+                        class="w-full min-w-[600px] text-left border-collapse"
+                    >
+                        <thead>
+                            <tr
+                                class="text-[10px] text-gray-400 uppercase tracking-wider border-b border-gray-100"
+                            >
+                                <th class="pb-3 font-medium">ID Transaksi</th>
+                                <th class="pb-3 font-medium">Produk</th>
+                                <th class="pb-3 font-medium">Tujuan</th>
+                                <th class="pb-3 font-medium text-right"
+                                    >Harga</th
+                                >
+                                <th class="pb-3 font-medium text-right"
+                                    >Status</th
+                                >
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            {
+                                ppobHistory.slice(0, 5).map((item) => (
+                                    <tr class="group hover:bg-gray-50 transition-colors">
+                                        <td class="py-4 font-semibold text-gray-800">
+                                            #{item.id}
+                                        </td>
+                                        <td class="py-4">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-8 h-8 rounded-full bg-blue-50 text-[#4d96ff] flex items-center justify-center text-xs">
+                                                    <i class="fa-solid fa-receipt" />
+                                                </div>
+                                                <div>
+                                                    <div class="font-bold text-gray-800">
+                                                        {item.product}
+                                                    </div>
+                                                    <div class="text-[10px] text-gray-400">
+                                                        {item.date}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="py-4 font-mono text-xs text-gray-500">
+                                            {item.target}
+                                        </td>
+                                        <td class="py-4 text-right font-bold text-gray-800">
+                                            Rp{" "}
+                                            {new Intl.NumberFormat(
+                                                "id-ID",
+                                            ).format(item.price)}
+                                        </td>
+                                        <td class="py-4 text-right">
+                                            {item.status === "success" && (
+                                                <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-500">
+                                                    <span class="inline-block w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1" />{" "}
+                                                    SUKSES
+                                                </span>
+                                            )}
+                                            {item.status === "pending" && (
+                                                <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-amber-50 text-amber-500">
+                                                    <span class="inline-block w-1.5 h-1.5 bg-amber-500 rounded-full mr-1" />{" "}
+                                                    PROSES
+                                                </span>
+                                            )}
+                                            {item.status === "failed" && (
+                                                <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-red-50 text-[#ff6b6b]">
+                                                    <span class="inline-block w-1.5 h-1.5 bg-[#ff6b6b] rounded-full mr-1" />{" "}
+                                                    GAGAL
+                                                </span>
+                                            )}
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Pagination -->
+                <div
+                    class="flex items-center justify-between mt-6 pt-6 border-t border-gray-100"
+                >
+                    <span class="text-xs font-bold text-gray-400"
+                        >1-5 dari 50</span
+                    >
+                    <div class="flex gap-2">
+                        <button
+                            disabled
+                            class="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-400 font-bold text-xs cursor-not-allowed"
+                            >Prev</button
+                        >
+                        <button
+                            class="px-3 py-1.5 rounded-lg bg-[#ff6b6b] text-white font-bold text-xs hover:bg-[#e55a5a] transition-all shadow-sm"
+                            >Next</button
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings Content -->
+            <div id="table-earnings" class="hidden">
+                <div class="overflow-x-auto">
+                    <table
+                        class="w-full min-w-[600px] text-left border-collapse"
+                    >
+                        <thead>
+                            <tr
+                                class="text-[10px] text-gray-400 uppercase tracking-wider border-b border-gray-100"
+                            >
+                                <th class="pb-3 font-medium">ID Earnings</th>
+                                <th class="pb-3 font-medium">Task / Sumber</th>
+                                <th class="pb-3 font-medium">Tanggal</th>
+                                <th class="pb-3 font-medium text-right"
+                                    >Reward</th
+                                >
+                                <th class="pb-3 font-medium text-right"
+                                    >Status</th
+                                >
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            {
+                                earningsHistory.slice(0, 5).map((item) => (
+                                    <tr class="group hover:bg-gray-50 transition-colors">
+                                        <td class="py-4 font-semibold text-gray-800">
+                                            #{item.id}
+                                        </td>
+                                        <td class="py-4">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-8 h-8 rounded-full bg-red-50 text-[#ff6b6b] flex items-center justify-center text-xs">
+                                                    <i class="fa-solid fa-coins" />
+                                                </div>
+                                                <div class="font-bold text-gray-800">
+                                                    {item.task}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="py-4 text-gray-500">
+                                            {item.date}
+                                        </td>
+                                        <td class="py-4 text-right font-bold text-emerald-500">
+                                            + Rp{" "}
+                                            {new Intl.NumberFormat(
+                                                "id-ID",
+                                            ).format(item.amount)}
+                                        </td>
+                                        <td class="py-4 text-right">
+                                            {item.status === "success" && (
+                                                <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-500">
+                                                    <span class="inline-block w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1" />{" "}
+                                                    CAIR
+                                                </span>
+                                            )}
+                                            {item.status === "pending" && (
+                                                <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-amber-50 text-amber-500">
+                                                    <span class="inline-block w-1.5 h-1.5 bg-amber-500 rounded-full mr-1" />{" "}
+                                                    PENDING
+                                                </span>
+                                            )}
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Pagination -->
+                <div
+                    class="flex items-center justify-between mt-6 pt-6 border-t border-gray-100"
+                >
+                    <span class="text-xs font-bold text-gray-400"
+                        >1-5 dari 24</span
+                    >
+                    <div class="flex gap-2">
+                        <button
+                            disabled
+                            class="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-400 font-bold text-xs cursor-not-allowed"
+                            >Prev</button
+                        >
+                        <button
+                            class="px-3 py-1.5 rounded-lg bg-[#ff6b6b] text-white font-bold text-xs hover:bg-[#e55a5a] transition-all shadow-sm"
+                            >Next</button
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END: Bottom Section -->
 
     <script is:inline>
         function switchTab(tab) {
@@ -555,35 +636,19 @@ const earningsHistory = Array.from({ length: 15 }).map((_, i) => ({
                 ppobTable.classList.remove("hidden");
                 earningsTable.classList.add("hidden");
 
-                ppobTab.classList.add(
-                    "bg-white",
-                    "text-[#0C1A18]",
-                    "shadow-sm",
-                );
+                ppobTab.classList.add("nav-pill-active");
                 ppobTab.classList.remove("text-gray-500");
 
-                earningsTab.classList.remove(
-                    "bg-white",
-                    "text-[#0C1A18]",
-                    "shadow-sm",
-                );
+                earningsTab.classList.remove("nav-pill-active");
                 earningsTab.classList.add("text-gray-500");
             } else {
                 ppobTable.classList.add("hidden");
                 earningsTable.classList.remove("hidden");
 
-                earningsTab.classList.add(
-                    "bg-white",
-                    "text-[#0C1A18]",
-                    "shadow-sm",
-                );
+                earningsTab.classList.add("nav-pill-active");
                 earningsTab.classList.remove("text-gray-500");
 
-                ppobTab.classList.remove(
-                    "bg-white",
-                    "text-[#0C1A18]",
-                    "shadow-sm",
-                );
+                ppobTab.classList.remove("nav-pill-active");
                 ppobTab.classList.add("text-gray-500");
             }
         }

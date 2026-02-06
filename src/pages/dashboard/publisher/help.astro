@@ -1,0 +1,307 @@
+---
+import DashboardLayout from "../../../layouts/DashboardLayout.astro";
+
+// Contact Information
+const contacts = [
+    {
+        name: "WhatsApp",
+        value: "+62 812-3456-7890",
+        icon: "fa-brands fa-whatsapp",
+        color: "text-green-500",
+        bgColor: "bg-green-50",
+        borderColor: "border-green-100",
+        link: "https://wa.me/6281234567890",
+        description: "Respon cepat 09:00 - 21:00 WIB",
+    },
+    {
+        name: "Email",
+        value: "support@nexone.id",
+        icon: "fa-solid fa-envelope",
+        color: "text-blue-500",
+        bgColor: "bg-blue-50",
+        borderColor: "border-blue-100",
+        link: "mailto:support@nexone.id",
+        description: "Respon dalam 1x24 jam",
+    },
+    {
+        name: "Telegram",
+        value: "@nexone_support",
+        icon: "fa-brands fa-telegram",
+        color: "text-sky-500",
+        bgColor: "bg-sky-50",
+        borderColor: "border-sky-100",
+        link: "https://t.me/nexone_support",
+        description: "Chat langsung dengan admin",
+    },
+    {
+        name: "Instagram",
+        value: "@nexone.id",
+        icon: "fa-brands fa-instagram",
+        color: "text-pink-500",
+        bgColor: "bg-pink-50",
+        borderColor: "border-pink-100",
+        link: "https://instagram.com/nexone.id",
+        description: "DM untuk pertanyaan umum",
+    },
+];
+
+const faqs = [
+    {
+        question: "Bagaimana cara deposit saldo?",
+        answer: "Kamu bisa deposit melalui menu Deposit, pilih metode pembayaran yang tersedia (Transfer Bank, QRIS, E-Wallet), lalu ikuti instruksi pembayaran.",
+    },
+    {
+        question: "Berapa lama proses withdraw?",
+        answer: "Proses withdraw biasanya memakan waktu 1x24 jam di hari kerja. Untuk weekend atau hari libur, proses akan dilakukan di hari kerja berikutnya.",
+    },
+    {
+        question: "Bagaimana cara mendapatkan bonus referral?",
+        answer: "Bagikan kode referral kamu ke teman. Setiap teman yang mendaftar dan melakukan transaksi pertama, kamu akan mendapat bonus sesuai ketentuan program.",
+    },
+    {
+        question: "Apakah transaksi PPOB aman?",
+        answer: "Ya, semua transaksi PPOB dijamin aman dan langsung terhubung ke provider resmi. Jika ada kendala, silakan hubungi support kami.",
+    },
+];
+---
+
+<DashboardLayout title="Pusat Bantuan">
+    <!-- Header Section -->
+    <div class="mb-8">
+        <h1 class="text-xl font-bold text-gray-800 tracking-tight">
+            Pusat Bantuan
+        </h1>
+        <p class="text-gray-500 mt-1 text-xs">
+            Ada pertanyaan? Hubungi kami melalui kontak di bawah ini.
+        </p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Left Column: Contact Cards -->
+        <div class="lg:col-span-2 space-y-6">
+            <!-- Contact Header -->
+            <div class="soft-card p-6 border border-gray-100">
+                <div class="flex items-center gap-4 mb-6">
+                    <div
+                        class="w-14 h-14 bg-gradient-to-br from-[#ff6b6b] to-[#ff5252] rounded-2xl flex items-center justify-center shadow-lg shadow-red-200"
+                    >
+                        <i class="fa-solid fa-headset text-2xl text-white"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold text-gray-800">
+                            Hubungi Kami
+                        </h2>
+                        <p class="text-xs text-gray-500">
+                            Pilih channel yang paling nyaman untuk kamu
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Contact Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {
+                        contacts.map((contact) => (
+                            <a
+                                href={contact.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class={`group p-4 rounded-2xl border ${contact.borderColor} ${contact.bgColor} hover:shadow-md transition-all hover:-translate-y-1`}
+                            >
+                                <div class="flex items-start gap-4">
+                                    <div
+                                        class={`w-12 h-12 bg-white rounded-xl flex items-center justify-center ${contact.color} shadow-sm`}
+                                    >
+                                        <i class={`${contact.icon} text-xl`} />
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-xs text-gray-500 font-medium mb-0.5">
+                                            {contact.name}
+                                        </p>
+                                        <p class="text-sm font-bold text-gray-800 truncate">
+                                            {contact.value}
+                                        </p>
+                                        <p class="text-[10px] text-gray-400 mt-1">
+                                            {contact.description}
+                                        </p>
+                                    </div>
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-gray-300 group-hover:text-gray-500 transition-colors" />
+                                </div>
+                            </a>
+                        ))
+                    }
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="soft-card p-6 border border-gray-100">
+                <div class="flex items-center gap-3 mb-6">
+                    <div
+                        class="w-10 h-10 bg-[#ff6b6b]/10 rounded-xl flex items-center justify-center"
+                    >
+                        <i class="fa-solid fa-circle-question text-[#ff6b6b]"
+                        ></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold text-gray-800">
+                            Pertanyaan Umum (FAQ)
+                        </h2>
+                        <p class="text-xs text-gray-500">
+                            Jawaban cepat untuk pertanyaan yang sering
+                            ditanyakan
+                        </p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    {
+                        faqs.map((faq, index) => (
+                            <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
+                                <div class="flex items-start gap-3">
+                                    <span class="w-6 h-6 bg-[#ff6b6b] text-white text-xs font-bold rounded-full flex items-center justify-center shrink-0">
+                                        {index + 1}
+                                    </span>
+                                    <div>
+                                        <h3 class="text-sm font-bold text-gray-800 mb-2">
+                                            {faq.question}
+                                        </h3>
+                                        <p class="text-xs text-gray-500 leading-relaxed">
+                                            {faq.answer}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Quick Actions -->
+        <div class="space-y-6">
+            <!-- Quick Help Card -->
+            <div class="soft-card p-6 border border-gray-100">
+                <div class="text-center mb-6">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-br from-[#ff6b6b]/10 to-[#ff5252]/10 rounded-full flex items-center justify-center mx-auto mb-4"
+                    >
+                        <i class="fa-solid fa-life-ring text-3xl text-[#ff6b6b]"
+                        ></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-1">
+                        Butuh Bantuan Cepat?
+                    </h3>
+                    <p class="text-xs text-gray-500">
+                        Tim support kami siap membantu
+                    </p>
+                </div>
+
+                <a
+                    href="https://wa.me/6281234567890?text=Halo,%20saya%20butuh%20bantuan"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-full py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-green-200 mb-3"
+                >
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    Chat WhatsApp
+                </a>
+
+                <a
+                    href="/dashboard/publisher/ticket"
+                    class="w-full py-3 bg-[#ff6b6b] hover:bg-[#ff5252] text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-red-200"
+                >
+                    <i class="fa-solid fa-ticket"></i>
+                    Buat Tiket Support
+                </a>
+            </div>
+
+            <!-- Operating Hours -->
+            <div class="soft-card p-6 border border-gray-100">
+                <div class="flex items-center gap-3 mb-4">
+                    <div
+                        class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center"
+                    >
+                        <i class="fa-solid fa-clock text-amber-500"></i>
+                    </div>
+                    <h3 class="text-sm font-bold text-gray-800">
+                        Jam Operasional
+                    </h3>
+                </div>
+
+                <div class="space-y-3">
+                    <div
+                        class="flex justify-between items-center py-2 border-b border-dashed border-gray-100"
+                    >
+                        <span class="text-xs text-gray-500">Senin - Jumat</span>
+                        <span class="text-xs font-bold text-gray-800"
+                            >09:00 - 21:00 WIB</span
+                        >
+                    </div>
+                    <div
+                        class="flex justify-between items-center py-2 border-b border-dashed border-gray-100"
+                    >
+                        <span class="text-xs text-gray-500">Sabtu</span>
+                        <span class="text-xs font-bold text-gray-800"
+                            >09:00 - 17:00 WIB</span
+                        >
+                    </div>
+                    <div class="flex justify-between items-center py-2">
+                        <span class="text-xs text-gray-500">Minggu & Libur</span
+                        >
+                        <span class="text-xs font-bold text-red-500">Tutup</span
+                        >
+                    </div>
+                </div>
+
+                <div
+                    class="mt-4 p-3 bg-amber-50 rounded-xl border border-amber-100"
+                >
+                    <p class="text-[10px] text-amber-700">
+                        <i class="fa-solid fa-info-circle mr-1"></i>
+                        Respon WhatsApp & Telegram lebih cepat di jam operasional.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Social Media -->
+            <div class="soft-card p-6 border border-gray-100">
+                <h3 class="text-sm font-bold text-gray-800 mb-4">
+                    <i class="fa-solid fa-share-nodes mr-2 text-[#ff6b6b]"></i>
+                    Ikuti Kami
+                </h3>
+                <div class="flex gap-3">
+                    <a
+                        href="#"
+                        class="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center text-gray-400 hover:text-pink-500 hover:bg-pink-50 transition-colors"
+                    >
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a
+                        href="#"
+                        class="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center text-gray-400 hover:text-black hover:bg-gray-100 transition-colors"
+                    >
+                        <i class="fa-brands fa-tiktok"></i>
+                    </a>
+                    <a
+                        href="#"
+                        class="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center text-gray-400 hover:text-blue-500 hover:bg-blue-50 transition-colors"
+                    >
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+                    <a
+                        href="#"
+                        class="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center text-gray-400 hover:text-sky-500 hover:bg-sky-50 transition-colors"
+                    >
+                        <i class="fa-brands fa-telegram"></i>
+                    </a>
+                    <a
+                        href="#"
+                        class="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors"
+                    >
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</DashboardLayout>

@@ -30,10 +30,10 @@ const tickets = [
 <DashboardLayout title="Pusat Bantuan - Tiket">
     <!-- Header -->
     <div class="mb-8">
-        <h1 class="text-2xl font-bold text-white tracking-tight">
+        <h1 class="text-2xl font-bold text-gray-800 tracking-tight">
             Pusat Bantuan
         </h1>
-        <p class="text-gray-400 text-sm mt-1">
+        <p class="text-gray-500 text-sm mt-1">
             Kami siap membantu kendala Anda 24/7.
         </p>
     </div>
@@ -41,20 +41,12 @@ const tickets = [
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         <!-- LEFT: Create Ticket Form -->
         <div class="lg:col-span-7">
-            <div
-                class="bg-gray-50 rounded-[2rem] p-6 md:p-8 border border-gray-200 shadow-sm relative overflow-hidden"
-            >
-                <!-- Decoration -->
-                <div
-                    class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"
-                >
-                </div>
-
-                <h2 class="text-lg font-bold text-[#0C1A18] mb-6 relative z-10">
+            <div class="soft-card p-6 md:p-8 border border-gray-100">
+                <h2 class="text-lg font-bold text-gray-800 mb-6">
                     Buat Tiket Baru
                 </h2>
 
-                <form class="space-y-5 relative z-10">
+                <form class="space-y-5">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div class="space-y-1.5">
                             <label
@@ -127,20 +119,9 @@ const tickets = [
                     <div class="pt-2">
                         <button
                             type="button"
-                            class="w-full py-3.5 bg-[#0C1A18] hover:bg-[#152A26] text-white font-bold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm transform active:scale-95"
+                            class="w-full py-3.5 bg-[#ff6b6b] hover:bg-[#ff5252] text-white font-bold rounded-xl shadow-lg shadow-red-200 transition-all flex items-center justify-center gap-2 text-sm transform active:scale-95"
                         >
-                            <svg
-                                class="w-4 h-4"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                ><path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                                ></path></svg
-                            >
+                            <i class="fa-solid fa-paper-plane"></i>
                             Kirim Tiket
                         </button>
                     </div>
@@ -150,47 +131,15 @@ const tickets = [
 
         <!-- RIGHT: Recent Tickets -->
         <div class="lg:col-span-5 space-y-6">
-            <!-- Quick FAQ -->
-            <div
-                class="bg-[#D4F24F] rounded-2xl p-6 relative overflow-hidden shadow-lg"
-            >
-                <div class="relative z-10">
-                    <h3 class="text-[#0C1A18] font-black text-lg">
-                        Butuh Jawaban Cepat?
-                    </h3>
-                    <p
-                        class="text-[#0C1A18]/80 text-xs font-medium mt-1 mb-4 leading-relaxed"
-                    >
-                        Cek halaman FAQ kami sebelum membuat tiket. Banyak
-                        masalah umum sudah ada solusinya di sana.
-                    </p>
-                    <button
-                        class="px-4 py-2 bg-[#0C1A18] text-white rounded-lg text-xs font-bold hover:bg-opacity-90 transition-all"
-                    >
-                        Baca FAQ
-                    </button>
-                </div>
-                <div class="absolute right-0 bottom-0 w-24 h-24 opacity-10">
-                    <svg
-                        class="w-full h-full text-[#0C1A18]"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                        ><path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"
-                        ></path></svg
-                    >
-                </div>
-            </div>
-
             <!-- Ticket List -->
             <div>
                 <div class="flex items-center justify-between mb-3 px-1">
-                    <h3 class="text-white font-bold text-sm">
+                    <h3 class="text-gray-800 font-bold text-sm">
                         Tiket Terbaru Anda
                     </h3>
                     <a
                         href="#"
-                        class="text-emerald-400 text-xs font-bold hover:underline"
+                        class="text-[#ff6b6b] text-xs font-bold hover:underline"
                         >Lihat Semua</a
                     >
                 </div>
@@ -198,32 +147,42 @@ const tickets = [
                 <div class="space-y-3">
                     {
                         tickets.map((ticket) => (
-                            <div class="bg-gray-50 hover:bg-white p-4 rounded-xl border border-gray-200 transition-all group cursor-pointer hover:border-[#0C1A18]">
-                                <div class="flex justify-between items-start mb-2">
-                                    <span class="bg-white border border-gray-200 text-gray-500 font-mono text-[10px] font-bold px-2 py-0.5 rounded group-hover:border-[#0C1A18] transition-colors">
-                                        {ticket.id}
-                                    </span>
+                            <div class="soft-card p-4 border border-gray-100 transition-all group cursor-pointer hover:shadow-md hover:border-gray-200">
+                                <div class="flex justify-between items-start mb-3">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-500 group-hover:bg-gray-200 transition-colors">
+                                            <i class="fa-solid fa-ticket text-xs" />
+                                        </div>
+                                        <span class="text-gray-400 font-mono text-[10px] font-bold">
+                                            {ticket.id}
+                                        </span>
+                                    </div>
                                     {ticket.status === "open" && (
-                                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100">
+                                        <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full">
+                                            <i class="fa-solid fa-circle text-[6px] mr-1 animate-pulse" />
                                             Open
                                         </span>
                                     )}
                                     {ticket.status === "answered" && (
-                                        <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
+                                        <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full">
+                                            <i class="fa-solid fa-reply text-[8px] mr-1" />
                                             Dijawab
                                         </span>
                                     )}
                                     {ticket.status === "closed" && (
-                                        <span class="text-[10px] font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded border border-gray-200">
+                                        <span class="text-[10px] font-bold text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">
+                                            <i class="fa-solid fa-check text-[8px] mr-1" />
                                             Closed
                                         </span>
                                     )}
                                 </div>
-                                <h4 class="text-[#0C1A18] font-bold text-sm leading-tight mb-1">
+                                <h4 class="text-gray-800 font-bold text-sm leading-tight mb-2 group-hover:text-gray-900">
                                     {ticket.subject}
                                 </h4>
                                 <div class="flex items-center gap-2 text-[10px] text-gray-400 font-medium">
-                                    <span>{ticket.category}</span>
+                                    <span class="bg-gray-50 px-2 py-0.5 rounded">
+                                        {ticket.category}
+                                    </span>
                                     <span class="w-1 h-1 rounded-full bg-gray-300" />
                                     <span>{ticket.date}</span>
                                 </div>
@@ -231,6 +190,25 @@ const tickets = [
                         ))
                     }
                 </div>
+            </div>
+
+            <!-- Quick FAQ -->
+            <div class="soft-card p-6 bg-blue-50 border border-blue-100">
+                <h3 class="text-gray-800 font-black text-lg">
+                    Butuh Jawaban Cepat?
+                </h3>
+                <p
+                    class="text-gray-600 text-xs font-medium mt-1 mb-4 leading-relaxed"
+                >
+                    Cek halaman FAQ kami sebelum membuat tiket. Banyak masalah
+                    umum sudah ada solusinya di sana.
+                </p>
+                <button
+                    class="px-4 py-2 bg-[#ff6b6b] text-white rounded-lg text-xs font-bold hover:bg-[#ff5252] transition-all shadow-lg shadow-red-200"
+                >
+                    <i class="fa-solid fa-book-open mr-1"></i>
+                    Baca FAQ
+                </button>
             </div>
         </div>
     </div>

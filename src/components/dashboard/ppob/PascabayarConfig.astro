@@ -1,0 +1,164 @@
+---
+/**
+ * Pascabayar Configuration Component
+ * Category selection grid + ID input for postpaid services
+ */
+---
+
+<div id="config-pascabayar" class="hidden space-y-5">
+    <!-- Category Grid Pascabayar -->
+    <div class="space-y-2">
+        <label
+            class="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1"
+        >
+            Layanan Tagihan
+        </label>
+        <div class="grid grid-cols-4 lg:grid-cols-3 gap-2">
+            <!-- 1. PLN Pascabayar -->
+            <button
+                class="cat-pasca-btn active flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-[#ff6b6b] text-[#ff6b6b] shadow-sm transition-all text-center"
+                onclick="selectCategoryPasca(this)"
+            >
+                <i class="fa-solid fa-bolt text-base lg:text-lg"></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >PLN Pasca</span
+                >
+            </button>
+            <!-- 2. BPJS Kesehatan -->
+            <button
+                class="cat-pasca-btn flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-[#ff6b6b] hover:border-[#ff6b6b] transition-all text-center"
+                onclick="selectCategoryPasca(this)"
+            >
+                <i class="fa-solid fa-heart-pulse text-base lg:text-lg"></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >BPJS Kes</span
+                >
+            </button>
+            <!-- 3. PDAM -->
+            <button
+                class="cat-pasca-btn flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-[#ff6b6b] hover:border-[#ff6b6b] transition-all text-center"
+                onclick="selectCategoryPasca(this)"
+            >
+                <i class="fa-solid fa-droplet text-base lg:text-lg"></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >PDAM</span
+                >
+            </button>
+            <!-- 4. Internet Pasca -->
+            <button
+                class="cat-pasca-btn flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-[#ff6b6b] hover:border-[#ff6b6b] transition-all text-center"
+                onclick="selectCategoryPasca(this)"
+            >
+                <i class="fa-solid fa-globe text-base lg:text-lg"></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >Internet</span
+                >
+            </button>
+            <!-- 5. PLN Nontaglis -->
+            <button
+                class="cat-pasca-btn flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-[#ff6b6b] hover:border-[#ff6b6b] transition-all text-center"
+                onclick="selectCategoryPasca(this)"
+            >
+                <i class="fa-solid fa-plug text-base lg:text-lg"></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >Nontaglis</span
+                >
+            </button>
+            <!-- 6. PBB -->
+            <button
+                class="cat-pasca-btn flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-[#ff6b6b] hover:border-[#ff6b6b] transition-all text-center"
+                onclick="selectCategoryPasca(this)"
+            >
+                <i class="fa-solid fa-building text-base lg:text-lg"></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >PBB</span
+                >
+            </button>
+            <!-- 7. Gas Negara -->
+            <button
+                class="cat-pasca-btn flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-[#ff6b6b] hover:border-[#ff6b6b] transition-all text-center"
+                onclick="selectCategoryPasca(this)"
+            >
+                <i class="fa-solid fa-fire-flame-simple text-base lg:text-lg"
+                ></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >PGN</span
+                >
+            </button>
+            <!-- 8. HP Pascabayar -->
+            <button
+                class="cat-pasca-btn flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-[#ff6b6b] hover:border-[#ff6b6b] transition-all text-center"
+                onclick="selectCategoryPasca(this)"
+            >
+                <i class="fa-solid fa-mobile text-base lg:text-lg"></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >HP Pasca</span
+                >
+            </button>
+            <!-- 9. Multifinance -->
+            <button
+                class="cat-pasca-btn flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-[#ff6b6b] hover:border-[#ff6b6b] transition-all text-center"
+                onclick="selectCategoryPasca(this)"
+            >
+                <i class="fa-solid fa-hand-holding-dollar text-base lg:text-lg"
+                ></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >Finance</span
+                >
+            </button>
+            <!-- 10. TV Pascabayar -->
+            <button
+                class="cat-pasca-btn flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-[#ff6b6b] hover:border-[#ff6b6b] transition-all text-center"
+                onclick="selectCategoryPasca(this)"
+            >
+                <i class="fa-solid fa-tv text-base lg:text-lg"></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >TV Pasca</span
+                >
+            </button>
+            <!-- 11. E-Money Custom -->
+            <button
+                class="cat-pasca-btn flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-[#ff6b6b] hover:border-[#ff6b6b] transition-all text-center"
+                onclick="selectCategoryPasca(this)"
+            >
+                <i class="fa-solid fa-wallet text-base lg:text-lg"></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >E-Money+</span
+                >
+            </button>
+            <!-- 12. BPJS Ketenagakerjaan -->
+            <button
+                class="cat-pasca-btn flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-[#ff6b6b] hover:border-[#ff6b6b] transition-all text-center"
+                onclick="selectCategoryPasca(this)"
+            >
+                <i class="fa-solid fa-shield-halved text-base lg:text-lg"></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >BPJS TK</span
+                >
+            </button>
+        </div>
+    </div>
+
+    <!-- ID Input -->
+    <div class="space-y-1.5">
+        <label
+            class="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1"
+        >
+            ID Pelanggan
+        </label>
+        <input
+            type="text"
+            id="id-pelanggan-input"
+            class="w-full bg-white text-gray-900 font-bold text-sm px-4 py-3 rounded-xl border border-gray-200 focus:border-[#ff6b6b] focus:ring-1 focus:ring-[#ff6b6b] outline-none shadow-sm transition-all placeholder:text-gray-300"
+            placeholder="Nomor ID/Meter..."
+        />
+    </div>
+
+    <!-- Cek Tagihan Button -->
+    <button
+        class="w-full py-3.5 bg-[#ff6b6b] hover:bg-[#ff5252] text-white font-bold rounded-xl shadow-lg shadow-red-200 transition-all flex items-center justify-center gap-2 text-sm"
+    >
+        <i class="fa-solid fa-magnifying-glass"></i>
+        Cek Tagihan
+    </button>
+</div>

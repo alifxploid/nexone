@@ -21,41 +21,78 @@ const { title } = Astro.props;
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="generator" content={Astro.generator} />
         <title>{title}</title>
+        <!-- Google Fonts Poppins -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
             rel="stylesheet"
         />
+        <!-- Font Awesome -->
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+            rel="stylesheet"
+        />
+        <style>
+            body {
+                font-family: "Poppins", sans-serif;
+            }
+            /* Hide scrollbar for cleaner look */
+            ::-webkit-scrollbar {
+                width: 6px;
+            }
+            ::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            ::-webkit-scrollbar-thumb {
+                background-color: #ddd;
+                border-radius: 20px;
+            }
+
+            .nav-pill-active {
+                background-color: #ff6b6b;
+                color: white;
+                box-shadow: 0 4px 14px rgba(255, 107, 107, 0.25);
+            }
+
+            .sidebar-icon {
+                color: #a0a0a0;
+                transition: all 0.3s ease;
+            }
+            .sidebar-icon:hover,
+            .sidebar-icon.active {
+                color: #ff6b6b;
+            }
+
+            .soft-shadow {
+                box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05);
+            }
+        </style>
     </head>
-    <body class="bg-white text-[#0F1F1C] font-['Plus_Jakarta_Sans',sans-serif]">
-        <div class="flex h-screen overflow-hidden">
-            <!-- Sidebar Component -->
-            <Sidebar />
+    <body
+        class="antialiased min-h-screen flex flex-col md:flex-row p-2 md:p-4 gap-4 md:gap-6 bg-[#FAF9F6] text-gray-800 transition-colors duration-300"
+    >
+        <!-- Sidebar Component -->
+        <Sidebar />
 
-            <!-- Main Content Area -->
-            <main
-                class="flex-1 ml-0 md:ml-72 flex flex-col h-screen overflow-hidden bg-[#0C1A18] transition-all duration-300"
-            >
-                <!-- Navbar Component -->
-                <Navbar />
+        <!-- Main Content Area -->
+        <main
+            class="flex-1 flex flex-col gap-4 md:gap-8 overflow-y-auto pb-4 px-2 md:px-0"
+        >
+            <!-- Navbar Component -->
+            <Navbar />
 
-                <!-- Page Content Scrollable -->
-                <div class="flex-1 overflow-y-auto flex flex-col">
-                    <div class="flex-1 p-4 md:p-8">
-                        <slot />
-                    </div>
+            <!-- Page Content -->
+            <slot />
 
-                    <!-- Footer Component -->
-                    <Footer />
-                </div>
-            </main>
-        </div>
+            <!-- Footer Component -->
+            <Footer />
+        </main>
 
         <!-- Mobile Sidebar Overlay -->
         <div
             id="sidebar-overlay"
-            class="fixed inset-0 bg-black/50 z-40 hidden md:hidden glass-overlay opacity-0 transition-opacity duration-300"
+            class="fixed inset-0 bg-black/60 backdrop-blur-lg z-40 hidden md:hidden opacity-0 transition-opacity duration-300"
         >
         </div>
 
@@ -69,7 +106,6 @@ const { title } = Astro.props;
                     sidebar.classList.toggle("-translate-x-full");
                     overlay.classList.toggle("hidden");
                     mobileBtn.classList.toggle("rotate-180");
-                    // Small timeout to allow display:block to apply before opacity transition
                     setTimeout(() => {
                         overlay.classList.toggle("opacity-0");
                     }, 10);

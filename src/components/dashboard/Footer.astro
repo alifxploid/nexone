@@ -2,22 +2,28 @@
 const year = new Date().getFullYear();
 ---
 
-<footer
-    class="py-6 px-8 text-center md:text-left border-t border-[#1F3D36] mt-auto bg-[#0C1A18]"
->
+<footer class="py-3 md:py-4 mt-auto">
     <div
-        class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-400"
+        class="flex flex-col md:flex-row items-center justify-between gap-2 md:gap-3 text-[10px] md:text-xs text-gray-400 bg-white rounded-2xl md:rounded-full px-4 md:px-6 py-3 shadow-sm"
     >
-        <p>© {year} NexOne Dashboard. All rights reserved.</p>
-        <div class="flex gap-4">
-            <a href="#" class="hover:text-gray-600 transition-colors"
-                >Privacy Policy</a
+        <p class="font-medium text-center md:text-left">
+            © {year} NexOne Dashboard.
+        </p>
+        <div class="flex gap-4 md:gap-6">
+            <a
+                href="#"
+                class="hover:text-[#ff6b6b] transition-colors font-medium"
+                >Privacy</a
             >
-            <a href="#" class="hover:text-gray-600 transition-colors"
-                >Terms of Service</a
+            <a
+                href="#"
+                class="hover:text-[#ff6b6b] transition-colors font-medium"
+                >Terms</a
             >
-            <a href="#" class="hover:text-gray-600 transition-colors"
-                >Help Center</a
+            <a
+                href="#"
+                class="hover:text-[#ff6b6b] transition-colors font-medium"
+                >Help</a
             >
         </div>
     </div>

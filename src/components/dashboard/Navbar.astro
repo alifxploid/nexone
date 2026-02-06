@@ -9,99 +9,202 @@ let basePath = "/dashboard";
 if (isPublisher) basePath = "/dashboard/publisher";
 if (isAdvertiser) basePath = "/dashboard/advertiser";
 if (isAdmin) basePath = "/admin";
+
+// Mock notifications
+const notifications = [
+    {
+        id: 1,
+        type: "success",
+        title: "Deposit Berhasil",
+        message: "Deposit Rp 500.000 telah dikonfirmasi",
+        time: "5 menit lalu",
+        read: false,
+    },
+    {
+        id: 2,
+        type: "info",
+        title: "Misi Baru Tersedia",
+        message: "Ada 3 misi baru yang cocok untuk Anda",
+        time: "1 jam lalu",
+        read: false,
+    },
+    {
+        id: 3,
+        type: "warning",
+        title: "Withdraw Diproses",
+        message: "Permintaan withdraw Rp 200.000 sedang diproses",
+        time: "2 jam lalu",
+        read: true,
+    },
+];
 ---
 
-<header
-    class="h-16 md:h-20 px-4 md:px-8 border-b border-[#1F3D36] flex items-center justify-between bg-[#0C1A18] sticky top-0 z-40"
->
-    <!-- Left: Search Bar -->
-    <!-- Left: Search Bar (Removed, only Mobile Toggle remains) -->
-    <div class="flex-1 flex items-center gap-4">
-        <button
-            id="mobile-menu-btn"
-            class="md:hidden text-gray-400 hover:text-white p-2 -ml-2 transition-transform duration-500"
+<!-- BEGIN: Header -->
+<header class="flex flex-wrap items-center justify-between gap-2 md:gap-4 py-2">
+    <!-- Mobile Menu Button -->
+    <button
+        id="mobile-menu-btn"
+        class="md:hidden text-gray-500 hover:text-gray-800 p-2 bg-white rounded-full shadow-sm transition-colors"
+    >
+        <svg
+            class="w-7 h-7"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
         >
-            <svg
-                class="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                ><path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                ></path>
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg
-            >
-        </button>
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+    </button>
+
+    <!-- Role Badge / Breadcrumb -->
+    <div
+        class="hidden md:flex bg-white rounded-full p-1 md:p-1.5 px-3 md:px-4 items-center shadow-sm"
+    >
+        <span class="text-xs md:text-sm font-semibold text-gray-800">
+            {
+                isPublisher
+                    ? "Publisher"
+                    : isAdvertiser
+                      ? "Advertiser"
+                      : "Dashboard"
+            }
+        </span>
     </div>
 
-    <!-- Right: Actions -->
-    <div class="flex items-center gap-4 ml-4">
-        <button
-            class="w-10 h-10 rounded-full bg-[#142925] hover:bg-[#1F3D36] text-gray-400 hover:text-white flex items-center justify-center transition-all relative"
-        >
-            <svg
-                class="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                ><path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                ></path></svg
+    <!-- Right Side Actions & Profile -->
+    <div
+        class="flex items-center gap-3 md:gap-6 bg-white px-3 md:px-4 py-1.5 md:py-2 rounded-full shadow-sm"
+    >
+        <!-- Notification Dropdown -->
+        <div class="relative" id="notification-dropdown-container">
+            <button
+                id="notification-btn"
+                class="text-gray-400 hover:text-gray-800 relative transition-colors"
             >
-            <span
-                class="absolute top-2 right-2.5 w-2 h-2 bg-red-500 rounded-full border-2 border-[#142925]"
-            ></span>
-        </button>
+                <i class="fa-regular fa-bell"></i>
+                <span
+                    class="absolute -top-1 -right-1 w-2 h-2 bg-[#ff6b6b] rounded-full border-2 border-white"
+                ></span>
+            </button>
 
-        <div class="h-8 w-px bg-[#1F3D36]"></div>
+            <!-- Notification Menu -->
+            <div
+                id="notification-menu"
+                class="fixed md:absolute left-2 right-2 md:left-auto md:right-0 top-16 md:top-full md:mt-2 w-auto md:w-80 bg-white border border-gray-100 rounded-2xl shadow-xl transform opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50"
+            >
+                <div class="p-4">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-sm font-bold text-gray-800">
+                            Notifikasi
+                        </h3>
+                        <button
+                            class="text-[10px] text-[#ff6b6b] font-bold hover:underline"
+                        >
+                            Tandai Semua Dibaca
+                        </button>
+                    </div>
+
+                    <div class="space-y-3 max-h-64 overflow-y-auto">
+                        {
+                            notifications.map((notif) => (
+                                <div
+                                    class={`flex items-start gap-3 p-3 rounded-xl transition-colors cursor-pointer ${notif.read ? "bg-gray-50" : "bg-red-50 hover:bg-red-100"}`}
+                                >
+                                    <div
+                                        class={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
+                                            notif.type === "success"
+                                                ? "bg-green-100 text-green-500"
+                                                : notif.type === "warning"
+                                                  ? "bg-amber-100 text-amber-500"
+                                                  : "bg-blue-100 text-blue-500"
+                                        }`}
+                                    >
+                                        <i
+                                            class={`fa-solid ${
+                                                notif.type === "success"
+                                                    ? "fa-circle-check"
+                                                    : notif.type === "warning"
+                                                      ? "fa-clock"
+                                                      : "fa-bell"
+                                            } text-xs`}
+                                        />
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="flex items-center justify-between gap-2">
+                                            <p class="text-xs font-bold text-gray-800 truncate">
+                                                {notif.title}
+                                            </p>
+                                            {!notif.read && (
+                                                <span class="w-2 h-2 bg-[#ff6b6b] rounded-full shrink-0" />
+                                            )}
+                                        </div>
+                                        <p class="text-[10px] text-gray-500 truncate">
+                                            {notif.message}
+                                        </p>
+                                        <p class="text-[10px] text-gray-400 mt-1">
+                                            {notif.time}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+
+                    <a
+                        href={`${basePath}/notifications`}
+                        class="block mt-4 py-2 text-center text-xs font-bold text-[#ff6b6b] hover:bg-red-50 rounded-lg transition-colors"
+                    >
+                        Lihat Semua Notifikasi
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="h-6 w-[1px] bg-gray-200"></div>
 
         <!-- Profile Dropdown -->
-        <div class="relative ml-2" id="profile-dropdown-container">
+        <div class="relative" id="profile-dropdown-container">
             <button
                 id="profile-btn"
-                class="flex items-center gap-3 hover:bg-[#142925] p-1.5 pr-2.5 rounded-full transition-all border border-transparent hover:border-[#1F3D36]"
+                class="flex items-center gap-3 hover:opacity-80 transition-opacity"
             >
-                <div class="text-right hidden md:block">
-                    <p class="text-xs font-bold text-white">
+                <img
+                    alt="User Avatar"
+                    class="w-10 h-10 rounded-full object-cover"
+                    src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+                />
+                <div class="hidden md:block text-left">
+                    <h4 class="text-sm font-bold text-gray-800 leading-tight">
                         James Passaquindici
-                    </p>
-                    <p class="text-[10px] text-gray-400 font-mono">
+                    </h4>
+                    <p
+                        class="text-[10px] text-[#ff6b6b] font-semibold tracking-wider uppercase"
+                    >
                         {
                             isPublisher
-                                ? "PUBLISHER"
+                                ? "Publisher"
                                 : isAdvertiser
-                                  ? "ADVERTISER"
+                                  ? "Advertiser"
                                   : isAdmin
-                                    ? "ADMIN"
-                                    : "USER"
+                                    ? "Admin"
+                                    : "Member"
                         }
                     </p>
                 </div>
-                <img
-                    src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
-                    alt="User"
-                    class="w-9 h-9 rounded-full bg-[#142925] border border-[#1F3D36]"
-                />
             </button>
 
             <!-- Dropdown Menu -->
             <div
                 id="profile-menu"
-                class="absolute right-0 top-full mt-2 w-56 bg-[#0C1A18] border border-[#1F3D36] rounded-xl shadow-2xl transform opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50"
+                class="absolute right-0 top-full mt-2 w-56 bg-white border border-gray-100 rounded-2xl shadow-xl transform opacity-0 scale-95 pointer-events-none transition-all duration-200 origin-top-right z-50"
             >
                 <div class="p-2 space-y-1">
-                    <div class="px-3 py-2 border-b border-[#1F3D36] mb-1">
-                        <p class="text-xs font-bold text-white">
+                    <div class="px-3 py-2 border-b border-gray-100 mb-1">
+                        <p class="text-sm font-bold text-gray-800">
                             James Passaquindici
                         </p>
                         <p class="text-[10px] text-gray-400">
@@ -111,100 +214,129 @@ if (isAdmin) basePath = "/admin";
 
                     <a
                         href={`${basePath}/profile`}
-                        class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-[#142925] transition-colors"
+                        class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50 transition-colors"
                     >
-                        <svg
-                            class="w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            ><path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                            ></path></svg
-                        >
+                        <i class="fa-solid fa-user w-4"></i>
                         Profile Saya
                     </a>
                     <a
                         href={`${basePath}/settings`}
-                        class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-[#142925] transition-colors"
+                        class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50 transition-colors"
                     >
-                        <svg
-                            class="w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            ><path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                            ></path><path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                            ></path></svg
-                        >
+                        <i class="fa-solid fa-gear w-4"></i>
                         Settings
                     </a>
+                    <a
+                        href={`${basePath}/help`}
+                        class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-50 transition-colors"
+                    >
+                        <i class="fa-solid fa-circle-question w-4"></i>
+                        Bantuan
+                    </a>
 
-                    <div class="h-px bg-[#1F3D36] my-1"></div>
+                    <div class="h-px bg-gray-100 my-1"></div>
 
                     <button
-                        class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-bold text-red-500 hover:bg-red-500/10 transition-colors"
+                        class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-bold text-[#ff6b6b] hover:bg-red-50 transition-colors"
                     >
-                        <svg
-                            class="w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            ><path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                            ></path></svg
-                        >
+                        <i class="fa-solid fa-arrow-right-from-bracket w-4"></i>
                         Keluar
                     </button>
                 </div>
             </div>
         </div>
-
-        <script>
-            function initProfileMenu() {
-                const btn = document.getElementById("profile-btn");
-                const menu = document.getElementById("profile-menu");
-
-                if (btn && menu) {
-                    // Toggle
-                    btn.addEventListener("click", (e) => {
-                        e.stopPropagation();
-                        menu.classList.toggle("opacity-0");
-                        menu.classList.toggle("scale-95");
-                        menu.classList.toggle("pointer-events-none");
-                    });
-
-                    // Outside click
-                    document.addEventListener("click", (e) => {
-                        if (
-                            !menu.contains(e.target as Node) &&
-                            !btn.contains(e.target as Node)
-                        ) {
-                            menu.classList.add("opacity-0");
-                            menu.classList.add("scale-95");
-                            menu.classList.add("pointer-events-none");
-                        }
-                    });
-                }
-            }
-
-            // Init on load
-            initProfileMenu();
-            document.addEventListener("astro:page-load", initProfileMenu);
-        </script>
     </div>
 </header>
+<!-- END: Header -->
+
+<script>
+    function initDropdowns() {
+        const profileBtn = document.getElementById("profile-btn");
+        const profileMenu = document.getElementById("profile-menu");
+        const notificationBtn = document.getElementById("notification-btn");
+        const notificationMenu = document.getElementById("notification-menu");
+
+        // Helper to close a dropdown
+        function closeDropdown(menu: HTMLElement | null) {
+            if (menu) {
+                menu.classList.add(
+                    "opacity-0",
+                    "scale-95",
+                    "pointer-events-none",
+                );
+            }
+        }
+
+        // Helper to open a dropdown
+        function openDropdown(menu: HTMLElement | null) {
+            if (menu) {
+                menu.classList.remove(
+                    "opacity-0",
+                    "scale-95",
+                    "pointer-events-none",
+                );
+            }
+        }
+
+        // Helper to check if dropdown is open
+        function isOpen(menu: HTMLElement | null) {
+            return menu && !menu.classList.contains("opacity-0");
+        }
+
+        // Profile button handler
+        if (profileBtn && profileMenu) {
+            profileBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                // Close notification dropdown first
+                closeDropdown(notificationMenu);
+                // Toggle profile dropdown
+                if (isOpen(profileMenu)) {
+                    closeDropdown(profileMenu);
+                } else {
+                    openDropdown(profileMenu);
+                }
+            });
+        }
+
+        // Notification button handler
+        if (notificationBtn && notificationMenu) {
+            notificationBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                // Close profile dropdown first
+                closeDropdown(profileMenu);
+                // Toggle notification dropdown
+                if (isOpen(notificationMenu)) {
+                    closeDropdown(notificationMenu);
+                } else {
+                    openDropdown(notificationMenu);
+                }
+            });
+        }
+
+        // Click outside to close all dropdowns
+        document.addEventListener("click", (e) => {
+            const target = e.target as Node;
+
+            if (
+                profileMenu &&
+                !profileMenu.contains(target) &&
+                profileBtn &&
+                !profileBtn.contains(target)
+            ) {
+                closeDropdown(profileMenu);
+            }
+
+            if (
+                notificationMenu &&
+                !notificationMenu.contains(target) &&
+                notificationBtn &&
+                !notificationBtn.contains(target)
+            ) {
+                closeDropdown(notificationMenu);
+            }
+        });
+    }
+
+    initDropdowns();
+    document.addEventListener("astro:page-load", initDropdowns);
+</script>

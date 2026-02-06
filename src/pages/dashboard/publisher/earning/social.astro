@@ -66,8 +66,8 @@ const filters = ["Semua", "Youtube", "Instagram", "TikTok", "Website"];
         <!-- Header Section -->
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-                <h1 class="text-2xl font-bold text-white tracking-tight">Misi Tersedia</h1>
-                <p class="text-gray-400 mt-1 text-sm">Selesaikan tugas, kumpulkan cuan.</p>
+                <h1 class="text-2xl font-bold text-gray-800 tracking-tight">Misi Tersedia</h1>
+                <p class="text-gray-500 mt-1 text-sm">Selesaikan tugas, kumpulkan cuan.</p>
             </div>
             
             <!-- Filter Tabs -->
@@ -77,8 +77,8 @@ const filters = ["Semua", "Youtube", "Instagram", "TikTok", "Website"];
                         <button
                             class={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
                                 index === 0
-                                    ? "bg-[#D4F24F] text-[#0F1F1C] font-bold shadow-lg shadow-[#D4F24F]/20"
-                                    : "bg-[#142925] text-gray-400 hover:text-white hover:bg-[#1F3D36] border border-[#1F3D36]"
+                                    ? "bg-[#ff6b6b] text-white font-bold shadow-lg shadow-red-200"
+                                    : "bg-white text-gray-500 hover:text-gray-800 hover:bg-gray-50 border border-gray-200"
                             }`}
                         >
                             {filter}
@@ -92,10 +92,10 @@ const filters = ["Semua", "Youtube", "Instagram", "TikTok", "Website"];
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {
                 tasks.map((task) => (
-                    <div class="bg-white rounded-[2rem] p-6 shadow-sm hover:shadow-lg transition-all duration-300 relative group border border-gray-100/50">
+                    <div class="soft-card p-6 relative group hover:-translate-y-1 transition-transform duration-300">
                         <!-- Card Header -->
                         <div class="flex items-center justify-between mb-4">
-                            <div class="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <div class="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-gray-100">
                                 <img src={task.icon} alt={task.platform} class="w-7 h-7" />
                             </div>
                             <span class="px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-600 text-xs font-bold ring-1 ring-emerald-100">
@@ -109,9 +109,7 @@ const filters = ["Semua", "Youtube", "Instagram", "TikTok", "Website"];
                                 {task.title}
                             </h3>
                             <div class="flex items-center gap-2 text-xs font-medium text-gray-400">
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
+                                <i class="fa-solid fa-users"></i>
                                 <span>Sisa {task.quota} slot</span>
                             </div>
                         </div>
@@ -119,7 +117,7 @@ const filters = ["Semua", "Youtube", "Instagram", "TikTok", "Website"];
                         <!-- Card Footer -->
                         <button
                             onclick={`openModal('${JSON.stringify(task).replace(/'/g, "\\'")}')`}
-                            class="w-full py-3 rounded-xl border border-[#0C1A18] text-[#0C1A18] font-bold hover:bg-[#0C1A18] hover:text-[#D4F24F] transition-all duration-300 active:scale-95 text-sm"
+                            class="w-full py-3 rounded-xl border border-gray-200 text-gray-600 font-bold hover:bg-[#ff6b6b] hover:text-white hover:border-[#ff6b6b] transition-all duration-300 active:scale-95 text-sm"
                         >
                             Lihat Detail
                         </button>
@@ -136,7 +134,7 @@ const filters = ["Semua", "Youtube", "Instagram", "TikTok", "Website"];
     >
         <!-- Backdrop -->
         <div 
-            class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+            class="absolute inset-0 bg-gray-900/40 backdrop-blur-sm transition-opacity"
             onclick="closeModal()"
         ></div>
 
@@ -144,7 +142,7 @@ const filters = ["Semua", "Youtube", "Instagram", "TikTok", "Website"];
         <div
             class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-sm md:max-w-md p-4"
         >
-            <div id="modalBox" class="bg-white rounded-[2rem] shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
+            <div id="modalBox" class="bg-white rounded-[2rem] shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto ring-1 ring-gray-100">
                 <!-- Modal Content -->
                 <div id="modalContent" class="p-6 md:p-8">
                     <!-- Content injected via JS -->
@@ -184,7 +182,7 @@ const filters = ["Semua", "Youtube", "Instagram", "TikTok", "Website"];
                     <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">ID: ${task.id}</span>
                     <h2 class="text-2xl font-bold text-gray-800 mt-1">Detail Misi</h2>
                 </div>
-                <div class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-600 text-xs font-bold uppercase">
+                <div class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-600 text-xs font-bold uppercase ring-1 ring-emerald-200">
                     Active
                 </div>
             </div>
@@ -192,8 +190,10 @@ const filters = ["Semua", "Youtube", "Instagram", "TikTok", "Website"];
             <div class="space-y-6">
                 <!-- Info Utama -->
                 <div class="bg-gray-50 rounded-2xl p-5 border border-gray-100">
-                    <div class="flex items-center gap-4 mb-4 border-b border-gray-100 pb-4">
-                        <img src="${task.icon}" class="w-10 h-10" />
+                    <div class="flex items-center gap-4 mb-4 border-b border-gray-200 pb-4">
+                        <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center border border-gray-100 shadow-sm">
+                            <img src="${task.icon}" class="w-7 h-7" />
+                        </div>
                         <div>
                             <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Platform</p>
                             <p class="font-bold text-gray-800 text-lg">${task.platform}</p>
@@ -206,18 +206,23 @@ const filters = ["Semua", "Youtube", "Instagram", "TikTok", "Website"];
                 </div>
 
                 <!-- Komisi -->
-                <div class="text-center">
-                    <p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-1">Komisi Kamu</p>
-                    <p class="text-4xl font-black text-[#0C1A18] tracking-tight">Rp ${task.fee}</p>
+                <div class="text-center bg-red-50 py-4 rounded-xl border border-red-100">
+                    <p class="text-red-400 text-xs font-bold uppercase tracking-wider mb-1">Komisi Kamu</p>
+                    <p class="text-4xl font-black text-gray-800 tracking-tight">Rp ${task.fee}</p>
                 </div>
 
                 <!-- Instruksi -->
                 <div>
-                    <h3 class="font-bold text-gray-800 mb-3 text-sm uppercase tracking-wider">Instruksi Pengerjaan:</h3>
-                    <ul class="space-y-2">
+                    <h3 class="font-bold text-gray-800 mb-3 text-sm uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-gray-400"></i>
+                         Instruksi Pengerjaan
+                    </h3>
+                    <ul class="space-y-3">
                         ${task.instructions.map(inst => `
-                            <li class="flex items-start gap-3 text-sm text-gray-600">
-                                <svg class="w-5 h-5 text-[#D4F24F] shrink-0 fill-current" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg>
+                            <li class="flex items-start gap-3 text-sm text-gray-600 bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                                <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 text-[10px] font-bold mt-0.5">
+                                    <i class="fa-solid fa-check"></i>
+                                </span>
                                 ${inst}
                             </li>
                         `).join('')}
@@ -228,14 +233,15 @@ const filters = ["Semua", "Youtube", "Instagram", "TikTok", "Website"];
                 <div class="pt-4 space-y-3">
                     <div>
                         <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Link / Username Kamu</label>
-                        <input type="text" placeholder="Masukkan username utk validasi..." class="w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-sm font-medium" />
+                        <input type="text" placeholder="Masukkan username utk validasi..." class="w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:outline-none focus:border-red-400 focus:ring-1 focus:ring-red-400 transition-colors bg-gray-50 text-sm font-medium" />
                     </div>
                     
-                    <button class="w-full py-4 bg-[#0C1A18] text-white font-bold rounded-xl shadow-lg shadow-[#0C1A18]/20 hover:bg-[#152A26] transition-all hover:-translate-y-1 active:scale-95 text-sm">
+                    <button class="w-full py-4 bg-[#ff6b6b] text-white font-bold rounded-xl shadow-lg shadow-red-200 hover:bg-[#e55a5a] transition-all hover:-translate-y-1 active:scale-95 text-sm flex items-center justify-center gap-2">
+                         <i class="fa-solid fa-paper-plane"></i>
                         Buka Link & Kerjakan
                     </button>
                     
-                    <button onclick="closeModal()" class="w-full py-3.5 rounded-xl border border-gray-200 font-bold text-gray-600 hover:bg-gray-50 transition-colors text-sm">
+                    <button onclick="closeModal()" class="w-full py-3.5 rounded-xl border border-gray-200 font-bold text-gray-500 hover:bg-gray-50 hover:text-gray-800 transition-colors text-sm">
                         Batalkan
                     </button>
                 </div>

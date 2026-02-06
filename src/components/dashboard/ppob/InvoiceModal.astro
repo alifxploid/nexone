@@ -1,12 +1,15 @@
 ---
-
+/**
+ * Invoice Modal Component for PPOB
+ * Confirmation dialog before payment
+ */
 ---
 
 <!-- INVOICE MODAL COMPONENT -->
 <div id="invoice-modal" class="fixed inset-0 z-50 hidden">
     <!-- Backdrop -->
     <div
-        class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+        class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
         onclick="closeInvoice()"
     >
     </div>
@@ -19,12 +22,20 @@
             class="bg-white rounded-[2rem] shadow-2xl overflow-hidden animate-fade-in-up"
         >
             <!-- Modal Header -->
-            <div class="bg-[#0C1A18] p-6 text-center relative overflow-hidden">
+            <div
+                class="bg-gradient-to-r from-[#ff6b6b] to-[#ff5252] p-6 text-center relative overflow-hidden"
+            >
                 <div class="relative z-10">
+                    <div
+                        class="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3"
+                    >
+                        <i class="fa-solid fa-file-invoice text-2xl text-white"
+                        ></i>
+                    </div>
                     <h3 class="text-white font-bold text-lg">
                         Konfirmasi Transaksi
                     </h3>
-                    <p class="text-emerald-400 text-xs mt-1">
+                    <p class="text-white/80 text-xs mt-1">
                         Pastikan detail pesanan sudah benar
                     </p>
                 </div>
@@ -41,19 +52,9 @@
                     class="flex items-center gap-4 bg-gray-50 p-4 rounded-2xl border border-gray-100"
                 >
                     <div
-                        class="w-12 h-12 bg-white rounded-full shadow-sm flex items-center justify-center text-[#0C1A18]"
+                        class="w-12 h-12 bg-gradient-to-br from-[#ff6b6b] to-[#ff5252] rounded-full shadow-lg shadow-red-200 flex items-center justify-center text-white"
                     >
-                        <svg
-                            class="w-6 h-6"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            ><path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg
-                        >
+                        <i class="fa-solid fa-bolt text-lg"></i>
                     </div>
                     <div>
                         <p
@@ -61,7 +62,7 @@
                         >
                             Layanan
                         </p>
-                        <h4 id="inv-service" class="font-bold text-gray-900">
+                        <h4 id="inv-service" class="font-bold text-gray-800">
                             Pulsa Reguler
                         </h4>
                     </div>
@@ -75,7 +76,7 @@
                         <span class="text-gray-500 text-sm">Nomor Tujuan</span>
                         <span
                             id="inv-number"
-                            class="font-bold text-gray-900 font-mono text-sm tracking-wide"
+                            class="font-bold text-gray-800 font-mono text-sm tracking-wide"
                             >0812-3456-7890</span
                         >
                     </div>
@@ -85,7 +86,7 @@
                         <span class="text-gray-500 text-sm">Produk</span>
                         <span
                             id="inv-product"
-                            class="font-bold text-gray-900 text-sm"
+                            class="font-bold text-gray-800 text-sm"
                             >Pulsa 10.000</span
                         >
                     </div>
@@ -98,7 +99,7 @@
                                 class="text-xs text-gray-400 line-through mr-1"
                                 >Rp 2.500</span
                             >
-                            <span class="font-bold text-emerald-600 text-sm"
+                            <span class="font-bold text-green-600 text-sm"
                                 >GRATIS</span
                             >
                         </div>
@@ -107,14 +108,14 @@
 
                 <!-- Total -->
                 <div
-                    class="bg-[#F8FAFC] p-4 rounded-xl flex justify-between items-center border border-gray-200"
+                    class="bg-gradient-to-r from-[#ff6b6b]/10 to-[#ff5252]/10 p-4 rounded-xl flex justify-between items-center border border-[#ff6b6b]/20"
                 >
                     <span class="text-gray-600 font-bold text-sm"
                         >Total Bayar</span
                     >
                     <span
                         id="inv-total"
-                        class="text-xl font-black text-[#0C1A18]"
+                        class="text-xl font-black text-[#ff6b6b]"
                         >Rp 10.150</span
                     >
                 </div>
@@ -125,23 +126,14 @@
                         onclick="closeInvoice()"
                         class="py-3.5 rounded-xl border border-gray-200 font-bold text-gray-600 hover:bg-gray-50 transition-colors text-sm"
                     >
+                        <i class="fa-solid fa-xmark mr-1"></i>
                         Batal
                     </button>
                     <button
-                        class="py-3.5 rounded-xl bg-[#0C1A18] text-white font-bold shadow-lg shadow-[#0C1A18]/20 hover:bg-[#152A26] transition-all transform active:scale-95 flex items-center justify-center gap-2 text-sm"
+                        class="py-3.5 rounded-xl bg-[#ff6b6b] text-white font-bold shadow-lg shadow-red-200 hover:bg-[#ff5252] transition-all transform active:scale-95 flex items-center justify-center gap-2 text-sm"
                     >
                         <span>Bayar</span>
-                        <svg
-                            class="w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            ><path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg
-                        >
+                        <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </div>
             </div>

@@ -1,0 +1,164 @@
+---
+/**
+ * Prabayar Configuration Component
+ * Category selection grid + phone input for prepaid services
+ */
+---
+
+<div id="config-prabayar" class="space-y-5">
+    <!-- Category Grid -->
+    <div class="space-y-2">
+        <label
+            class="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1"
+        >
+            Layanan
+        </label>
+        <div class="grid grid-cols-4 lg:grid-cols-3 gap-2">
+            <!-- 1. Token PLN -->
+            <button
+                class="cat-btn active flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-[#ff6b6b] text-[#ff6b6b] shadow-sm transition-all text-center"
+                onclick="selectCategory(this)"
+            >
+                <i class="fa-solid fa-bolt text-base lg:text-lg"></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >Token PLN</span
+                >
+            </button>
+            <!-- 2. Pulsa -->
+            <button
+                class="cat-btn flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-[#ff6b6b] hover:border-[#ff6b6b] transition-all text-center"
+                onclick="selectCategory(this)"
+            >
+                <i class="fa-solid fa-mobile-screen text-base lg:text-lg"></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >Pulsa</span
+                >
+            </button>
+            <!-- 3. Paket Data -->
+            <button
+                class="cat-btn flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-[#ff6b6b] hover:border-[#ff6b6b] transition-all text-center"
+                onclick="selectCategory(this)"
+            >
+                <i class="fa-solid fa-wifi text-base lg:text-lg"></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >Data</span
+                >
+            </button>
+            <!-- 4. Topup Game -->
+            <button
+                class="cat-btn flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-[#ff6b6b] hover:border-[#ff6b6b] transition-all text-center"
+                onclick="selectCategory(this)"
+            >
+                <i class="fa-solid fa-gamepad text-base lg:text-lg"></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >Game</span
+                >
+            </button>
+            <!-- 5. E-Money -->
+            <button
+                class="cat-btn flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-[#ff6b6b] hover:border-[#ff6b6b] transition-all text-center"
+                onclick="selectCategory(this)"
+            >
+                <i class="fa-solid fa-wallet text-base lg:text-lg"></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >E-Money</span
+                >
+            </button>
+            <!-- 6. Voucher -->
+            <button
+                class="cat-btn flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-[#ff6b6b] hover:border-[#ff6b6b] transition-all text-center"
+                onclick="selectCategory(this)"
+            >
+                <i class="fa-solid fa-ticket text-base lg:text-lg"></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >Voucher</span
+                >
+            </button>
+            <!-- 7. Telepon/SMS -->
+            <button
+                class="cat-btn flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-[#ff6b6b] hover:border-[#ff6b6b] transition-all text-center"
+                onclick="selectCategory(this)"
+            >
+                <i class="fa-solid fa-phone text-base lg:text-lg"></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >Tlp/SMS</span
+                >
+            </button>
+            <!-- 8. Aktivasi -->
+            <button
+                class="cat-btn flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-[#ff6b6b] hover:border-[#ff6b6b] transition-all text-center"
+                onclick="selectCategory(this)"
+            >
+                <i class="fa-solid fa-circle-check text-base lg:text-lg"></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >Aktivasi</span
+                >
+            </button>
+            <!-- 9. Pertagas -->
+            <button
+                class="cat-btn flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-[#ff6b6b] hover:border-[#ff6b6b] transition-all text-center"
+                onclick="selectCategory(this)"
+            >
+                <i class="fa-solid fa-fire-flame-simple text-base lg:text-lg"
+                ></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >Pertagas</span
+                >
+            </button>
+            <!-- 10. Streaming -->
+            <button
+                class="cat-btn flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-[#ff6b6b] hover:border-[#ff6b6b] transition-all text-center"
+                onclick="selectCategory(this)"
+            >
+                <i class="fa-solid fa-circle-play text-base lg:text-lg"></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >Streaming</span
+                >
+            </button>
+            <!-- 11. Masa Aktif -->
+            <button
+                class="cat-btn flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-[#ff6b6b] hover:border-[#ff6b6b] transition-all text-center"
+                onclick="selectCategory(this)"
+            >
+                <i class="fa-solid fa-clock text-base lg:text-lg"></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >Masa Aktif</span
+                >
+            </button>
+            <!-- 12. Layanan TV -->
+            <button
+                class="cat-btn flex flex-col items-center gap-1.5 p-2 lg:p-3 rounded-xl bg-white border border-gray-200 text-gray-400 hover:text-[#ff6b6b] hover:border-[#ff6b6b] transition-all text-center"
+                onclick="selectCategory(this)"
+            >
+                <i class="fa-solid fa-tv text-base lg:text-lg"></i>
+                <span class="text-[9px] lg:text-[10px] font-bold leading-tight"
+                    >TV</span
+                >
+            </button>
+        </div>
+    </div>
+
+    <!-- Phone Input -->
+    <div class="space-y-1.5">
+        <label
+            class="text-[10px] font-bold text-gray-500 uppercase tracking-wider ml-1"
+        >
+            Nomor Tujuan
+        </label>
+        <div class="relative group">
+            <input
+                type="text"
+                id="phone-input"
+                class="w-full bg-white text-gray-900 font-bold text-sm px-4 py-3 rounded-xl border border-gray-200 focus:border-[#ff6b6b] focus:ring-1 focus:ring-[#ff6b6b] outline-none shadow-sm transition-all placeholder:text-gray-300"
+                placeholder="0812..."
+            />
+            <div class="absolute right-3 top-1/2 -translate-y-1/2">
+                <span
+                    class="bg-gray-100 text-gray-400 text-[9px] font-bold px-1.5 py-0.5 rounded border border-gray-200"
+                >
+                    Auto
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
