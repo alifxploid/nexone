@@ -3,7 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Navbar from "../components/landing/Navbar.astro";
 import Footer from "../components/landing/Footer.astro";
 import SocialBoosterPricing from "../components/pricing/SocialBoosterPricing.astro";
-import ClipperPricing from "../components/pricing/ClipperPricing.astro";
+
 import PPOBPricing from "../components/pricing/PPOBPricing.astro";
 ---
 
@@ -35,12 +35,7 @@ import PPOBPricing from "../components/pricing/PPOBPricing.astro";
                 >
                     Social Booster
                 </button>
-                <button
-                    id="tab-clipper"
-                    class="tab-btn px-6 py-2.5 rounded-full text-sm font-bold text-gray-500 hover:text-gray-900 transition-all duration-300"
-                >
-                    Clipper (Link)
-                </button>
+
                 <button
                     id="tab-ppob"
                     class="tab-btn px-6 py-2.5 rounded-full text-sm font-bold text-gray-500 hover:text-gray-900 transition-all duration-300"
@@ -56,11 +51,6 @@ import PPOBPricing from "../components/pricing/PPOBPricing.astro";
                 <SocialBoosterPricing />
             </div>
 
-            <!-- Content: Clipper -->
-            <div id="content-clipper" class="tab-content hidden">
-                <ClipperPricing />
-            </div>
-
             <!-- Content: PPOB -->
             <div id="content-ppob" class="tab-content hidden">
                 <PPOBPricing />
@@ -73,13 +63,11 @@ import PPOBPricing from "../components/pricing/PPOBPricing.astro";
 <script>
     const tabs = {
         social: document.getElementById("tab-social"),
-        clipper: document.getElementById("tab-clipper"),
         ppob: document.getElementById("tab-ppob"),
     };
 
     const contents = {
         social: document.getElementById("content-social"),
-        clipper: document.getElementById("content-clipper"),
         ppob: document.getElementById("content-ppob"),
     };
 
@@ -117,9 +105,8 @@ import PPOBPricing from "../components/pricing/PPOBPricing.astro";
     }
 
     // Initialize logic
-    if (tabs.social && tabs.clipper && tabs.ppob) {
+    if (tabs.social && tabs.ppob) {
         tabs.social.addEventListener("click", () => switchTab("social"));
-        tabs.clipper.addEventListener("click", () => switchTab("clipper"));
         tabs.ppob.addEventListener("click", () => switchTab("ppob"));
 
         // Default active

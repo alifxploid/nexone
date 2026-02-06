@@ -1,9 +1,11 @@
 ---
 import DashboardLayout from "../../../layouts/DashboardLayout.astro";
+import { ChartOverview } from "@/components/shared/ChartOverview";
 
 // Mock Data Stats
 const stats = {
-    balance: 2500000,
+    socialBalance: 1500000,
+    ppobBalance: 1000000,
     totalDeposit: 15450000,
     activeCampaigns: 12,
     status: "Advertiser",
@@ -63,8 +65,32 @@ const ppobHistory = Array.from({ length: 15 }).map((_, i) => ({
     </div>
 
     <!-- Stats Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-        <!-- Card 1: Sisa Saldo -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <!-- Card 1: Saldo Iklan (Social Booster) -->
+        <div
+            class="bg-white rounded-[2rem] p-6 border border-gray-200 shadow-sm relative overflow-hidden group hover:border-blue-500 transition-colors"
+        >
+            <div
+                class="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"
+            >
+            </div>
+            <p
+                class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
+            >
+                Saldo Iklan
+            </p>
+            <h3 class="text-2xl font-black text-[#0C1A18]">
+                Rp {new Intl.NumberFormat("id-ID").format(stats.socialBalance)}
+            </h3>
+            <div class="mt-4 flex items-center gap-2">
+                <span
+                    class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-lg border border-blue-100"
+                    >Social Booster</span
+                >
+            </div>
+        </div>
+
+        <!-- Card 2: Saldo PPOB -->
         <div
             class="bg-white rounded-[2rem] p-6 border border-gray-200 shadow-sm relative overflow-hidden group hover:border-[#D4F24F] transition-colors"
         >
@@ -75,18 +101,15 @@ const ppobHistory = Array.from({ length: 15 }).map((_, i) => ({
             <p
                 class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-2"
             >
-                Sisa Saldo
+                Saldo PPOB
             </p>
             <h3 class="text-2xl font-black text-[#0C1A18]">
-                Rp {new Intl.NumberFormat("id-ID").format(stats.balance)}
+                Rp {new Intl.NumberFormat("id-ID").format(stats.ppobBalance)}
             </h3>
             <div class="mt-4 flex items-center gap-2">
                 <span
                     class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-100"
-                    >Aman</span
-                >
-                <span class="text-[10px] text-gray-400 font-medium"
-                    >Saldo tersedia</span
+                    >Transaksi</span
                 >
             </div>
         </div>
@@ -155,6 +178,11 @@ const ppobHistory = Array.from({ length: 15 }).map((_, i) => ({
                 >
             </div>
         </div>
+    </div>
+
+    <!-- Chart Section -->
+    <div class="mb-8">
+        <ChartOverview client:load />
     </div>
 
     <!-- History Tables (PPOB Only) -->

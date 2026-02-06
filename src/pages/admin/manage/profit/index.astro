@@ -298,7 +298,10 @@ const allTransactions = Array.from({ length: 50 }).map((_, i) => {
     </div>
 
     <div class="mb-8">
-        <ChartAreaInteractive client:load />
+        <ChartAreaInteractive
+            client:load
+            className="bg-[#142925] border-[#1F3D36] text-white"
+        />
     </div>
 
     <!-- Recent Transactions Table -->
