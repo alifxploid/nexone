@@ -1,84 +1,95 @@
+---
+/**
+ * Stats Component
+ * Animated counter statistics section
+ * @version Astro 5.17 compatible
+ */
+
+interface StatItem {
+    target: number;
+    prefix?: string;
+    suffix: string;
+    label: string;
+}
+
+const stats: StatItem[] = [
+    { target: 10, suffix: "M+", label: "Interaksi Sosial" },
+    { target: 500, prefix: "Rp ", suffix: "Jt+", label: "Komisi Dibayarkan" },
+    { target: 50, suffix: "K+", label: "Member Aktif" },
+];
+---
+
 <section class="py-20 bg-gray-50 border-t border-gray-100" id="stats-section">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
             class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-gray-200"
         >
-            <!-- Stat 1 -->
-            <div class="py-4 md:py-0">
-                <div
-                    class="stat-number text-4xl md:text-5xl font-bold text-[#0f172a] mb-2"
-                    data-target="10"
-                    data-suffix="M+"
-                >
-                    0
-                </div>
-                <div class="text-gray-500 font-medium">Interaksi Sosial</div>
-            </div>
-
-            <!-- Stat 2 -->
-            <div class="py-4 md:py-0">
-                <div
-                    class="stat-number text-4xl md:text-5xl font-bold text-[#0f172a] mb-2"
-                    data-target="500"
-                    data-prefix="Rp "
-                    data-suffix="Jt+"
-                >
-                    0
-                </div>
-                <div class="text-gray-500 font-medium">Komisi Dibayarkan</div>
-            </div>
-
-            <!-- Stat 3 -->
-            <div class="py-4 md:py-0">
-                <div
-                    class="stat-number text-4xl md:text-5xl font-bold text-[#0f172a] mb-2"
-                    data-target="50"
-                    data-suffix="K+"
-                >
-                    0
-                </div>
-                <div class="text-gray-500 font-medium">Member Aktif</div>
-            </div>
+            {
+                stats.map((stat) => (
+                    <div class="py-4 md:py-0">
+                        <div
+                            class="stat-number text-4xl md:text-5xl font-bold text-[#0f172a] mb-2"
+                            data-target={stat.target}
+                            data-prefix={stat.prefix || ""}
+                            data-suffix={stat.suffix}
+                        >
+                            0
+                        </div>
+                        <div class="text-gray-500 font-medium">
+                            {stat.label}
+                        </div>
+                    </div>
+                ))
+            }
         </div>
     </div>
 </section>
 
 <script>
-    const observerOptions = {
+    const observerOptions: IntersectionObserverInit = {
         root: null,
         rootMargin: "0px",
         threshold: 0.1,
     };
 
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                const counters = entry.target.querySelectorAll(".stat-number");
-                counters.forEach((counter) => {
-                    const target = parseInt(
-                        counter.getAttribute("data-target") || "0",
-                    );
-                    const prefix = counter.getAttribute("data-prefix") || "";
-                    const suffix = counter.getAttribute("data-suffix") || "";
-                    const duration = 2000; // 2 seconds
-                    const increment = target / (duration / 16); // 60fps
+    const observer = new IntersectionObserver(
+        (
+            entries: IntersectionObserverEntry[],
+            obs: IntersectionObserver,
+        ): void => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const counters =
+                        entry.target.querySelectorAll<HTMLElement>(
+                            ".stat-number",
+                        );
+                    counters.forEach((counter) => {
+                        const target: number = parseInt(
+                            counter.dataset.target || "0",
+                        );
+                        const prefix: string = counter.dataset.prefix || "";
+                        const suffix: string = counter.dataset.suffix || "";
+                        const duration: number = 2000;
+                        const increment: number = target / (duration / 16);
 
-                    let current = 0;
-                    const updateCounter = () => {
-                        current += increment;
-                        if (current < target) {
-                            counter.textContent = `${prefix}${Math.ceil(current)}${suffix}`;
-                            requestAnimationFrame(updateCounter);
-                        } else {
-                            counter.textContent = `${prefix}${target}${suffix}`;
-                        }
-                    };
-                    updateCounter();
-                });
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
+                        let current: number = 0;
+                        const updateCounter = (): void => {
+                            current += increment;
+                            if (current < target) {
+                                counter.textContent = `${prefix}${Math.ceil(current)}${suffix}`;
+                                requestAnimationFrame(updateCounter);
+                            } else {
+                                counter.textContent = `${prefix}${target}${suffix}`;
+                            }
+                        };
+                        updateCounter();
+                    });
+                    obs.unobserve(entry.target);
+                }
+            });
+        },
+        observerOptions,
+    );
 
     const statsSection = document.getElementById("stats-section");
     if (statsSection) {

@@ -1,3 +1,61 @@
+---
+/**
+ * Features Component
+ * Main features section with 3 pillar cards
+ * @version Astro 5.17 compatible
+ */
+
+interface FeaturePoint {
+    text: string;
+}
+
+interface Product {
+    name: string;
+    price: string;
+}
+
+interface Notification {
+    icon: string;
+    iconBg: string;
+    iconColor: string;
+    title: string;
+    time: string;
+    description: string;
+}
+
+const socialFeatures: FeaturePoint[] = [
+    { text: "100% Akun Asli Indonesia" },
+    { text: "Garansi Uang Kembali" },
+    { text: "Proses Otomatis & Cepat" },
+];
+
+const ppobProducts: Product[] = [
+    { name: "Pulsa Telkomsel 100K", price: "Rp 96.500" },
+    { name: "Token Listrik 50K", price: "Rp 50.150" },
+    { name: "Diamond MLBB (86)", price: "Rp 19.200" },
+    { name: "Dana Kaget 50K", price: "Rp 51.000" },
+];
+
+const notifications: Notification[] = [
+    {
+        icon: "fa-solid fa-dollar-sign",
+        iconBg: "bg-orange-100",
+        iconColor: "text-[#f97316]",
+        title: "Payout Berhasil",
+        time: "Baru saja",
+        description: "Komisi Anda telah dikirim ke DANA.",
+    },
+    {
+        icon: "fa-solid fa-eye",
+        iconBg: "bg-blue-100",
+        iconColor: "text-blue-600",
+        title: "Traffic Spike",
+        time: "5m lalu",
+        description: "Link bio Instagram Anda sedang viral!",
+    },
+];
+---
+
 <section id="features" class="py-16 md:py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12 md:mb-16">
@@ -36,54 +94,21 @@
                             bikin konten auto FYP.
                         </p>
                         <ul class="space-y-3 mb-8 text-gray-600">
-                            <li class="flex items-center gap-2">
-                                <svg
-                                    class="w-5 h-5 text-[#f97316]"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    ><path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path></svg
-                                >
-                                100% Akun Asli Indonesia
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <svg
-                                    class="w-5 h-5 text-[#f97316]"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    ><path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path></svg
-                                >
-                                Garansi Uang Kembali
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <svg
-                                    class="w-5 h-5 text-[#f97316]"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    ><path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M5 13l4 4L19 7"></path></svg
-                                >
-                                Proses Otomatis & Cepat
-                            </li>
+                            {
+                                socialFeatures.map((feature) => (
+                                    <li class="flex items-center gap-2">
+                                        <i class="fa-solid fa-check text-[#f97316]" />
+                                        {feature.text}
+                                    </li>
+                                ))
+                            }
                         </ul>
                         <a
                             href="#"
                             class="inline-block px-6 py-3 bg-[#0f172a] text-white rounded-xl font-bold hover:bg-[#1e293b] transition-all hover:-translate-y-0.5 shadow-md active:scale-95"
                         >
-                            Mulai Viralkan Bisnis
+                            <i class="fa-solid fa-rocket mr-2"></i> Mulai Viralkan
+                            Bisnis
                         </a>
                     </div>
 
@@ -96,18 +121,9 @@
                                 <span class="font-semibold text-gray-800"
                                     >Engagement Growth</span
                                 >
-                                <svg
-                                    class="w-4 h-4 text-[#f97316]"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    ><path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                                    ></path></svg
-                                >
+                                <i
+                                    class="fa-solid fa-arrow-trend-up text-[#f97316]"
+                                ></i>
                             </div>
                             <div class="flex -space-x-2">
                                 <div
@@ -129,9 +145,7 @@
                         <div
                             class="flex items-end justify-between h-48 gap-4 px-2"
                         >
-                            <div
-                                class="w-full bg-gray-100 rounded-lg h-[40%] relative group"
-                            >
+                            <div class="w-full bg-gray-100 rounded-lg h-[40%]">
                             </div>
                             <div class="w-full bg-gray-100 rounded-lg h-[65%]">
                             </div>
@@ -175,7 +189,8 @@
             <div class="bg-slate-50 rounded-[2rem] p-8 md:p-10 flex flex-col">
                 <div class="mb-10 text-center">
                     <h3 class="text-2xl font-bold text-[#0f172a] mb-3">
-                        Digital Payment & PPOB
+                        <i class="fa-solid fa-wallet text-[#f97316] mr-2"></i> Digital
+                        Payment & PPOB
                     </h3>
                     <p class="text-gray-600">
                         Jual pulsa, kuota, topup game, & bayar tagihan dengan
@@ -183,7 +198,6 @@
                     </p>
                 </div>
 
-                <!-- Toggle UI / List -->
                 <div class="bg-white rounded-xl p-6 shadow-sm flex-1">
                     <div
                         class="flex justify-between items-center mb-6 pb-4 border-b border-gray-100"
@@ -193,51 +207,26 @@
                         >
                         <span
                             class="text-xs text-[#f97316] font-bold bg-orange-50 px-2 py-1 rounded"
-                            >Live</span
                         >
+                            <i
+                                class="fa-solid fa-circle text-[6px] mr-1 animate-pulse"
+                            ></i> Live
+                        </span>
                     </div>
 
                     <div class="space-y-4">
-                        <div
-                            class="flex justify-between items-center p-2 hover:bg-gray-50 rounded-lg transition-colors"
-                        >
-                            <span class="text-gray-600 text-sm font-medium"
-                                >Pulsa Telkomsel 100K</span
-                            >
-                            <span class="text-sm font-bold text-[#0f172a]"
-                                >Rp 96.500</span
-                            >
-                        </div>
-                        <div
-                            class="flex justify-between items-center p-2 hover:bg-gray-50 rounded-lg transition-colors"
-                        >
-                            <span class="text-gray-600 text-sm font-medium"
-                                >Token Listrik 50K</span
-                            >
-                            <span class="text-sm font-bold text-[#0f172a]"
-                                >Rp 50.150</span
-                            >
-                        </div>
-                        <div
-                            class="flex justify-between items-center p-2 hover:bg-gray-50 rounded-lg transition-colors"
-                        >
-                            <span class="text-gray-600 text-sm font-medium"
-                                >Diamond MLBB (86)</span
-                            >
-                            <span class="text-sm font-bold text-[#0f172a]"
-                                >Rp 19.200</span
-                            >
-                        </div>
-                        <div
-                            class="flex justify-between items-center p-2 hover:bg-gray-50 rounded-lg transition-colors"
-                        >
-                            <span class="text-gray-600 text-sm font-medium"
-                                >Dana Kaget 50K</span
-                            >
-                            <span class="text-sm font-bold text-[#0f172a]"
-                                >Rp 51.000</span
-                            >
-                        </div>
+                        {
+                            ppobProducts.map((product) => (
+                                <div class="flex justify-between items-center p-2 hover:bg-gray-50 rounded-lg transition-colors">
+                                    <span class="text-gray-600 text-sm font-medium">
+                                        {product.name}
+                                    </span>
+                                    <span class="text-sm font-bold text-[#0f172a]">
+                                        {product.price}
+                                    </span>
+                                </div>
+                            ))
+                        }
                     </div>
                 </div>
             </div>
@@ -246,7 +235,8 @@
             <div class="bg-slate-50 rounded-[2rem] p-8 md:p-10 flex flex-col">
                 <div class="mb-10 text-center">
                     <h3 class="text-2xl font-bold text-[#0f172a] mb-3">
-                        Smart Link Monetization
+                        <i class="fa-solid fa-link text-[#f97316] mr-2"></i> Smart
+                        Link Monetization
                     </h3>
                     <p class="text-gray-600">
                         Jangan biarkan traffic terbuang. Shorten link, pasang di
@@ -254,7 +244,6 @@
                     </p>
                 </div>
 
-                <!-- Earning UI -->
                 <div class="bg-white rounded-xl p-6 shadow-sm flex-1">
                     <div class="flex justify-between items-center mb-6">
                         <span class="font-semibold text-gray-800"
@@ -263,82 +252,35 @@
                         <div
                             class="flex items-center gap-1 text-xs text-[#f97316] bg-orange-50 px-2 py-1 rounded"
                         >
-                            <svg
-                                class="w-3 h-3"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                ><path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                                ></path></svg
-                            >
-                            +12%
+                            <i class="fa-solid fa-arrow-trend-up"></i> +12%
                         </div>
                     </div>
 
                     <div class="space-y-4">
-                        <!-- Item 1 -->
-                        <div class="flex gap-4 items-center">
-                            <div
-                                class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-[#f97316] font-bold text-lg shrink-0"
-                            >
-                                $
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex justify-between items-center">
-                                    <h4 class="text-sm font-bold text-gray-800">
-                                        Payout Berhasil
-                                    </h4>
-                                    <span class="text-xs text-gray-400"
-                                        >Baru saja</span
+                        {
+                            notifications.map((notif) => (
+                                <div class="flex gap-4 items-center">
+                                    <div
+                                        class={`w-10 h-10 rounded-full ${notif.iconBg} flex items-center justify-center ${notif.iconColor} shrink-0`}
                                     >
+                                        <i class={notif.icon} />
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-center">
+                                            <h4 class="text-sm font-bold text-gray-800">
+                                                {notif.title}
+                                            </h4>
+                                            <span class="text-xs text-gray-400">
+                                                {notif.time}
+                                            </span>
+                                        </div>
+                                        <p class="text-xs text-gray-500">
+                                            {notif.description}
+                                        </p>
+                                    </div>
                                 </div>
-                                <p class="text-xs text-gray-500">
-                                    Komisi Anda telah dikirim ke DANA.
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- Item 2 -->
-                        <div class="flex gap-4 items-center">
-                            <div
-                                class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-lg shrink-0"
-                            >
-                                <svg
-                                    class="w-5 h-5"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    ><path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                    ></path><path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                                    ></path></svg
-                                >
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex justify-between items-center">
-                                    <h4 class="text-sm font-bold text-gray-800">
-                                        Traffic Spike
-                                    </h4>
-                                    <span class="text-xs text-gray-400"
-                                        >5m lalu</span
-                                    >
-                                </div>
-                                <p class="text-xs text-gray-500">
-                                    Link bio Instagram Anda sedang viral!
-                                </p>
-                            </div>
-                        </div>
+                            ))
+                        }
                     </div>
                 </div>
             </div>

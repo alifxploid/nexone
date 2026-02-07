@@ -1,70 +1,79 @@
 ---
-const testimonials = [
-  {
-    name: "Andi Saputra",
-    role: "Owner Counter Pulsa",
-    content: "Sejak pakai NexOne, transaksi jadi super cepat. Nggak ada lagi komplain pelanggan gara-gara pulsa telat masuk. Sistemnya stabil banget!",
-    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-  },
-  {
-    name: "Siska Wijaya",
-    role: "Online Shop Owner",
-    content: "Fitur manajemen link-nya ngebantu banget buat bio Instagram olshop saya. Tampilannya profesional dan analytics-nya lengkap.",
-    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-  },
-  {
-    name: "Budi Santoso",
-    role: "Content Creator",
-    content: "Tools social booster-nya gila sih. Engagement rate naik drastis dalam sebulan. Recommended banget buat yang mau grow akun sosmed.",
-    avatar: "https://i.pravatar.cc/150?u=a04258114e29026302d",
-  },
+/**
+ * Testimonials Component
+ * Customer reviews section
+ * @version Astro 5.17 compatible
+ */
+
+interface Testimonial {
+    name: string;
+    role: string;
+    content: string;
+    avatar: string;
+}
+
+const testimonials: Testimonial[] = [
+    {
+        name: "Andi Saputra",
+        role: "Owner Counter Pulsa",
+        content: "Sejak pakai NexOne, transaksi jadi super cepat. Nggak ada lagi komplain pelanggan gara-gara pulsa telat masuk. Sistemnya stabil banget!",
+        avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
+    },
+    {
+        name: "Siska Wijaya",
+        role: "Online Shop Owner",
+        content: "Fitur manajemen link-nya ngebantu banget buat bio Instagram olshop saya. Tampilannya profesional dan analytics-nya lengkap.",
+        avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
+    },
+    {
+        name: "Budi Santoso",
+        role: "Content Creator",
+        content: "Tools social booster-nya gila sih. Engagement rate naik drastis dalam sebulan. Recommended banget buat yang mau grow akun sosmed.",
+        avatar: "https://i.pravatar.cc/150?u=a04258114e29026302d",
+    },
 ];
 ---
 
 <section id="testimonials" class="py-20 lg:py-24 bg-gray-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center max-w-3xl mx-auto mb-16">
-      <h2 class="text-3xl md:text-4xl font-bold text-[#0f172a] tracking-tight mb-4">
-        Apa Kata Mereka?
-      </h2>
-      <p class="text-xl text-gray-500">
-        Ribuan pebisnis digital telah mempercayakan operasional mereka pada NexOne.
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {
-        testimonials.map((item) => (
-          <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow relative">
-            <!-- Quote Icon -->
-            <div class="absolute top-6 right-8 text-orange-100">
-                 <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM5.0166 21L5.0166 18C5.0166 16.8954 5.91203 16 7.0166 16H10.0166C10.5689 16 11.0166 15.5523 11.0166 15V9C11.0166 8.44772 10.5689 8 10.0166 8H6.0166C5.46432 8 5.0166 8.44772 5.0166 9V11C5.0166 11.5523 4.56889 12 4.0166 12H3.0166V5H13.0166V15C13.0166 18.3137 10.3303 21 7.0166 21H5.0166Z" />
-                </svg>
-            </div>
-            
-            <p class="text-gray-600 mb-8 leading-relaxed relative z-10 pr-12">
-              "{item.content}"
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-[#0f172a] tracking-tight mb-4">
+                Apa Kata Mereka?
+            </h2>
+            <p class="text-xl text-gray-500">
+                Ribuan pebisnis digital telah mempercayakan operasional mereka pada NexOne.
             </p>
-            
-            <div class="flex items-center gap-4">
-              <img 
-                src={item.avatar} 
-                alt={item.name} 
-                class="w-12 h-12 rounded-full object-cover ring-2 ring-orange-50"
-              />
-              <div>
-                <h3 class="font-bold text-[#0f172a] text-sm md:text-base">
-                  {item.name}
-                </h3>
-                <p class="text-xs md:text-sm text-gray-500">
-                  {item.role}
-                </p>
-              </div>
-            </div>
-          </div>
-        ))
-      }
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((item) => (
+                <div class="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow relative">
+                    <!-- Quote Icon -->
+                    <div class="absolute top-6 right-8 text-orange-100">
+                        <i class="fa-solid fa-quote-right text-4xl"></i>
+                    </div>
+
+                    <p class="text-gray-600 mb-8 leading-relaxed relative z-10 pr-12">
+                        "{item.content}"
+                    </p>
+
+                    <div class="flex items-center gap-4">
+                        <img
+                            src={item.avatar}
+                            alt={item.name}
+                            class="w-12 h-12 rounded-full object-cover ring-2 ring-orange-50"
+                        />
+                        <div>
+                            <h3 class="font-bold text-[#0f172a] text-sm md:text-base">
+                                {item.name}
+                            </h3>
+                            <p class="text-xs md:text-sm text-gray-500">
+                                {item.role}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
     </div>
-  </div>
 </section>

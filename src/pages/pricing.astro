@@ -1,10 +1,29 @@
 ---
+/**
+ * Pricing Page
+ * Social Booster & PPOB Pricing with Tab Switcher
+ * @version Astro 5.17 compatible
+ */
 import Layout from "../layouts/Layout.astro";
 import Navbar from "../components/landing/Navbar.astro";
 import Footer from "../components/landing/Footer.astro";
 import SocialBoosterPricing from "../components/pricing/SocialBoosterPricing.astro";
-
 import PPOBPricing from "../components/pricing/PPOBPricing.astro";
+
+interface Tab {
+    id: string;
+    label: string;
+    icon: string;
+}
+
+const tabs: Tab[] = [
+    { id: "social", label: "Social Booster", icon: "fa-solid fa-rocket" },
+    {
+        id: "ppob",
+        label: "Pulsa & PPOB",
+        icon: "fa-solid fa-mobile-screen-button",
+    },
+];
 ---
 
 <Layout title="Harga & Paket - NexOne">
@@ -15,7 +34,7 @@ import PPOBPricing from "../components/pricing/PPOBPricing.astro";
     <main class="pt-32 pb-20 bg-gray-50 min-h-screen">
         <!-- Header Section -->
         <section class="text-center px-4 max-w-4xl mx-auto mb-12">
-            <h1 class="text-4xl md:text-5xl font-bold text-[#0F1F1C] mb-4">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#0f172a] mb-4">
                 Pilih Paket Pertumbuhan Anda
             </h1>
             <p class="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto">
@@ -29,19 +48,20 @@ import PPOBPricing from "../components/pricing/PPOBPricing.astro";
             <div
                 class="inline-flex bg-white p-1.5 rounded-full shadow-sm border border-gray-200"
             >
-                <button
-                    id="tab-social"
-                    class="tab-btn active px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300"
-                >
-                    Social Booster
-                </button>
-
-                <button
-                    id="tab-ppob"
-                    class="tab-btn px-6 py-2.5 rounded-full text-sm font-bold text-gray-500 hover:text-gray-900 transition-all duration-300"
-                >
-                    Pulsa & PPOB
-                </button>
+                {
+                    tabs.map((tab, index) => (
+                        <button
+                            id={`tab-${tab.id}`}
+                            class={`tab-btn px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 flex items-center gap-2 ${
+                                index === 0
+                                    ? "bg-gradient-to-r from-[#f97316] to-[#ea580c] text-white shadow-md"
+                                    : "text-gray-500 hover:text-gray-900"
+                            }`}
+                        >
+                            <i class={tab.icon} /> {tab.label}
+                        </button>
+                    ))
+                }
             </div>
         </div>
 
@@ -61,23 +81,29 @@ import PPOBPricing from "../components/pricing/PPOBPricing.astro";
 </Layout>
 
 <script>
-    const tabs = {
+    type TabKey = "social" | "ppob";
+
+    const tabs: Record<TabKey, HTMLElement | null> = {
         social: document.getElementById("tab-social"),
         ppob: document.getElementById("tab-ppob"),
     };
 
-    const contents = {
+    const contents: Record<TabKey, HTMLElement | null> = {
         social: document.getElementById("content-social"),
         ppob: document.getElementById("content-ppob"),
     };
 
-    type TabKey = keyof typeof tabs;
-
-    function switchTab(activeKey: TabKey) {
+    function switchTab(activeKey: TabKey): void {
         // Reset all tabs styles
         Object.values(tabs).forEach((tab) => {
             if (tab) {
-                tab.classList.remove("bg-[#0F392E]", "text-white", "shadow-md");
+                tab.classList.remove(
+                    "bg-gradient-to-r",
+                    "from-[#f97316]",
+                    "to-[#ea580c]",
+                    "text-white",
+                    "shadow-md",
+                );
                 tab.classList.add("text-gray-500", "hover:text-gray-900");
             }
         });
@@ -96,10 +122,15 @@ import PPOBPricing from "../components/pricing/PPOBPricing.astro";
 
         if (activeTab && activeContent) {
             activeTab.classList.remove("text-gray-500", "hover:text-gray-900");
-            activeTab.classList.add("bg-[#0F392E]", "text-white", "shadow-md");
+            activeTab.classList.add(
+                "bg-gradient-to-r",
+                "from-[#f97316]",
+                "to-[#ea580c]",
+                "text-white",
+                "shadow-md",
+            );
 
             activeContent.classList.remove("hidden");
-            // Simple fade in effect
             activeContent.classList.add("animate-fade-in");
         }
     }
@@ -108,9 +139,6 @@ import PPOBPricing from "../components/pricing/PPOBPricing.astro";
     if (tabs.social && tabs.ppob) {
         tabs.social.addEventListener("click", () => switchTab("social"));
         tabs.ppob.addEventListener("click", () => switchTab("ppob"));
-
-        // Default active
-        switchTab("social");
     }
 </script>
 

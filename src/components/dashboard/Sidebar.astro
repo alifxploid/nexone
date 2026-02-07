@@ -208,7 +208,7 @@ const roleLabel = isAdvertiser ? "Advertiser Account" : "Publisher Account";
             <div class="w-8 h-[1px] bg-gray-200 my-1"></div>
             
             <a 
-                href="/dashboard/publisher/settings" 
+                href={isAdvertiser ? "/dashboard/advertiser/settings" : "/dashboard/publisher/settings"} 
                 class="sidebar-icon text-lg text-gray-400 hover:text-[#ff6b6b] transition-all duration-200"
                 title="Settings"
             >

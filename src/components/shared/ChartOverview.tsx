@@ -129,11 +129,11 @@ const chartConfig = {
     },
     desktop: {
         label: "Desktop",
-        color: "#D4F24F", // Brand Green
+        color: "#ff6b6b", // Coral (primary accent)
     },
     mobile: {
         label: "Mobile",
-        color: "#2563EB", // Vibrant Blue
+        color: "#10b981", // Emerald
     },
 } satisfies ChartConfig
 

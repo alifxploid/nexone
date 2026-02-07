@@ -19,7 +19,7 @@ const sessions = [
         ip: "192.168.1.1",
         active: true,
         lastActive: "Sekarang",
-        icon: "monitor",
+        icon: "desktop",
     },
     {
         device: "iPhone 13 - Safari",
@@ -27,47 +27,43 @@ const sessions = [
         ip: "192.168.1.20",
         active: false,
         lastActive: "2 jam yang lalu",
-        icon: "smartphone",
+        icon: "mobile",
     },
 ];
 ---
 
 <DashboardLayout title="Pengaturan Akun">
-    <!-- Header Section -->
+    <!-- Header Section (Light Theme) -->
     <div class="mb-8">
-        <h1 class="text-2xl font-bold text-white tracking-tight">
+        <h1 class="text-xl font-bold text-gray-800 tracking-tight">
             Pengaturan Akun
         </h1>
-        <p class="text-gray-400 mt-1 text-sm">
+        <p class="text-gray-500 mt-1 text-xs">
             Kelola keamanan, notifikasi, dan privasi akun Anda.
         </p>
     </div>
 
-    <!-- Main Content Container (Strict Match to Profile.astro) -->
-    <!-- force w-full just in case -->
+    <!-- Main Content Container -->
     <div
         class="w-full max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 items-start"
     >
-        <!-- Left Column: Sidebar (Fixed Width) -->
+        <!-- Left Column: Sidebar -->
         <div class="w-full lg:w-[350px] shrink-0 space-y-6 lg:sticky lg:top-8">
-            <!-- Card 1: Security Score (Matches Profile Card Structure) -->
+            <!-- Card 1: Security Score -->
             <div
-                class="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100/50 relative overflow-hidden text-center"
+                class="soft-card p-8 border border-gray-100 relative overflow-hidden text-center"
             >
                 <div class="relative w-32 h-32 mx-auto mb-6">
                     <div
-                        class="w-full h-full rounded-full bg-[#E3F9E5] flex items-center justify-center relative border-4 border-white shadow-lg overflow-hidden"
+                        class="w-full h-full rounded-full bg-gradient-to-br from-[#ff6b6b]/10 to-[#ff5252]/10 flex items-center justify-center relative border-4 border-white shadow-lg overflow-hidden"
                     >
-                        <img
-                            src="https://img.icons8.com/?size=100&id=120527&format=png&color=000000"
-                            class="w-20 h-20 object-contain opacity-90"
-                            style="width: 80px; height: 80px;"
-                            alt="Security Shield"
-                        />
+                        <i
+                            class="fa-solid fa-shield-halved text-5xl text-[#ff6b6b]"
+                        ></i>
                     </div>
                     <!-- Badge -->
                     <div
-                        class="absolute bottom-0 right-0 bg-[#0C1A18] text-white text-xs font-bold px-3 py-1 rounded-full border-2 border-white"
+                        class="absolute bottom-0 right-0 bg-[#ff6b6b] text-white text-xs font-bold px-3 py-1 rounded-full border-2 border-white shadow-md"
                     >
                         {user.securityScore}%
                     </div>
@@ -78,52 +74,59 @@ const sessions = [
                 </h2>
                 <div class="flex items-center justify-center gap-2 mb-4">
                     <span
-                        class="px-3 py-1 bg-[#E3F9E5] text-emerald-700 text-xs font-bold rounded-full border border-emerald-200"
+                        class="px-3 py-1 bg-green-50 text-green-600 text-xs font-bold rounded-full border border-green-100"
                     >
-                        Protected
+                        <i class="fa-solid fa-check-circle mr-1"></i> Protected
                     </span>
                 </div>
                 <p class="text-xs text-gray-400 font-medium">
-                    Terakhir update: 2 menit yang lalu
+                    <i class="fa-regular fa-clock mr-1"></i> Terakhir update: 2 menit
+                    yang lalu
                 </p>
             </div>
 
-            <!-- Card 2: Help Center (Matches Stats Mini Structure) -->
+            <!-- Card 2: Help Center (Light Theme) -->
             <div
-                class="bg-[#0C1A18] rounded-[2rem] p-6 shadow-lg border border-[#1F3D36] relative overflow-hidden"
+                class="soft-card p-6 border border-gray-100 relative overflow-hidden"
             >
                 <div
-                    class="absolute top-0 right-0 w-24 h-24 bg-[#D4F24F]/10 rounded-full blur-xl -translate-y-1/2 translate-x-1/2"
+                    class="absolute top-0 right-0 w-24 h-24 bg-[#ff6b6b]/10 rounded-full blur-xl -translate-y-1/2 translate-x-1/2"
                 >
                 </div>
 
-                <h3 class="text-lg font-bold text-white mb-2 relative z-10">
-                    Butuh Bantuan?
-                </h3>
+                <div class="flex items-center gap-3 mb-3 relative z-10">
+                    <div
+                        class="w-10 h-10 bg-[#ff6b6b]/10 rounded-xl flex items-center justify-center"
+                    >
+                        <i class="fa-solid fa-headset text-[#ff6b6b]"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800">
+                        Butuh Bantuan?
+                    </h3>
+                </div>
                 <p
-                    class="text-gray-400 text-xs mb-4 relative z-10 w-4/5 leading-relaxed"
+                    class="text-gray-500 text-xs mb-4 relative z-10 leading-relaxed"
                 >
                     Jika menemukan aktivitas mencurigakan, segera hubungi kami.
                 </p>
                 <a
-                    href="/dashboard/advertiser/ticket"
-                    class="w-full py-2.5 bg-[#1F3D36] hover:bg-[#2a5249] text-white text-sm font-bold rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95 relative z-10"
+                    href="/dashboard/publisher/help"
+                    class="w-full py-2.5 bg-[#ff6b6b] hover:bg-[#ff5252] text-white text-sm font-bold rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95 relative z-10 shadow-lg shadow-red-200"
                 >
+                    <i class="fa-solid fa-paper-plane"></i>
                     Hubungi Support
                 </a>
             </div>
         </div>
 
         <!-- Right Column: Settings Forms -->
-        <!-- Added explicit w-full to prevent collapse -->
         <div class="flex-1 min-w-0 w-full">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Card 1: Security Settings (Merged Full Width) -->
-                <div
-                    class="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100/50 md:col-span-2"
-                >
+                <!-- Card 1: Security Settings -->
+                <div class="soft-card p-6 border border-gray-100 md:col-span-2">
                     <div class="mb-8">
                         <h3 class="text-lg font-bold text-gray-800">
+                            <i class="fa-solid fa-lock mr-2 text-[#ff6b6b]"></i>
                             Keamanan Login & Transaksi
                         </h3>
                         <p class="text-xs text-gray-400 mt-1">
@@ -136,13 +139,9 @@ const sessions = [
                         <!-- Change Password -->
                         <div class="space-y-4">
                             <h4
-                                class="text-sm font-bold text-[#0C1A18] flex items-center gap-2"
+                                class="text-sm font-bold text-gray-800 flex items-center gap-2"
                             >
-                                <img
-                                    src="https://img.icons8.com/?size=100&id=82747&format=png&color=000000"
-                                    class="w-5 h-5"
-                                    alt="Password Icon"
-                                />
+                                <i class="fa-solid fa-key text-[#ff6b6b]"></i>
                                 Ganti Password
                             </h4>
                             <div class="space-y-3">
@@ -154,7 +153,7 @@ const sessions = [
                                     <input
                                         type="password"
                                         placeholder="••••••••"
-                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium text-sm"
+                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#ff6b6b] focus:ring-2 focus:ring-[#ff6b6b]/20 transition-colors bg-gray-50 text-gray-800 font-medium text-sm"
                                     />
                                 </div>
                                 <div class="space-y-1">
@@ -165,7 +164,7 @@ const sessions = [
                                     <input
                                         type="password"
                                         placeholder="••••••••"
-                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium text-sm"
+                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#ff6b6b] focus:ring-2 focus:ring-[#ff6b6b]/20 transition-colors bg-gray-50 text-gray-800 font-medium text-sm"
                                     />
                                 </div>
                             </div>
@@ -176,13 +175,10 @@ const sessions = [
                             class="md:border-l md:border-dashed md:border-gray-200 md:pl-8 space-y-4"
                         >
                             <h4
-                                class="text-sm font-bold text-[#0C1A18] flex items-center gap-2"
+                                class="text-sm font-bold text-gray-800 flex items-center gap-2"
                             >
-                                <img
-                                    src="https://img.icons8.com/?size=100&id=82753&format=png&color=000000"
-                                    class="w-5 h-5"
-                                    alt="PIN Icon"
-                                />
+                                <i class="fa-solid fa-hashtag text-[#ff6b6b]"
+                                ></i>
                                 PIN Transaksi
                             </h4>
                             <div class="space-y-3">
@@ -195,7 +191,7 @@ const sessions = [
                                         type="password"
                                         maxlength="6"
                                         placeholder="* * * * * *"
-                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium text-sm tracking-[0.5em] text-center"
+                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#ff6b6b] focus:ring-2 focus:ring-[#ff6b6b]/20 transition-colors bg-gray-50 text-gray-800 font-medium text-sm tracking-[0.5em] text-center"
                                     />
                                 </div>
                                 <div class="space-y-1">
@@ -207,7 +203,7 @@ const sessions = [
                                         type="password"
                                         maxlength="6"
                                         placeholder="* * * * * *"
-                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#0C1A18] focus:ring-1 focus:ring-[#0C1A18] transition-colors bg-gray-50 text-gray-800 font-medium text-sm tracking-[0.5em] text-center"
+                                        class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-[#ff6b6b] focus:ring-2 focus:ring-[#ff6b6b]/20 transition-colors bg-gray-50 text-gray-800 font-medium text-sm tracking-[0.5em] text-center"
                                     />
                                 </div>
                             </div>
@@ -218,8 +214,9 @@ const sessions = [
                         class="mt-8 flex justify-end border-t border-gray-100 pt-6"
                     >
                         <button
-                            class="px-8 py-3 bg-[#0C1A18] text-white font-bold rounded-xl shadow-lg shadow-[#0C1A18]/20 hover:bg-[#152A26] transition-all hover:-translate-y-1 active:scale-95 text-sm"
+                            class="px-8 py-3 bg-[#ff6b6b] text-white font-bold rounded-xl shadow-lg shadow-red-200 hover:bg-[#ff5252] transition-all hover:-translate-y-1 active:scale-95 text-sm"
                         >
+                            <i class="fa-solid fa-floppy-disk mr-2"></i>
                             Simpan Perubahan
                         </button>
                     </div>
@@ -227,10 +224,11 @@ const sessions = [
 
                 <!-- Card 2: Notifications -->
                 <div
-                    class="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100/50 flex flex-col h-full"
+                    class="soft-card p-6 border border-gray-100 flex flex-col h-full"
                 >
                     <div class="mb-6">
                         <h3 class="text-lg font-bold text-gray-800">
+                            <i class="fa-solid fa-bell mr-2 text-[#ff6b6b]"></i>
                             Notifikasi
                         </h3>
                         <p class="text-xs text-gray-400 mt-1">
@@ -244,7 +242,9 @@ const sessions = [
                         >
                             <div>
                                 <p class="text-sm font-bold text-gray-800">
-                                    Transaksi
+                                    <i
+                                        class="fa-solid fa-receipt text-[#ff6b6b] mr-1"
+                                    ></i> Transaksi
                                 </p>
                                 <p class="text-[10px] text-gray-500">
                                     Info topup & withdraw
@@ -260,7 +260,7 @@ const sessions = [
                                     checked
                                 />
                                 <div
-                                    class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#0C1A18]"
+                                    class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#ff6b6b]"
                                 >
                                 </div>
                             </label>
@@ -270,7 +270,9 @@ const sessions = [
                         >
                             <div>
                                 <p class="text-sm font-bold text-gray-800">
-                                    Promo & Info
+                                    <i
+                                        class="fa-solid fa-bullhorn text-[#ff6b6b] mr-1"
+                                    ></i> Promo & Info
                                 </p>
                                 <p class="text-[10px] text-gray-500">
                                     Update fitur baru
@@ -285,7 +287,7 @@ const sessions = [
                                     class="sr-only peer"
                                 />
                                 <div
-                                    class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#0C1A18]"
+                                    class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#ff6b6b]"
                                 >
                                 </div>
                             </label>
@@ -295,11 +297,14 @@ const sessions = [
 
                 <!-- Card 3: Active Sessions -->
                 <div
-                    class="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100/50 flex flex-col h-full"
+                    class="soft-card p-6 border border-gray-100 flex flex-col h-full"
                 >
                     <div class="mb-6 flex items-center justify-between">
                         <div>
                             <h3 class="text-lg font-bold text-gray-800">
+                                <i
+                                    class="fa-solid fa-desktop mr-2 text-[#ff6b6b]"
+                                ></i>
                                 Sesi Aktif
                             </h3>
                             <p class="text-xs text-gray-400 mt-1">
@@ -311,36 +316,12 @@ const sessions = [
                     <div class="space-y-3 flex-1">
                         {
                             sessions.map((session) => (
-                                <div class="flex items-start gap-3 p-3 border border-gray-50 rounded-xl bg-gray-50/50">
+                                <div class="flex items-start gap-3 p-3 border border-gray-100 rounded-xl bg-gray-50/50">
                                     <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center shrink-0 text-gray-500 shadow-sm border border-gray-100">
-                                        {session.icon === "monitor" ? (
-                                            <svg
-                                                class="w-4 h-4"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="2"
-                                                    d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                                                />
-                                            </svg>
+                                        {session.icon === "desktop" ? (
+                                            <i class="fa-solid fa-desktop text-sm" />
                                         ) : (
-                                            <svg
-                                                class="w-4 h-4"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    stroke-width="2"
-                                                    d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
-                                                />
-                                            </svg>
+                                            <i class="fa-solid fa-mobile-screen text-sm" />
                                         )}
                                     </div>
                                     <div class="flex-1 min-w-0">
@@ -349,7 +330,7 @@ const sessions = [
                                                 {session.device}
                                             </h5>
                                             {session.active && (
-                                                <span class="w-2 h-2 rounded-full bg-emerald-500 shadow-emerald-200 shadow-lg" />
+                                                <span class="w-2 h-2 rounded-full bg-green-500 shadow-green-200 shadow-lg" />
                                             )}
                                         </div>
                                         <p class="text-[10px] text-gray-500 truncate">
@@ -370,18 +351,7 @@ const sessions = [
                         <div
                             class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center shrink-0 text-red-600 border border-red-200"
                         >
-                            <svg
-                                class="w-5 h-5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                ><path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                                ></path></svg
-                            >
+                            <i class="fa-solid fa-trash"></i>
                         </div>
                         <div class="flex-1">
                             <h3 class="text-sm font-bold text-red-900">
@@ -393,8 +363,9 @@ const sessions = [
                             </p>
                         </div>
                         <button
-                            class="px-6 py-2.5 bg-white border border-red-200 text-red-600 font-bold text-xs rounded-lg hover:bg-red-600 hover:text-white transition-colors shadow-sm whitespace-nowrap"
+                            class="px-6 py-2.5 bg-white border border-red-200 text-red-600 font-bold text-xs rounded-xl hover:bg-red-600 hover:text-white transition-colors shadow-sm whitespace-nowrap"
                         >
+                            <i class="fa-solid fa-trash mr-1"></i>
                             Hapus Akun
                         </button>
                     </div>

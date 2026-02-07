@@ -1,8 +1,20 @@
 ---
 import DashboardLayout from "../../../../layouts/DashboardLayout.astro";
 
+// Campaign history data interface
+interface Campaign {
+    id: string;
+    type: string;
+    platform: string;
+    name: string;
+    target: number;
+    progress: number;
+    status: "active" | "completed" | "pending";
+    date: string;
+}
+
 // Mock History Data
-const history = [
+const history: Campaign[] = [
     {
         id: "CMP-001",
         type: "Social Booster",
@@ -47,70 +59,57 @@ const history = [
 ---
 
 <DashboardLayout title="Riwayat Campaign">
-    <!-- Header -->
-    <div
-        class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4"
-    >
-        <div>
-            <h1 class="text-2xl font-bold text-white tracking-tight">
-                Riwayat Campaign
-            </h1>
-            <p class="text-gray-400 mt-1 text-sm">
-                Monitor performa campaign yang telah Anda buat.
-            </p>
+    <!-- BEGIN: Hero Section -->
+    <section class="mb-4 md:mb-8">
+        <div
+            class="flex flex-col md:flex-row md:items-end justify-between gap-4"
+        >
+            <div>
+                <h1
+                    class="text-2xl md:text-4xl font-bold text-gray-800 mb-1 md:mb-2"
+                >
+                    Riwayat Campaign
+                </h1>
+                <p class="text-gray-400 font-light text-base md:text-lg">
+                    Monitor performa campaign yang telah Anda buat.
+                </p>
+            </div>
+            <div class="flex gap-2">
+                <a
+                    href="/dashboard/advertiser/campaign/social"
+                    class="px-4 py-2.5 bg-[#ff6b6b] text-white rounded-xl font-bold text-sm hover:bg-[#e55a5a] transition-colors shadow-sm flex items-center gap-2"
+                >
+                    <i class="fa-solid fa-plus"></i> Social
+                </a>
+            </div>
         </div>
-        <div class="flex gap-2">
-            <a
-                href="/dashboard/advertiser/campaign/social"
-                class="px-4 py-2 bg-[#D4F24F] text-[#0C1A18] rounded-xl font-bold text-sm hover:bg-[#c3e33b] transition-colors"
-            >
-                + Social
-            </a>
-            <a
-                href="/dashboard/advertiser/campaign/clipper"
-                class="px-4 py-2 bg-white text-[#0C1A18] rounded-xl font-bold text-sm hover:bg-gray-100 transition-colors"
-            >
-                + Clipper
-            </a>
-        </div>
-    </div>
+    </section>
+    <!-- END: Hero Section -->
 
-    <!-- Table Card -->
-    <div
-        class="bg-white rounded-[2rem] p-6 md:p-8 border border-gray-200 shadow-sm overflow-hidden"
-    >
+    <!-- BEGIN: Table Card -->
+    <div class="soft-card p-4 md:p-6">
         <div class="overflow-x-auto">
-            <table class="w-full">
+            <table class="w-full min-w-[600px] text-left border-collapse">
                 <thead>
-                    <tr class="text-left border-b border-gray-100">
-                        <th
-                            class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
-                            >Campaign Info</th
-                        >
-                        <th
-                            class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
-                            >Progress</th
-                        >
-                        <th
-                            class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider"
-                            >Target</th
-                        >
-                        <th
-                            class="pb-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right"
-                            >Status</th
-                        >
+                    <tr
+                        class="text-[10px] text-gray-400 uppercase tracking-wider border-b border-gray-100"
+                    >
+                        <th class="pb-3 font-medium">Campaign Info</th>
+                        <th class="pb-3 font-medium">Progress</th>
+                        <th class="pb-3 font-medium">Target</th>
+                        <th class="pb-3 font-medium text-right">Status</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-50">
+                <tbody class="text-sm">
                     {
                         history.map((item) => (
-                            <tr class="group hover:bg-gray-50/50 transition-colors">
+                            <tr class="group hover:bg-gray-50 transition-colors">
                                 <td class="py-4 pr-4">
                                     <div>
                                         <span class="text-[10px] font-bold text-gray-400 block mb-0.5">
                                             {item.id} • {item.date}
                                         </span>
-                                        <h4 class="text-sm font-bold text-[#0C1A18]">
+                                        <h4 class="text-sm font-bold text-gray-800">
                                             {item.name}
                                         </h4>
                                         <span class="inline-flex items-center gap-1 text-[10px] font-medium text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded mt-1">
@@ -121,7 +120,7 @@ const history = [
                                 <td class="py-4 pr-4 align-middle">
                                     <div class="w-full max-w-[120px]">
                                         <div class="flex justify-between text-[10px] font-bold mb-1">
-                                            <span class="text-[#0C1A18]">
+                                            <span class="text-gray-800">
                                                 {item.progress}
                                             </span>
                                             <span class="text-gray-400">
@@ -135,7 +134,7 @@ const history = [
                                         </div>
                                         <div class="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
                                             <div
-                                                class="h-full bg-[#0C1A18] rounded-full transition-all duration-500"
+                                                class="h-full bg-[#ff6b6b] rounded-full transition-all duration-500"
                                                 style={`width: ${(item.progress / item.target) * 100}%`}
                                             />
                                         </div>
@@ -146,17 +145,20 @@ const history = [
                                 </td>
                                 <td class="py-4 text-right">
                                     {item.status === "active" && (
-                                        <span class="px-2 py-1 rounded-lg bg-emerald-50 text-emerald-600 text-[10px] font-bold border border-emerald-100">
+                                        <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-500">
+                                            <span class="inline-block w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1" />{" "}
                                             Berjalan
                                         </span>
                                     )}
                                     {item.status === "completed" && (
-                                        <span class="px-2 py-1 rounded-lg bg-blue-50 text-blue-600 text-[10px] font-bold border border-blue-100">
+                                        <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-blue-50 text-blue-500">
+                                            <span class="inline-block w-1.5 h-1.5 bg-blue-500 rounded-full mr-1" />{" "}
                                             Selesai
                                         </span>
                                     )}
                                     {item.status === "pending" && (
-                                        <span class="px-2 py-1 rounded-lg bg-amber-50 text-amber-600 text-[10px] font-bold border border-amber-100">
+                                        <span class="px-3 py-1 rounded-full text-[10px] font-bold bg-amber-50 text-amber-500">
+                                            <span class="inline-block w-1.5 h-1.5 bg-amber-500 rounded-full mr-1" />{" "}
                                             Pending
                                         </span>
                                     )}
@@ -167,5 +169,25 @@ const history = [
                 </tbody>
             </table>
         </div>
+
+        <!-- Pagination -->
+        <div
+            class="flex items-center justify-between mt-6 pt-6 border-t border-gray-100"
+        >
+            <span class="text-xs font-bold text-gray-400">1-4 dari 4</span>
+            <div class="flex gap-2">
+                <button
+                    disabled
+                    class="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-400 font-bold text-xs cursor-not-allowed"
+                    >Prev</button
+                >
+                <button
+                    disabled
+                    class="px-3 py-1.5 rounded-lg border border-gray-200 text-gray-400 font-bold text-xs cursor-not-allowed"
+                    >Next</button
+                >
+            </div>
+        </div>
     </div>
+    <!-- END: Table Card -->
 </DashboardLayout>

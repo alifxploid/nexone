@@ -3,108 +3,63 @@ import Layout from "../../layouts/Layout.astro";
 ---
 
 <Layout title="Verifikasi Email - NexOne">
-    <div class="min-h-screen flex font-sans">
-        <!-- Left Column: Form Section -->
+    <div
+        class="min-h-screen flex items-center justify-center p-4 md:p-6 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 font-sans"
+    >
         <div
-            class="w-full flex items-center justify-center p-4 sm:p-8 bg-gray-50 relative overflow-hidden"
+            class="w-full max-w-[460px] bg-white p-6 md:p-10 rounded-3xl shadow-2xl shadow-gray-200/50 border border-gray-100 transition-all text-center"
         >
-            <!-- Background Grid Pattern (Matching Hero) -->
-            <div
-                class="absolute inset-0 z-0 h-full w-full bg-[#FAFAFA] bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:40px_40px]"
-            >
-            </div>
-
-            <!-- Card Container -->
-            <div
-                class="w-full max-w-sm bg-white p-8 md:p-10 rounded-[2.5rem] shadow-2xl shadow-gray-200/50 relative z-10 text-center"
-            >
-                <!-- Header -->
-                <div class="mb-8">
-                    <!-- Logo -->
-                    <a
-                        href="/"
-                        class="inline-block hover:opacity-80 transition-opacity mb-8"
-                    >
-                        <span
-                            class="text-3xl font-bold tracking-tight text-[#0F1F1C]"
-                            >NexOne</span
-                        >
-                    </a>
-
-                    <!-- Icon -->
+            <!-- Logo -->
+            <div class="mb-6 flex justify-center">
+                <a href="/" class="flex items-center gap-2.5 group">
                     <div
-                        class="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-6 text-[#0F392E] rotate-3 shadow-sm border border-emerald-100/50"
+                        class="w-11 h-11 bg-[#ff6b6b] rounded-xl flex items-center justify-center text-white font-bold text-xl group-hover:scale-110 transition-transform shadow-lg shadow-red-200"
                     >
-                        <svg
-                            class="w-8 h-8"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                            ></path>
-                        </svg>
+                        N
                     </div>
-
-                    <h1
-                        class="text-2xl font-bold text-[#0F1F1C] mb-3 tracking-tight"
+                    <span
+                        class="text-2xl font-bold text-gray-800 tracking-tight"
+                        >NexOne</span
                     >
-                        Cek Email Kamu
-                    </h1>
-                    <p class="text-gray-500 text-sm leading-relaxed">
-                        Kami telah mengirimkan link verifikasi ke alamat email
-                        yang kamu daftarkan. Link tersebut berlaku selama 24
-                        jam.
-                    </p>
-                </div>
-
-                <!-- Action Button -->
-                <button
-                    type="button"
-                    class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-lg text-sm font-bold text-white bg-[#0F392E] hover:bg-[#164e3f] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0F392E] transition-all hover:-translate-y-0.5"
-                >
-                    Buka Email App
-                </button>
-
-                <!-- Footer Links -->
-                <div class="mt-8 pt-6 border-t border-gray-100">
-                    <p class="text-xs text-gray-500 mb-4">
-                        Tidak menerima email? <a
-                            href="#"
-                            class="font-bold text-[#0F392E] hover:underline"
-                            >Kirim ulang</a
-                        >
-                    </p>
-
-                    <a
-                        href="/auth/login"
-                        class="inline-flex items-center text-xs font-medium text-gray-400 hover:text-[#0F392E] transition-colors"
-                    >
-                        <svg
-                            class="w-3 h-3 mr-1"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            ><path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg
-                        >
-                        Kembali ke Login
-                    </a>
-                </div>
+                </a>
             </div>
 
-            <!-- Footer Copyright (Absolute Bottom) -->
-            <div class="absolute bottom-6 text-center w-full z-10">
-                <p class="text-xs text-gray-400">
-                    &copy; 2024 NexOne Ecosystem. All rights reserved.
+            <!-- Icon -->
+            <div
+                class="w-16 h-16 bg-[#ff6b6b]/10 rounded-2xl flex items-center justify-center mx-auto mb-6 rotate-3"
+            >
+                <i class="fa-solid fa-envelope text-[#ff6b6b] text-2xl"></i>
+            </div>
+
+            <h1 class="text-2xl font-bold text-gray-800 mb-3 tracking-tight">
+                Cek Email Kamu
+            </h1>
+            <p class="text-gray-500 text-sm leading-relaxed mb-8">
+                Kami telah mengirimkan link verifikasi ke alamat email yang kamu
+                daftarkan. Link tersebut berlaku selama 24 jam.
+            </p>
+
+            <button
+                type="button"
+                class="w-full py-3.5 bg-[#ff6b6b] text-white rounded-xl font-bold text-base hover:bg-[#ff5252] transition-all shadow-lg shadow-red-200 hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.98]"
+            >
+                <i class="fa-solid fa-envelope-open mr-2"></i> Buka Email App
+            </button>
+
+            <div class="mt-8 pt-6 border-t border-gray-100">
+                <p class="text-sm text-gray-500 mb-4">
+                    Tidak menerima email? <a
+                        href="#"
+                        class="font-bold text-[#ff6b6b] hover:underline"
+                        >Kirim ulang</a
+                    >
                 </p>
+                <a
+                    href="/auth/login"
+                    class="inline-flex items-center text-sm font-medium text-gray-400 hover:text-[#ff6b6b] transition-colors"
+                >
+                    <i class="fa-solid fa-arrow-left mr-2"></i> Kembali ke Login
+                </a>
             </div>
         </div>
     </div>
