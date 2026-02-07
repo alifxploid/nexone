@@ -1,0 +1,137 @@
+---
+interface Props {
+    type: "login" | "register";
+}
+
+const { type } = Astro.props;
+
+const isLogin = type === "login";
+
+// Text Configurations
+const title = isLogin ? "Masuk ke NexOne" : "Daftar NexOne";
+const headline = isLogin ? "Login" : "Register";
+const subheadline = isLogin
+    ? "Silakan pilih jenis akun Anda untuk melanjutkan"
+    : "Pilih jenis akun untuk mulai bergabung";
+
+const publisherLink = isLogin
+    ? "/auth/login/publisher"
+    : "/auth/register/publisher";
+const advertiserLink = isLogin
+    ? "/auth/login/advertiser"
+    : "/auth/register/advertiser";
+
+const footerText = isLogin ? "Belum punya akun?" : "Sudah punya akun?";
+const footerLinkText = isLogin ? "Daftar sekarang" : "Masuk di sini";
+const footerLinkUrl = isLogin ? "/auth/register" : "/auth/login";
+---
+
+<div
+    class="min-h-screen flex items-center justify-center p-4 md:p-6 bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 font-sans"
+>
+    <div
+        class="w-full max-w-[460px] bg-white p-6 md:p-10 rounded-3xl shadow-2xl shadow-gray-200/50 border border-gray-100 transition-all"
+    >
+        <!-- Logo -->
+        <div class="mb-8 flex justify-center">
+            <a href="/" class="flex items-center gap-2.5 group">
+                <div
+                    class="w-11 h-11 bg-[#ff6b6b] rounded-xl flex items-center justify-center text-white font-bold text-xl group-hover:scale-110 transition-transform shadow-lg shadow-red-200"
+                >
+                    N
+                </div>
+                <span class="text-2xl font-bold text-gray-800 tracking-tight"
+                    >NexOne</span
+                >
+            </a>
+        </div>
+
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-bold text-gray-800 mb-2 tracking-tight">
+                {headline}
+            </h1>
+            <p class="text-gray-500 text-sm">
+                {subheadline}
+            </p>
+        </div>
+
+        <div class="space-y-4">
+            <!-- Publisher Option -->
+            <a
+                href={publisherLink}
+                class="group block w-full bg-white border border-gray-200 rounded-2xl p-4 hover:border-[#ff6b6b] hover:shadow-lg hover:shadow-red-50 transition-all duration-300 relative overflow-hidden"
+            >
+                <div class="flex items-center gap-4 relative z-10">
+                    <div
+                        class="w-12 h-12 bg-orange-50 text-[#ff6b6b] rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300"
+                    >
+                        <i class="fa-solid fa-users text-xl"></i>
+                    </div>
+                    <div class="text-left flex-1">
+                        <h3
+                            class="text-base font-bold text-gray-900 group-hover:text-[#ff6b6b] transition-colors"
+                        >
+                            Publisher
+                        </h3>
+                        <p class="text-xs text-gray-500 mt-0.5">
+                            {
+                                isLogin
+                                    ? "Kerjakan tugas dan raih penghasilan."
+                                    : "Dapatkan penghasilan tambahan."
+                            }
+                        </p>
+                    </div>
+                    <div
+                        class="text-gray-300 group-hover:text-[#ff6b6b] transition-colors"
+                    >
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Advertiser Option -->
+            <a
+                href={advertiserLink}
+                class="group block w-full bg-white border border-gray-200 rounded-2xl p-4 hover:border-[#ff6b6b] hover:shadow-lg hover:shadow-red-50 transition-all duration-300 relative overflow-hidden"
+            >
+                <div class="flex items-center gap-4 relative z-10">
+                    <div
+                        class="w-12 h-12 bg-gray-50 text-gray-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-[#ff6b6b] group-hover:text-white transition-all duration-300"
+                    >
+                        <i class="fa-solid fa-bullhorn text-xl"></i>
+                    </div>
+                    <div class="text-left flex-1">
+                        <h3
+                            class="text-base font-bold text-gray-900 group-hover:text-[#ff6b6b] transition-colors"
+                        >
+                            Advertiser
+                        </h3>
+                        <p class="text-xs text-gray-500 mt-0.5">
+                            {
+                                isLogin
+                                    ? "Promosikan produk atau bisnis kamu."
+                                    : "Iklankan produk ke ribuan user."
+                            }
+                        </p>
+                    </div>
+                    <div
+                        class="text-gray-300 group-hover:text-[#ff6b6b] transition-colors"
+                    >
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="text-center mt-8">
+            <p class="text-gray-500 font-medium text-sm">
+                {footerText}
+                <a
+                    href={footerLinkUrl}
+                    class="text-[#ff6b6b] font-bold hover:underline"
+                    >{footerLinkText}</a
+                >
+            </p>
+        </div>
+    </div>
+</div>

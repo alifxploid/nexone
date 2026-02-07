@@ -1,0 +1,21 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import AuthSelection from "../../components/auth/AuthSelection.astro";
+
+export function getStaticPaths() {
+    return [
+        { params: { action: "login" } },
+        { params: { action: "register" } },
+    ];
+}
+
+const { action } = Astro.params;
+
+// Ensure action is typed correctly for the component prop
+const type = action as "login" | "register";
+const title = action === "login" ? "Masuk ke NexOne" : "Daftar NexOne";
+---
+
+<Layout title={title}>
+    <AuthSelection type={type} />
+</Layout>
